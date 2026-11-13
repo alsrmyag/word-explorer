@@ -1,0 +1,1020 @@
+<title>Word Explorer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: one-screen tablet app on a daylight sea. Home is a stepping-stone path to a treasure chest; quiz is one focused card; the cat lives in its own room. Committed single look. */
+:root{
+  --sea:#0b5d7a; --sea-2:#118bb0; --sea-3:#7fd3e6;
+  --paper:#f6fbff; --ink:#123247; --ink-soft:#4b6a7f;
+  --sun:#ffc23a; --coral:#ff6a55; --leaf:#2fae6b; --berry:#7a4dff;
+  --line:#d5e6f0; --soft:#e7f3fa;
+  --bronze:#c98a4b; --silver:#a9b6c2; --gold:#f2b51d;
+  --display:"Fredoka","Baloo 2","Arial Rounded MT Bold",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{margin:0;color:var(--ink);font-family:var(--body);font-size:18px;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;overflow:hidden;
+  background:radial-gradient(1200px 500px at 15% -10%, rgba(127,211,230,.45), transparent 60%),radial-gradient(900px 600px at 110% 110%, rgba(17,139,176,.6), transparent 60%),repeating-radial-gradient(circle at 30% 120%, rgba(255,255,255,.05) 0 2px, transparent 2px 38px),var(--sea)}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;touch-action:manipulation}
+button:focus-visible{outline:4px solid var(--sun);outline-offset:3px}
+button:disabled{cursor:default}
+.app{height:100%;display:flex;flex-direction:column;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px;box-sizing:border-box;max-width:1400px;margin:0 auto}
+.screen{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px}
+.panel{background:var(--paper);border-radius:28px;padding:clamp(16px,2.2vw,26px);flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:14px}
+
+/* top bar */
+.top{display:flex;align-items:center;gap:10px;color:#fff;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 10px 4px 4px;border-radius:999px;touch-action:none}
+.logo .comp{width:50px;height:50px;border-radius:50%;background:var(--sun);display:grid;place-items:center;font-size:28px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15)}
+.logo h1{font-family:var(--display);font-weight:700;font-size:26px;margin:0;line-height:1}
+.logo small{display:block;font-size:13px;opacity:.85;margin-top:3px}
+.spacer{flex:1}
+.pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.16);border-radius:999px;padding:8px 16px;font-family:var(--display);font-weight:600;font-size:24px;color:#fff;font-variant-numeric:tabular-nums}
+.pill.coin{background:var(--sun);color:var(--ink);box-shadow:0 4px 0 #c9921a}
+.pill.coin.bump{animation:bump .3s}
+@keyframes bump{50%{transform:scale(1.18)}}
+.navb{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);border-radius:999px;padding:8px 16px 8px 10px;font-family:var(--display);font-weight:600;font-size:20px;color:#fff;min-height:48px}
+.navb .i{font-size:28px}
+.navb.on{background:#fff;color:var(--ink)}
+
+/* common bits */
+.tag{font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:.4px;text-transform:uppercase;background:var(--soft);color:var(--sea);padding:6px 12px;border-radius:999px}
+.tag.ko,.ko{text-transform:none;letter-spacing:0;background:#fff3d1;color:#8a5a00}
+.ko{border-radius:10px;padding:2px 10px;font-size:18px;font-weight:700;font-family:var(--body)}
+.speak{flex:none;width:62px;height:62px;border-radius:50%;background:var(--sea-2);color:#fff;font-size:28px;display:grid;place-items:center;box-shadow:0 4px 0 #0a6b8a}
+.speak:active{transform:translateY(3px);box-shadow:0 1px 0 #0a6b8a}
+.sm{width:46px;height:46px;border-radius:50%;background:var(--soft);font-size:20px;display:grid;place-items:center;flex:none}
+.big-btn{background:var(--coral);color:#fff;font-family:var(--display);font-weight:700;font-size:clamp(24px,2.6vw,32px);border-radius:22px;padding:18px 28px;box-shadow:0 6px 0 #c84636;display:inline-flex;align-items:center;justify-content:center;gap:10px}
+.big-btn:active{transform:translateY(4px);box-shadow:0 2px 0 #c84636}
+.big-btn.green{background:var(--leaf);box-shadow:0 6px 0 #1f7d4b}
+.big-btn.blue{background:var(--sea-2);box-shadow:0 6px 0 #0a6b8a}
+.big-btn.yellow{background:var(--sun);color:var(--ink);box-shadow:0 6px 0 #c9921a}
+.big-btn.ghost{background:var(--soft);color:var(--ink);box-shadow:0 6px 0 var(--line)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+
+/* ---------- path (home) ---------- */
+.home{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;flex:1;min-height:0}
+.pathcard{background:var(--paper);border-radius:28px;padding:18px clamp(16px,2vw,26px);display:flex;flex-direction:column;gap:10px;min-height:0;overflow:auto}
+.pathhead{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.pathhead h2{font-family:var(--display);font-size:clamp(26px,3vw,36px);margin:0;line-height:1.1}
+.left{font-family:var(--display);font-weight:700;font-size:clamp(20px,2.2vw,26px);background:#ffecea;color:#b2321f;border-radius:999px;padding:8px 18px}
+.left.done{background:#e6f8ee;color:#1f7d4b}
+.path{position:relative;height:clamp(230px,30vh,290px);margin-top:4px}
+.path svg.trail{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.stone{z-index:1}
+.stone{position:absolute;transform:translate(-50%,-50%);width:clamp(108px,11.5vw,150px);display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.stone .rock{width:100%;aspect-ratio:1.25;border-radius:50% 50% 46% 46%/58% 58% 42% 42%;background:#cfdce4;display:grid;place-items:center;font-size:clamp(40px,4.4vw,56px);box-shadow:0 8px 0 #a9bcc8;position:relative}
+.stone b{font-family:var(--display);font-size:clamp(15px,1.5vw,19px);line-height:1.1}
+.stone small{font-size:13px;color:var(--ink-soft)}
+.stone .rw{position:absolute;top:-12px;right:-10px;background:var(--sun);color:var(--ink);border-radius:999px;padding:3px 9px;font-family:var(--display);font-weight:700;font-size:16px;box-shadow:0 3px 0 #c9921a}
+.stone.lock{opacity:.45;filter:grayscale(.8)}
+.stone.done .rock{background:#bfe9d1;box-shadow:0 8px 0 #7cc79f}
+.stone.done .rock::after{content:"✓";position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);background:var(--leaf);color:#fff;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:700}
+.stone.done .rw{background:#e6f8ee;color:#1f7d4b;box-shadow:none}
+.stone.cur .rock{background:#fff;box-shadow:0 8px 0 var(--coral),0 0 0 6px rgba(255,106,85,.25);animation:glow 1.4s infinite}
+.stone.cur .go{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);background:var(--coral);color:#fff;border-radius:999px;padding:4px 14px;font-family:var(--display);font-weight:700;font-size:18px;white-space:nowrap}
+@keyframes glow{50%{box-shadow:0 8px 0 var(--coral),0 0 0 14px rgba(255,106,85,.12)}}
+.chest .rock{background:#ffe9b0;box-shadow:0 8px 0 #e0b143;font-size:clamp(48px,5.4vw,70px)}
+.chest.ready .rock{animation:wiggle 1s infinite;background:#fff3d1}
+@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+.pathcat{position:absolute;transform:translate(-50%,-100%);transition:left .9s cubic-bezier(.5,0,.5,1),top .9s cubic-bezier(.5,0,.5,1);z-index:3;pointer-events:none}
+.pathcat.jumping .catw{animation:arc .9s ease-in-out}
+@keyframes arc{0%{transform:translateY(0)}45%{transform:translateY(-70px) rotate(-8deg)}100%{transform:translateY(0)}}
+.todaycards{display:flex;gap:10px;flex-wrap:wrap}
+.cardsnote{display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:var(--ink-soft);font-size:16px}
+
+/* puzzle card */
+.pz{position:relative;width:96px;height:120px;border-radius:16px;background:#fff;border:4px solid var(--line);overflow:hidden;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.pz .e{font-size:44px;line-height:1}
+.pz .w{font-family:var(--display);font-weight:600;font-size:16px;text-align:center;line-height:1.05;padding:0 4px;overflow-wrap:anywhere}
+.pz .cov{position:absolute;width:50%;height:50%;background:linear-gradient(135deg,#2a9cc0,#0f6f8f);display:grid;place-items:center;color:rgba(255,255,255,.55);font-family:var(--display);font-weight:700;font-size:22px;transition:transform .5s,opacity .5s;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
+.pz .c0{top:0;left:0}.pz .c1{top:0;left:50%}.pz .c2{top:50%;left:0}.pz .c3{top:50%;left:50%}
+.pz .cov.off{opacity:0;transform:scale(.3) rotate(25deg)}
+.pz .badge{position:absolute;top:3px;right:4px;font-size:15px;z-index:2}
+.pz.new{border-color:var(--sea-3)}
+.t0{border-color:var(--bronze)!important}.t1{border-color:var(--silver)!important}.t2{border-color:var(--gold)!important}
+.t3{border-color:transparent!important;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(120deg,#ff5d8f,#ffc23a,#2fae6b,#118bb0,#7a4dff) border-box!important}
+
+/* ---------- quiz ---------- */
+.qtop{display:flex;align-items:center;gap:12px;color:#fff}
+.iconbtn{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.18);font-size:26px;display:grid;place-items:center;color:#fff;flex:none}
+.prog{flex:1;height:18px;background:rgba(255,255,255,.2);border-radius:999px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--sun);border-radius:999px;transition:width .3s}
+.qlabel{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.stage{flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;min-height:0}
+.prompt{display:flex;align-items:center;gap:14px}
+.prompt .txt{font-family:var(--display);font-weight:500;font-size:clamp(24px,2.8vw,34px);line-height:1.3;flex:1;min-width:0}
+.prompt .txt em{font-style:normal;color:var(--coral);font-weight:700}
+.prompt .txt.sent{font-size:clamp(28px,3.4vw,42px);line-height:1.5}
+.bigword{font-family:var(--display);font-weight:700;font-size:clamp(52px,7vw,84px);line-height:1}
+.blank{display:inline-block;min-width:3.5em;border-bottom:4px solid var(--sea-2);margin:0 .15em;text-align:center;color:var(--leaf);font-weight:700}
+.def{font-size:clamp(22px,2.4vw,28px);line-height:1.4;display:flex;align-items:center;gap:10px}
+.hint{background:#fff3d1;color:#8a5a00;border-radius:999px;padding:8px 16px;font-weight:700;font-size:17px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.opts.emo{grid-template-columns:repeat(4,1fr)}
+.opts.one{grid-template-columns:1fr}
+.opt{position:relative;background:#fff;border:3px solid var(--line);border-radius:22px;min-height:84px;padding:12px 70px 12px 22px;font-family:var(--display);font-weight:600;font-size:clamp(22px,2.5vw,30px);text-align:left;display:flex;align-items:center;box-shadow:0 4px 0 var(--line)}
+.opts.one .opt{font-size:clamp(20px,2.2vw,26px);font-weight:500;min-height:72px}
+.opt:active{transform:translateY(3px)}
+.opts.emo .opt{justify-content:center;padding:10px;font-size:clamp(56px,6.5vw,80px);min-height:130px}
+.opt .os{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:50px;height:50px;border-radius:50%;background:var(--soft);font-size:22px;display:grid;place-items:center}
+.opt.right{border-color:var(--leaf);background:#e6f8ee;box-shadow:0 4px 0 var(--leaf)}
+.opt.wrong{border-color:var(--coral);background:#ffecea;box-shadow:0 4px 0 var(--coral);animation:shake .35s}
+.opt.dim{opacity:.4}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.fb{display:flex;align-items:center;gap:14px;border-radius:20px;padding:12px 16px;font-size:19px}
+.fb.good{background:#e6f8ee}.fb.bad{background:#fff1e3}
+.fb .em{font-size:54px;line-height:1}
+.fb .big{font-family:var(--display);font-weight:700;font-size:26px}
+.fb .msg{flex:1;min-width:0}
+.next{background:var(--sea-2);color:#fff;font-family:var(--display);font-weight:700;font-size:26px;border-radius:20px;padding:16px 28px;box-shadow:0 5px 0 #0a6b8a;flex:none}
+.next:active{transform:translateY(3px);box-shadow:0 2px 0 #0a6b8a}
+
+/* story */
+.story{display:flex;flex-direction:column;gap:12px;max-width:980px}
+.story h2{font-family:var(--display);font-size:clamp(28px,3vw,38px);margin:0}
+.sline{display:flex;align-items:flex-start;gap:12px;font-size:clamp(22px,2.4vw,28px);line-height:1.5}
+.sline .sm{margin-top:2px}
+.sline mark{background:#fff3d1;color:inherit;border-radius:6px;padding:0 4px;font-weight:700}
+
+/* round result */
+.score{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;justify-content:center;flex:1}
+.score .num{font-family:var(--display);font-weight:700;font-size:clamp(60px,8vw,96px);line-height:1}
+.score .num small{font-size:.45em;color:var(--ink-soft)}
+.score h2{font-family:var(--display);font-size:clamp(26px,3vw,36px);margin:0}
+.wlist{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.wlist span{background:#ffecea;border-radius:999px;padding:6px 14px;font-family:var(--display);font-weight:600;font-size:20px}
+
+/* coin burst */
+.burst{position:fixed;inset:0;z-index:40;pointer-events:none;display:grid;place-items:center}
+.burst .amt{font-family:var(--display);font-weight:700;font-size:clamp(70px,10vw,120px);color:var(--sun);text-shadow:0 6px 0 #c9921a,0 0 30px rgba(255,194,58,.6);animation:pop .6s both}
+.burst .cn{position:fixed;font-size:44px;transition:transform .9s cubic-bezier(.6,-0.2,.7,1),opacity .9s}
+@keyframes pop{0%{transform:scale(.2);opacity:0}60%{transform:scale(1.2);opacity:1}100%{transform:scale(1)}}
+
+/* card book */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.tab{flex:none;background:rgba(255,255,255,.18);color:#fff;border-radius:999px;padding:10px 18px;font-family:var(--display);font-weight:600;font-size:20px;display:flex;align-items:center;gap:8px}
+.tab.on{background:#fff;color:var(--ink)}
+.bookhead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;color:#fff;font-family:var(--display);font-size:20px}
+.bookhead b{font-size:28px}
+.scroll{overflow-y:auto;min-height:0;flex:1;padding-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(116px,1fr));gap:12px}
+.card{position:relative;background:#fff;border-radius:18px;padding:12px 6px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;border:4px solid var(--line);min-height:124px;box-sizing:border-box}
+.card .e{font-size:48px;line-height:1.1}
+.card .w{font-family:var(--display);font-weight:600;font-size:18px;overflow-wrap:anywhere;text-align:center;line-height:1.1}
+.card .st{position:absolute;top:4px;right:6px;font-size:16px}
+.card.unk{background:rgba(255,255,255,.55);border-style:dashed;border-color:rgba(255,255,255,.7)}
+.card.unk .e{filter:brightness(0);opacity:.18}
+.card.unk .w{color:rgba(18,50,71,.45)}
+.card.t3::after{content:"";position:absolute;inset:0;border-radius:14px;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.85) 45%,transparent 60%);background-size:250% 100%;animation:shine 3s infinite;pointer-events:none}
+@keyframes shine{0%{background-position:150% 0}60%,100%{background-position:-100% 0}}
+.legend{display:flex;gap:10px;flex-wrap:wrap;align-items:center;color:#fff;font-size:15px}
+.legend i{display:inline-block;width:18px;height:18px;border-radius:5px;border:4px solid;vertical-align:-5px;margin-right:4px;background:#fff}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(6,40,56,.6);display:grid;place-items:center;padding:16px;z-index:30}
+.sheet{background:var(--paper);border-radius:28px;padding:24px;width:min(900px,100%);max-height:calc(100% - 32px);overflow:auto;display:flex;flex-direction:column;gap:14px;box-sizing:border-box;position:relative}
+.sheet .close{position:absolute;top:14px;right:14px;width:56px;height:56px;border-radius:50%;background:var(--soft);font-size:26px;display:grid;place-items:center;z-index:2}
+.detail{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center}
+.detail .bigemoji{font-size:clamp(90px,11vw,140px);background:var(--soft);border-radius:28px;padding:20px;line-height:1}
+.wordline{font-family:var(--display);font-weight:700;font-size:clamp(40px,5vw,60px);display:flex;align-items:center;gap:14px;flex-wrap:wrap;line-height:1}
+.ex{font-size:22px;line-height:1.45;color:var(--ink-soft);display:flex;align-items:center;gap:10px}
+.ex b{color:var(--ink)}
+.wchips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.wchip{background:var(--soft);border-radius:999px;padding:8px 14px;font-family:var(--display);font-weight:600;font-size:20px}
+.wchip.an{background:#ffecea}
+.chestbox{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.chestbox .ch{font-size:130px;line-height:1;animation:wiggle .5s 3}
+.chestbox h2{font-family:var(--display);font-size:34px;margin:0}
+.minis{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.minis .card{width:110px;animation:pop .5s both}
+
+/* cat */
+.catw{position:relative;display:inline-block;line-height:0}
+.catw svg{width:100%;height:auto;overflow:visible}
+.catw .acc{position:absolute;left:50%;transform:translate(-50%,-50%);line-height:1;pointer-events:none}
+.catw .breath{animation:breathe 3.2s ease-in-out infinite;transform-origin:50% 100%}
+.catw .tail{animation:wag 2.2s ease-in-out infinite;transform-origin:150px 200px}
+.catw .eyes{animation:blink 4.5s infinite;transform-origin:100px 92px}
+@keyframes breathe{50%{transform:scaleY(1.025)}}
+@keyframes wag{50%{transform:rotate(14deg)}}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.catroom{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,1fr);gap:14px;flex:1;min-height:0}
+.room{position:relative;border-radius:28px;overflow:hidden;min-height:340px;background:linear-gradient(#ffe6ef 0 62%,#e7c79c 62% 100%)}
+.room::before{content:"";position:absolute;left:0;right:0;top:62%;height:10px;background:#d4ae7c}
+.room .win{position:absolute;top:8%;left:8%;width:22%;aspect-ratio:1;background:linear-gradient(#bfe8ff,#e9f7ff);border:10px solid #fff;border-radius:12px;box-shadow:0 4px 0 rgba(0,0,0,.08)}
+.room .bed{position:absolute;left:6%;bottom:8%;font-size:clamp(70px,8vw,110px);line-height:1}
+.room .bedname{position:absolute;left:6%;bottom:3%;font-size:13px;color:#6b4a22;font-weight:700}
+.room .toy{position:absolute;right:18%;bottom:12%;font-size:52px}
+.room .bowl{position:absolute;right:4%;bottom:5%;font-size:46px}
+.room .poop{position:absolute;bottom:4%;font-size:46px;cursor:pointer;animation:bump 1.4s infinite}
+.room .stagecat{position:absolute;left:50%;bottom:6%;transform:translateX(-50%);width:clamp(190px,24vw,290px)}
+.room .stagecat.hop .catw{animation:hop .45s ease-in-out 4}
+.room .stagecat.run{animation:run 2.6s ease-in-out}
+@keyframes hop{50%{transform:translateY(-36px)}}
+@keyframes run{0%{left:50%}20%{left:20%}40%{left:80%}60%{left:25%}80%{left:70%}100%{left:50%}}
+.bubble{position:absolute;top:6%;right:5%;max-width:46%;background:#fff;border-radius:22px;padding:12px 16px;font-family:var(--display);font-weight:600;font-size:clamp(18px,2vw,24px);box-shadow:0 4px 0 rgba(0,0,0,.08);display:flex;align-items:center;gap:10px}
+.bubble small{display:block;font-family:var(--body);font-weight:700;font-size:15px;color:#8a5a00}
+.float{position:absolute;font-size:40px;pointer-events:none;animation:up 1.6s ease-out forwards;z-index:4}
+@keyframes up{to{transform:translateY(-160px) scale(1.3);opacity:0}}
+.flycard{position:absolute;left:50%;top:30%;transform:translate(-50%,-50%);font-size:90px;z-index:5;animation:pop .5s both}
+.catside{background:var(--paper);border-radius:28px;padding:18px;display:flex;flex-direction:column;gap:12px;overflow:auto;min-height:0}
+.catside h2{font-family:var(--display);margin:0;font-size:30px;display:flex;align-items:center;gap:10px}
+.stat{display:grid;grid-template-columns:40px 1fr 54px;align-items:center;gap:8px;font-weight:700}
+.stat .b{height:16px;border-radius:999px;background:var(--soft);overflow:hidden}
+.stat .b i{display:block;height:100%;border-radius:999px;background:var(--leaf)}
+.stat .b i.low{background:var(--coral)}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.act{background:#fff;border:3px solid var(--line);border-radius:18px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:var(--display);font-weight:600;font-size:18px;box-shadow:0 4px 0 var(--line)}
+.act .i{font-size:34px;line-height:1.1}
+.act small{font-family:var(--body);font-size:13px;color:var(--ink-soft);font-weight:700}
+.act:active{transform:translateY(3px)}
+.act.hot{border-color:var(--coral);box-shadow:0 4px 0 var(--coral)}
+.namein{font:inherit;font-family:var(--display);font-size:22px;border:3px solid var(--line);border-radius:14px;padding:8px 12px;width:100%;box-sizing:border-box;user-select:text;-webkit-user-select:text}
+
+/* shop */
+.shopgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.item{background:#fff;border:3px solid var(--line);border-radius:20px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.item .i{font-size:54px;line-height:1.1}
+.item b{font-family:var(--display);font-size:20px}
+.item small{color:var(--ink-soft);font-size:14px}
+.item .buy{margin-top:auto;background:var(--sun);border-radius:14px;padding:10px 16px;font-family:var(--display);font-weight:700;font-size:20px;box-shadow:0 4px 0 #c9921a;width:100%}
+.item .buy.wear{background:var(--sea-2);color:#fff;box-shadow:0 4px 0 #0a6b8a}
+.item .buy.off{background:var(--soft);color:var(--ink);box-shadow:0 4px 0 var(--line)}
+.item .buy:disabled{background:#eef3f6;color:#9aaab5;box-shadow:none}
+.item.own{border-color:var(--leaf)}
+
+/* report */
+.report{user-select:text;-webkit-user-select:text}
+.report h2{font-family:var(--display);margin:0;font-size:30px}
+.report h3{margin:0 0 8px;font-size:18px;color:var(--ink-soft)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.kpi{background:#fff;border:2px solid var(--line);border-radius:18px;padding:12px 16px}
+.kpi b{display:block;font-family:var(--display);font-size:30px;font-variant-numeric:tabular-nums}
+.kpi span{font-size:14px;color:var(--ink-soft)}
+.week{display:flex;align-items:flex-end;gap:10px;height:140px;border-bottom:2px solid var(--line)}
+.week .d{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%;font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.week .d i{display:block;width:40%;max-width:26px;background:var(--sea-2);border-radius:6px 6px 0 0;min-height:2px}
+.week .d i.c{background:var(--leaf)}
+.tw{overflow-x:auto}
+table.t{width:100%;border-collapse:collapse;font-size:16px}
+table.t td,table.t th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;font-variant-numeric:tabular-nums}
+table.t th{color:var(--ink-soft);font-size:14px}
+.pbtn{background:var(--sea-2);color:#fff;border-radius:14px;padding:12px 18px;font-weight:700;font-size:17px}
+.pbtn.ghost{background:#eef3f6;color:var(--ink)}
+.pbtn.danger{background:#ffecea;color:#b2321f}
+textarea.copy{width:100%;min-height:160px;font:14px/1.5 var(--body);border:2px solid var(--line);border-radius:12px;padding:10px;box-sizing:border-box}
+.note{font-size:14px;color:var(--ink-soft)}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:999px;padding:12px 22px;font-weight:700;z-index:50;max-width:90vw;text-align:center}
+
+@media (max-width:900px){
+  body{overflow:auto}
+  .catroom{grid-template-columns:1fr}
+  .opts.emo{grid-template-columns:1fr 1fr}
+  .logo small{display:none}
+  .navb span{display:none}
+}
+@media (max-width:640px){
+  .opts{grid-template-columns:1fr}
+  .detail{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .path{height:auto;display:flex;flex-direction:column;gap:22px;padding:10px 0}
+  .path svg.trail,.pathcat{display:none}
+  .stone{position:static;transform:none;width:150px;margin:0 auto}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="app" id="app"></div>
+
+<script type="text/plain" id="wordData">
+/*WORDS*/
+</script>
+<script type="text/plain" id="lessonData">
+/*LESSONS*/
+</script>
+
+<script>
+(function(){
+"use strict";
+/* ================= DATA ================= */
+const ISL = [
+  {id:'animal', name:'Wild Island', ko:'동물·자연', em:'🦁'},
+  {id:'food',   name:'Town Island', ko:'집·마을', em:'🏘️'},
+  {id:'feel',   name:'Heart Island', ko:'마음·친구', em:'💗'},
+  {id:'book',   name:'Book Words', ko:'책에서 찾은 단어', em:'📖'}
+];
+const STAGES = [
+  {n:1, icon:'🖼️', en:'Look & Find', ko:'보고 그림 찾기', coins:3, say:'Step one. Listen to the word, and find the picture.'},
+  {n:2, icon:'🔁', en:'Same & Opposite', ko:'같은 뜻·반대 뜻', coins:3, say:'Step two. Find the word that means the same, or the opposite.'},
+  {n:3, icon:'✏️', en:'Fill the Blank', ko:'빈칸 채우기', coins:3, say:'Step three. Find the word that fits in the blank.'},
+  {n:4, icon:'📖', en:'Story Time', ko:'이야기 퀴즈', coins:5, say:'Step four. Read the story, and answer the questions.'}
+];
+const CHEST_COINS = 6, MILESTONE = 10, MILESTONE_COINS = 5;
+const TIER = [{en:'Bronze',ko:'동'},{en:'Silver',ko:'은'},{en:'Gold',ko:'금'},{en:'Rainbow',ko:'무지개'}];
+const TIER_EM = ['🥉','🥈','🥇','🌈'];
+const REVIEW_GAP = [2,3,5];
+
+const WORDS=[], BYID={}, BYW={};
+(function(){
+  let isl=null;
+  document.getElementById('wordData').textContent.split('\n').forEach(l=>{
+    l=l.trim(); if(!l) return; if(l[0]==='@'){isl=l.slice(1);return;}
+    const f=l.split('|'); if(f.length<9) return;
+    const sp=s=>s?s.split('/').map(x=>x.trim()).filter(Boolean):[];
+    const w={word:f[0],pos:f[1],em:f[2],def:f[3],sent:f[4],syn:sp(f[5]),ant:sp(f[6]),lvl:+f[7]||2,ko:f[8],island:isl,book:isl==='book'};
+    w.id=isl+':'+w.word; WORDS.push(w); BYID[w.id]=w; BYW[w.word]=w;
+  });
+})();
+const LESSONS=[];
+(function(){
+  let L=null;
+  document.getElementById('lessonData').textContent.split('\n').forEach(l=>{
+    l=l.trim(); if(!l) return;
+    if(l.startsWith('@L ')){ const [id,title]=l.slice(3).split('|'); L={id,title,words:[],story:[],qs:[]}; LESSONS.push(L); return; }
+    if(!L) return;
+    if(l.startsWith('W: ')) L.words=l.slice(3).split(',').map(s=>s.trim()).filter(w=>BYW[w]).map(w=>BYW[w].id);
+    else if(l.startsWith('S: ')) L.story.push(l.slice(3));
+    else if(l.startsWith('Q: ')){ const f=l.slice(3).split('|'); L.qs.push({q:f[0],a:f[1],w:f.slice(2)}); }
+  });
+})();
+const LBYID = Object.fromEntries(LESSONS.map(l=>[l.id,l]));
+
+/* ================= STORAGE ================= */
+const KEY='wordExplorer.v2', OLD='wordExplorer.v1';
+function freshCat(){ return {name:'Mimi', named:false, food:70, joy:70, poops:0, sick:false, tick:Date.now(), checkDay:-1, sickDay:-99,
+  inv:{food:2,fish:1,milk:0,bag:3,med:0}, owned:[], wear:{}, played:{}}; }
+function fresh(){ return {v:2, wv:4, coins:0, cards:{}, today:null, done:[], days:{}, types:{}, wrong:{}, right:{}, milestone:0, streak:0, lastDay:null, cat:freshCat()}; }
+let S=fresh();
+function dayNum(d){ d=d||new Date(); return Math.floor((d.getTime()-d.getTimezoneOffset()*60000)/864e5); }
+function dateStr(d){ d=d||new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+try{
+  const raw=localStorage.getItem(KEY);
+  if(raw){ S=Object.assign(fresh(),JSON.parse(raw)); S.cat=Object.assign(freshCat(),S.cat||{}); S.cat.inv=Object.assign(freshCat().inv,S.cat.inv||{}); }
+  else {
+    const old=localStorage.getItem(OLD);
+    if(old){ const o=JSON.parse(old); S.coins=o.coins||0; S.streak=o.streak||0; S.lastDay=o.lastDay||null; S.days=o.days||{};
+      const day=dayNum()-1;
+      Object.entries(o.w||{}).forEach(([id,st])=>{ if(BYID[id] && st.sk && (st.sk.pic||st.sk.def)) S.cards[id]={tier:0,got:'v1',rev:day}; });
+      S.milestone=Math.floor(Object.keys(S.cards).length/MILESTONE); }
+  }
+}catch(e){}
+if((S.wv||1)<4){ S.cards={}; S.today=null; S.done=[]; S.milestone=0; S.wrong={}; S.right={}; S.wv=4; }
+if(!S.sr){ S.streak=0; S.lastDay=null; S.sr=1; }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
+
+/* ================= HELPERS ================= */
+const $=(s,el)=>(el||document).querySelector(s);
+const $$=(s,el)=>[...(el||document).querySelectorAll(s)];
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+const lc=a=>a.map(x=>x.toLowerCase());
+function filled(w){ return w.sent.replace('___',w.word); }
+function sentHTML(w){ return esc(w.sent).replace('___','<b>'+esc(w.word)+'</b>'); }
+function close(a,b){
+  if(a.word===b.word) return true;
+  const as=lc(a.syn),bs=lc(b.syn),aa=lc(a.ant),ba=lc(b.ant);
+  if(as.includes(b.word)||bs.includes(a.word)) return true;
+  if(as.some(x=>bs.includes(x))) return true;
+  if(aa.length&&aa.some(x=>ba.includes(x))) return true;
+  return false;
+}
+function toast(m){ const t=document.createElement('div'); t.className='toast'; t.textContent=m; document.body.appendChild(t); setTimeout(()=>t.remove(),2400); }
+
+/* speech + sound */
+let voice=null;
+function pickVoice(){ try{ const vs=speechSynthesis.getVoices();
+  voice=vs.find(v=>/en[-_]US/i.test(v.lang)&&/google/i.test(v.name))||vs.find(v=>/en[-_]US/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null; }catch(e){} }
+try{ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; }catch(e){}
+function speak(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(String(t).replace(/_{2,}/g,' blank ')); u.lang='en-US'; if(voice)u.voice=voice; u.rate=.85; u.pitch=1.05; speechSynthesis.speak(u); }catch(e){} }
+let ac=null;
+function tone(seq){ try{ ac=ac||new (window.AudioContext||window.webkitAudioContext)(); let t=ac.currentTime;
+  seq.forEach(([f,d])=>{ const o=ac.createOscillator(),g=ac.createGain(); o.type='triangle'; o.frequency.value=f; g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.18,t+.02); g.gain.exponentialRampToValueAtTime(.0001,t+d); o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t+d+.02); t+=d*.8; }); }catch(e){} }
+const ding=()=>tone([[660,.12],[880,.12],[1175,.22]]);
+const bonk=()=>tone([[300,.15],[220,.25]]);
+const fanfare=()=>tone([[523,.14],[659,.14],[784,.14],[1047,.4]]);
+const coinSnd=()=>tone([[988,.08],[1319,.18]]);
+function bindSay(root){ $$('[data-say]',root||document).forEach(b=>{ if(b._s) return; b._s=1; b.addEventListener('click',e=>{ e.stopPropagation(); speak(b.dataset.say); }); }); }
+
+/* ================= TODAY PATH ================= */
+function owned(id){ return !!S.cards[id]; }
+function reviewPick(n, exclude){
+  const day=dayNum();
+  return Object.entries(S.cards).filter(([id,c])=>BYID[id]&&!exclude.includes(id)&&c.tier<3&&(day-(c.rev||0))>=REVIEW_GAP[c.tier])
+    .sort((a,b)=>(a[1].rev||0)-(b[1].rev||0)).slice(0,n).map(x=>x[0]);
+}
+function newPath(){
+  const L=LESSONS.find(l=>!S.done.includes(l.id));
+  let words=L?L.words.slice():[];
+  const book=WORDS.filter(w=>w.book&&!owned(w.id)).map(w=>w.id);
+  words=words.concat(book);
+  let rev=reviewPick(L?Math.max(0,Math.min(3,15-words.length)):12, words);
+  if(!L && !rev.length) rev=shuffle(Object.keys(S.cards)).slice(0,12);
+  const all=words.concat(rev);
+  return {date:dateStr(), lesson:L?L.id:null, words:all, fresh:all.filter(id=>!owned(id)), stage:0, chest:false, earned:0, justStage:0};
+}
+function ensureToday(){
+  const d=dateStr();
+  if(S.today && !S.today.chest){ S.today.date=d; save(); return; }
+  if(S.today && S.today.chest && S.today.date===d) return;
+  S.today=newPath(); save();
+}
+const TW=()=>S.today.words.map(id=>BYID[id]).filter(Boolean);
+function stagesLeft(){ return S.today.chest?0:(4-S.today.stage); }
+
+/* ================= COINS ================= */
+function addCoins(n, cb){
+  const pill=$('#coinpill');
+  const b=document.createElement('div'); b.className='burst';
+  b.innerHTML=`<div class="amt">+${n} 🪙</div>`; document.body.appendChild(b);
+  coinSnd();
+  const r=pill?pill.getBoundingClientRect():{left:innerWidth-80,top:20,width:60,height:40};
+  const tx=r.left+r.width/2, ty=r.top+r.height/2;
+  const k=Math.min(14,Math.max(5,Math.round(n/2)));
+  for(let i=0;i<k;i++){ const c=document.createElement('div'); c.className='cn'; c.textContent='🪙';
+    c.style.left=(innerWidth/2-22+(Math.random()*240-120))+'px'; c.style.top=(innerHeight/2-22+(Math.random()*160-80))+'px';
+    b.appendChild(c);
+    setTimeout(()=>{ const cr=c.getBoundingClientRect(); c.style.transform=`translate(${tx-cr.left-22}px,${ty-cr.top-22}px) scale(.5)`; c.style.opacity='.2'; }, 500+i*60);
+  }
+  const start=S.coins; S.coins+=n; save();
+  setTimeout(()=>{ let v=start; const step=Math.max(1,Math.round(n/15));
+    const iv=setInterval(()=>{ v=Math.min(S.coins,v+step); const p=$('#coinpill'); if(p){ p.querySelector('span').textContent=v; p.classList.remove('bump'); void p.offsetWidth; p.classList.add('bump'); } if(v>=S.coins){ clearInterval(iv); } }, 50); }, 1100);
+  setTimeout(()=>{ b.remove(); cb&&cb(); }, 2100);
+}
+
+/* ================= TOP BAR ================= */
+let view='home';
+function topbar(){
+  return `<div class="top">
+    <div class="logo" id="logo"><div class="comp">🧭</div><div><h1>Word Explorer</h1><small>단어 탐험대</small></div></div>
+    <div class="spacer"></div>
+    <button class="navb ${view==='home'?'on':''}" data-nav="home"><span class="i">🏝️</span><span>Today</span></button>
+    <button class="navb ${view==='cat'||view==='shop'?'on':''}" data-nav="cat"><span class="i">🐱</span><span>${esc(S.cat.name)}</span></button>
+    <button class="navb ${view==='book'?'on':''}" data-nav="book"><span class="i">🗂️</span><span>Cards</span></button>
+    <div class="pill coin" id="coinpill">🪙 <span>${S.coins}</span></div>
+  </div>`;
+}
+function bindTop(){ bindSay($(".top"));
+  const el=$('#logo'); let t=null;
+  if(el){ const st=()=>{clearTimeout(t);t=setTimeout(()=>{t=null;showReport();},1500);}, sp=()=>{clearTimeout(t);t=null;};
+    el.addEventListener('pointerdown',st); ['pointerup','pointerleave','pointercancel'].forEach(e=>el.addEventListener(e,sp)); el.addEventListener('contextmenu',e=>e.preventDefault()); }
+  $$('[data-nav]').forEach(b=>b.onclick=()=>{ const n=b.dataset.nav; if(n==='home')home(); else if(n==='cat')catRoom(); else cardBook(); });
+}
+const app=document.getElementById('app');
+
+/* ================= HOME / PATH ================= */
+function pzHTML(w, pieces, justIdx){
+  const c=S.cards[w.id]; const isRev=!S.today.fresh.includes(w.id);
+  const tcls=(isRev||S.today.chest)&&c?'t'+c.tier:'new';
+  let cov=''; for(let k=0;k<4;k++){ const off=k<pieces; const anim=off&&justIdx===k; cov+=`<div class="cov c${k} ${off&&!anim?'off':''} ${anim?'just':''}">${off?'':'?'}</div>`; }
+  return `<div class="pz ${tcls}" ${pieces>=1?`data-say="${esc(w.word)}"`:''}>${isRev?'<span class="badge">🔁</span>':''}<div class="e">${w.em}</div><div class="w">${pieces>=1?esc(w.word):''}</div>${cov}</div>`;
+}
+const POS=[[6,62],[23,40],[42,66],[61,38],[79,64],[93,36]];
+function home(opts){
+  opts=opts||{}; view='home'; ensureToday(); tickCat();
+  const T=S.today, st=T.stage, L=T.lesson?LBYID[T.lesson]:null;
+  const left=stagesLeft(); const leftTxt=left>0?`오늘 남은 단계: ${left}개`:'보물상자를 열어요! 🎁';
+  const stones=STAGES.map((s,i)=>{ const cls=st>=s.n?'done':(st===s.n-1?'cur':'lock');
+    return `<button class="stone ${cls}" data-stage="${s.n}" style="left:${POS[i+1][0]}%;top:${POS[i+1][1]}%"><div class="rock">${s.icon}<span class="rw">+${s.coins}🪙</span>${cls==='cur'?'<span class="go">GO!</span>':''}</div><b>${s.n}. ${s.en}</b><small>${s.ko}</small></button>`; }).join('');
+  const ready=st>=4&&!T.chest;
+  const chest=`<button class="stone chest ${ready?'ready cur':''} ${T.chest?'done':''} ${!ready&&!T.chest?'lock':''}" id="chest" style="left:${POS[5][0]}%;top:${POS[5][1]}%"><div class="rock">${T.chest?'✨':'🎁'}<span class="rw">+${CHEST_COINS}🪙</span>${ready?'<span class="go">OPEN!</span>':''}</div><b>${T.chest?'Opened!':'Treasure'}</b><small>${T.chest?'카드 획득!':'카드 '+T.words.length+'장'}</small></button>`;
+  const catIdx=T.chest?5:st; const fromIdx=opts.jumpFrom!=null?opts.jumpFrom:catIdx;
+  const trail=`<svg class="trail" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M${POS.map(p=>p.join(' ')).join(' L')}" fill="none" stroke="rgba(17,139,176,.35)" stroke-width="1.2" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" style="stroke-width:6px"/></svg>`;
+  const head = T.chest
+    ? `<h2>오늘 탐험 완료! 🎉</h2><span class="left done">내일 또 만나요</span>`
+    : `<h2>${L?esc(L.title):'Review Day'}</h2><span class="left">${leftTxt}</span><button class="sm" data-say="${esc(left>0?`You have ${left} step${left>1?'s':''} left today. Finish all four steps to open the treasure chest!`:'Open the treasure chest!')}">🔊</button>`;
+  const words=TW();
+  const sub = T.chest
+    ? `<div class="cardsnote">모은 카드는 도감에 들어갔어요. 고양이와 카드로 놀아 보세요! <span class="spacer"></span><button class="big-btn ghost" id="bonus" style="font-size:20px;padding:12px 18px">⛵ 새 단어 더 탐험하기</button></div>`
+    : `<div class="cardsnote"><b>오늘의 카드 ${words.length}장</b> · 단계를 하나 끝낼 때마다 모든 카드에 퍼즐 조각이 하나씩 붙어요. 4조각을 다 모으면 보물상자가 열려요!</div>`;
+  app.innerHTML=`<div class="screen">${topbar()}
+    <div class="pathcard">
+      <div class="pathhead"><span class="tag ko">오늘의 탐험 길</span>${head}</div>
+      <div class="path" id="path">${trail}
+        <div class="stone" style="left:${POS[0][0]}%;top:${POS[0][1]}%;width:auto"><div style="font-size:40px">🚩</div><small>Start</small></div>
+        ${stones}${chest}
+        <div class="pathcat" id="pcat" style="left:${POS[fromIdx][0]}%;top:${POS[fromIdx][1]-6}%">${catSVG({size:84,mood:'happy'})}</div>
+      </div>
+      ${sub}
+      <div class="todaycards">${words.map(w=>pzHTML(w, T.chest?4:st, opts.justPiece)).join('')}</div>
+    </div></div>`;
+  bindTop(); bindSay();
+  $$('.stone[data-stage]').forEach(b=>b.onclick=()=>{ const n=+b.dataset.stage;
+    if(T.chest){ toast('오늘 탐험은 끝났어요! 내일 또 만나요.'); return; }
+    if(n<=st){ speak('You already finished this step!'); toast('이미 끝낸 단계예요 ✓'); return; }
+    if(n>st+1){ speak('Finish the step before this one first.'); toast('앞 단계를 먼저 끝내요!'); return; }
+    startStage(n); });
+  $('#chest').onclick=()=>{ if(ready) openChest(); else if(T.chest) toast('오늘 보물상자는 이미 열었어요!'); else { speak('Finish all four steps to open the treasure chest!'); toast(`4단계를 다 끝내면 열려요! (남은 단계 ${left}개)`); } };
+  const bonus=$('#bonus'); if(bonus) bonus.onclick=()=>{ S.today=newPath(); save(); home(); };
+  if(opts.jumpFrom!=null && opts.jumpFrom!==catIdx){
+    const pc=$('#pcat');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ pc.classList.add('jumping'); pc.style.left=POS[catIdx][0]+'%'; pc.style.top=(POS[catIdx][1]-6)+'%'; tone([[523,.1],[784,.2]]); }));
+  }
+  if(opts.justPiece!=null) setTimeout(()=>$$('.cov.just').forEach(c=>{c.classList.add('off');c.textContent='';}), 700);
+}
+
+/* ================= STAGES ================= */
+let run=null, shownAt=0;
+function distinctEmo(list, n, used){ const out=[]; for(const x of list){ if(out.length>=n) break; if(used.has(x.em)) continue; used.add(x.em); out.push(x); } return out; }
+function makeQ(n, w){
+  if(n===1){
+    const used=new Set([w.em]); const tw=TW();
+    let pool;
+    pool=shuffle(WORDS.filter(x=>x!==w&&x.island!==w.island&&!x.book&&!close(w,x)));
+    const d=distinctEmo(pool,3,used); if(d.length<3) d.push(...distinctEmo(shuffle(WORDS),3-d.length,used));
+    return {n, w, key:w.id, layout:'emo',
+      opts:shuffle([w].concat(d)).map(x=>({label:x.em, ok:x===w})),
+      head:`<div class="row" style="gap:16px"><div class="bigword">${esc(w.word)}</div><button class="speak" data-say="${esc(w.word)}">🔊</button></div>
+            <div class="def"><button class="sm" data-say="${esc(w.def)}">🔊</button><span>${esc(w.def)}</span></div>
+            <div class="row"><button class="hint" id="kohint">🇰🇷 한국어 힌트</button></div>`,
+      ask:'Find the picture.', say:`${w.word}. ${w.def}. Find the picture.`};
+  }
+  if(n===2){
+    const type = (w.syn.length&&w.ant.length) ? rnd(['syn','ant']) : (w.syn.length?'syn':'ant');
+    const answer=(type==='syn'?w.syn:w.ant)[0];
+    const bad=new Set([w.word].concat(lc(w.syn),lc(w.ant)));
+    const d=[]; const trap=type==='syn'?w.ant[0]:w.syn[0];
+    if(trap&&Math.random()<.5) d.push(trap);
+    const tw=TW();
+    const ok=x=>x.pos===w.pos&&x!==w&&!bad.has(x.word)&&!lc(x.syn).some(s=>bad.has(s))&&!lc(x.ant).some(s=>bad.has(s));
+    shuffle(tw.filter(ok)).concat(shuffle(WORDS.filter(ok))).forEach(x=>{ if(d.length<3&&!d.includes(x.word)) d.push(x.word); });
+    const p = type==='syn' ? `Which word means the <em>SAME</em> as <em>${esc(w.word)}</em>?` : `Which word is the <em>OPPOSITE</em> of <em>${esc(w.word)}</em>?`;
+    const s = type==='syn' ? `Which word means the same as ${w.word}?` : `Which word is the opposite of ${w.word}?`;
+    return {n, w, key:w.id, sub:type, opts:shuffle([answer].concat(d.slice(0,3))).map(x=>({label:x, ok:x===answer, say:x})),
+      label: type==='syn'?'같은 뜻':'반대 뜻',
+      head:`<div class="prompt"><div class="txt">${p}</div><button class="speak" data-say="${esc(s)}">🔊</button></div>`, say:s};
+  }
+  if(n===3){
+    const tw=TW(); const okx=x=>x.pos===w.pos&&x!==w&&!close(w,x)&&!lc(w.syn).includes(x.word);
+    const d=[]; shuffle(tw.filter(okx)).concat(shuffle(WORDS.filter(okx))).forEach(x=>{ if(d.length<3&&!d.includes(x)&&!d.some(y=>close(x,y))) d.push(x); });
+    return {n, w, key:w.id, opts:shuffle([w].concat(d)).map(x=>({label:x.word, ok:x===w, say:x.word})),
+      head:`<div class="prompt"><div class="txt sent">${esc(w.sent).replace('___','<span class="blank" id="bl">?</span>')}</div><button class="speak" data-say="${esc(w.sent)}">🔊</button></div>`, say:w.sent};
+  }
+}
+function makeStoryQ(L, i){
+  const q=L.qs[i];
+  return {n:4, key:'q'+i, layout:'one', opts:shuffle([q.a].concat(q.w)).map(x=>({label:x, ok:x===q.a, say:x})),
+    head:`<div class="prompt"><div class="txt">${esc(q.q)}</div><button class="speak" data-say="${esc(q.q)}">🔊</button></div>`, say:q.q, ans:q.a};
+}
+function stageItems(n){
+  const tw=TW();
+  if(n===4){ const L=S.today.lesson&&LBYID[S.today.lesson]; return L?L.qs.map((_,i)=>()=>makeStoryQ(L,i)):[]; }
+  let list=tw; if(n===2) list=tw.filter(w=>w.syn.length||w.ant.length);
+  return list.map(w=>()=>makeQ(n,w));
+}
+function startStage(n){
+  const items=stageItems(n);
+  if(!items.length){ completeStage(n); return; }
+  run={n, makers:shuffle(items), i:0, wrong:[], correct:0, round:1};
+  if(n===4) showStory(true); else stageIntro(n);
+}
+function stageIntro(n){
+  const s=STAGES[n-1];
+  app.innerHTML=`<div class="screen">${qtop()}<div class="panel"><div class="score">
+     <div style="font-size:90px;line-height:1">${s.icon}</div>
+     <h2>Step ${n}. ${s.en}</h2><div class="ko" style="font-size:22px">${s.ko}</div>
+     <div class="row" style="justify-content:center"><button class="speak" data-say="${esc(s.say)}">🔊</button><span style="font-size:22px">${esc(s.say)}</span></div>
+     <div class="row" style="justify-content:center;font-size:20px">문제 ${run.makers.length}개 · 다 맞히면 <b>+${s.coins}🪙</b> 와 퍼즐 조각!</div>
+     <button class="big-btn" id="begin">Let's go! →</button></div></div></div>`;
+  bindQtop(); bindSay(); $('#begin').onclick=()=>{ nextQ(); };
+  setTimeout(()=>speak(s.say),200);
+}
+function qtop(){
+  const s=STAGES[run.n-1]; const tot=run.makers.length; const pct=Math.round(run.i/tot*100);
+  return `<div class="qtop"><button class="iconbtn" id="quit" aria-label="Home">✕</button>
+    <span class="tag" style="background:#fff">${s.icon} Step ${run.n}${run.round>1?' · 다시하기':''}</span>
+    <div class="prog"><i style="width:${pct}%"></i></div>
+    <div class="pill coin" id="coinpill">🪙 <span>${S.coins}</span></div></div>`;
+}
+function bindQtop(){ $('#quit').onclick=()=>{ try{speechSynthesis.cancel();}catch(e){} run=null; home(); }; }
+let cur=null;
+function nextQ(){
+  if(run.i>=run.makers.length) return roundEnd();
+  cur=run.makers[run.i](); cur.answered=false; shownAt=Date.now();
+  const s=STAGES[run.n-1];
+  app.innerHTML=`<div class="screen">${qtop()}<div class="panel">
+    <div class="qlabel"><span class="tag">${s.en}</span><span class="tag ko">${cur.label||s.ko}</span><span class="tag" style="background:transparent">${run.i+1} / ${run.makers.length}</span>
+      ${run.n===4?'<span class="spacer"></span><button class="tag" id="peek" style="font-size:18px">📖 이야기 다시 보기</button>':''}</div>
+    <div class="stage">${cur.head}${cur.ask?`<div class="prompt"><div class="txt" style="font-size:24px">${cur.ask}</div></div>`:''}</div>
+    <div class="opts ${cur.layout||''}">${cur.opts.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o.label)}${o.say?`<span class="os" data-say="${esc(o.say)}" role="button" aria-label="Listen">🔊</span>`:''}</button>`).join('')}</div>
+    <div id="fbwrap"></div></div></div>`;
+  bindQtop(); bindSay();
+  const kh=$('#kohint'); if(kh) kh.onclick=()=>{ kh.textContent='🇰🇷 '+cur.w.ko; };
+  const pk=$('#peek'); if(pk) pk.onclick=()=>showStory(false);
+  $$('.opt').forEach(b=>b.onclick=e=>{ if(e.target.closest('.os')) return; answer(+b.dataset.i); });
+  setTimeout(()=>speak(cur.say),200);
+}
+function answer(i){
+  if(cur.answered) return; cur.answered=true;
+  const o=cur.opts[i], ok=o.ok, w=cur.w;
+  const sec=Math.min((Date.now()-shownAt)/1000,90);
+  const d=S.days[dateStr()]||(S.days[dateStr()]={q:0,c:0,sec:0}); d.q++; d.sec+=sec; if(ok)d.c++;
+  if(run.round===1){ const k='s'+run.n; const ts=S.types[k]||(S.types[k]=[0,0]); ts[1]++; if(ok)ts[0]++; }
+  if(w){ if(ok) S.right[w.id]=(S.right[w.id]||0)+1; else S.wrong[w.id]=(S.wrong[w.id]||0)+1; }
+  if(ok) run.correct++; else run.wrong.push(run.makers[run.i]);
+  save();
+  $$('.opt').forEach((b,j)=>{ const oj=cur.opts[j]; if(oj.ok) b.classList.add('right'); else if(j===i) b.classList.add('wrong'); else b.classList.add('dim'); });
+  const bl=$('#bl'); if(bl&&w) bl.textContent=w.word;
+  let extra='', sayAfter='';
+  if(w){ extra=`<div class="em">${w.em}</div>`; sayAfter=run.n===1?`${w.word}. ${filled(w)}`:filled(w); }
+  const right=cur.opts.find(x=>x.ok);
+  const rl = run.n===1 ? w.word : right.label;
+  $('#fbwrap').innerHTML=`<div class="fb ${ok?'good':'bad'}">${extra}
+    <div class="msg">${ok?`<div class="big">${rnd(['Great!','Awesome!','You got it!','Super!','Yes!'])}</div>`:`<div class="big">Nice try!</div><div>The answer is <b>${esc(rl)}</b>.${w?` <span class="ko">${esc(w.ko)}</span>`:''} 이따가 다시 풀어요.</div>`}
+    ${w?`<div style="margin-top:4px;color:var(--ink-soft)">${sentHTML(w)}</div>`:''}</div>
+    <button class="next" id="nx">Next →</button></div>`;
+  if(ok) ding(); else bonk();
+  setTimeout(()=>speak(ok?(sayAfter||'Great!'):('The answer is '+rl+'. '+(sayAfter||''))),400);
+  $('#nx').onclick=()=>{ run.i++; nextQ(); };
+  $('#fbwrap').scrollIntoView({block:'nearest'});
+}
+function roundEnd(){
+  const tot=run.makers.length, c=run.correct, s=STAGES[run.n-1];
+  const allRight=run.wrong.length===0;
+  const msg = allRight ? (run.round===1?'Perfect! 한 번에 다 맞혔어요!':'All correct! 다 맞혔어요!') : (c/tot>=.7?'Great job! 거의 다 왔어요!':'Good try! 다시 해 봐요!');
+  const wrongWords=run.wrong.map(m=>{ const q=m(); return q.w?q.w.word:'Q'; });
+  app.innerHTML=`<div class="screen">${qtop()}<div class="panel"><div class="score">
+     <div style="font-size:24px;color:var(--ink-soft)">Step ${run.n} · ${s.en}${run.round>1?' · 다시하기':''}</div>
+     <div class="num">${c}<small> / ${tot}</small></div>
+     <h2>${tot}개 중 ${c}개 맞혔어요!</h2>
+     <div style="font-size:22px">${msg}</div>
+     ${allRight?'':`<div class="wlist">${run.n===4?run.wrong.map((_,i)=>`<span>❓ 문제 ${i+1}</span>`).join(''):wrongWords.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`}
+     <div class="row" style="justify-content:center">
+       ${allRight?`<button class="big-btn green" id="claim">🪙 +${s.coins} 받기!</button>`:`<button class="big-btn" id="retry">🔁 틀린 것 다시하기 (${run.wrong.length})</button><button class="big-btn ghost" id="later">나중에</button>`}
+     </div></div></div></div>`;
+  bindQtop(); bindSay();
+  speak(`You got ${c} out of ${tot}! ${allRight?'Perfect!':'Let\'s try the wrong ones again.'}`);
+  if(allRight){ fanfare(); $('#claim').onclick=()=>completeStage(run.n); }
+  else { $('#retry').onclick=()=>{ run.makers=shuffle(run.wrong); run.wrong=[]; run.i=0; run.correct=0; run.round++; nextQ(); };
+         $('#later').onclick=()=>{ run=null; home(); }; }
+}
+function completeStage(n){
+  const s=STAGES[n-1]; const from=S.today.stage;
+  S.today.stage=Math.max(S.today.stage,n); S.today.earned+=s.coins; save();
+  const go=()=>{ run=null; home({jumpFrom:from, justPiece:n-1}); };
+  addCoins(s.coins, go);
+}
+function showStory(first){
+  const L=LBYID[S.today.lesson]; const tw=TW();
+  const forms=tw.map(w=>w.word).sort((a,b)=>b.length-a.length);
+  const mark=t=>{ let h=esc(t); forms.forEach(f=>{ h=h.replace(new RegExp('\\b('+f+')(s|es|ed|d)?\\b','gi'),'<mark data-say="$1">$1$2</mark>'); }); return h; };
+  const html=`<div class="story"><div class="qlabel"><span class="tag">Story Time</span><span class="tag ko">이야기 읽기</span></div>
+      <h2 class="row">${esc(L.title)} <button class="speak" data-say="${esc(L.title+'. '+L.story.join(' '))}">🔊</button></h2>
+      ${L.story.map(s=>`<div class="sline"><button class="sm" data-say="${esc(s)}">🔊</button><span>${mark(s)}</span></div>`).join('')}
+      <div class="note">노란 단어는 오늘 배운 단어예요. 눌러서 들어 보세요. 🔊 큰 버튼은 이야기 전체를 읽어 줘요.</div></div>`;
+  if(first){
+    app.innerHTML=`<div class="screen">${qtop()}<div class="panel">${html}
+      <div class="row" style="justify-content:flex-end;margin-top:auto"><span style="font-size:20px">문제 ${L.qs.length}개 · 다 맞히면 +${STAGES[3].coins}🪙</span><button class="big-btn" id="begin">Quiz! →</button></div></div></div>`;
+    bindQtop(); bindSay(); $('#begin').onclick=()=>nextQ();
+    setTimeout(()=>speak(L.title+'. '+L.story.join(' ')),300);
+  } else {
+    const m=document.createElement('div'); m.className='modal';
+    m.innerHTML=`<div class="sheet"><button class="close">✕</button>${html}</div>`; document.body.appendChild(m);
+    bindSay(m); m.querySelector('.close').onclick=()=>{ try{speechSynthesis.cancel();}catch(e){} m.remove(); }; m.onclick=e=>{ if(e.target===m) m.remove(); };
+  }
+}
+
+/* ================= CHEST ================= */
+function openChest(){
+  const T=S.today, day=dayNum();
+  const got=[], up=[];
+  T.words.forEach(id=>{ const c=S.cards[id];
+    if(!c){ S.cards[id]={tier:0,got:dateStr(),rev:day}; got.push(id); }
+    else { if(c.rev!==day||!T.fresh.includes(id)){ const old=c.tier; c.tier=Math.min(3,c.tier+1); c.rev=day; if(c.tier>old) up.push(id); } } });
+  if(T.lesson && !S.done.includes(T.lesson)) S.done.push(T.lesson);
+  T.chest=true;
+  const total=Object.keys(S.cards).length; let bonus=0;
+  while(Math.floor(total/MILESTONE)>S.milestone){ S.milestone++; bonus+=MILESTONE_COINS; }
+  const today=dateStr();
+  if(S.lastDay!==today){ const y=new Date(); y.setDate(y.getDate()-1); S.streak=(S.lastDay===dateStr(y))?(S.streak||0)+1:1; S.lastDay=today; }
+  save();
+  const m=document.createElement('div'); m.className='modal';
+  m.innerHTML=`<div class="sheet"><div class="chestbox">
+     <div class="ch" id="ch">🎁</div>
+     <h2>Treasure open! 보물상자가 열렸어요!</h2>
+     ${got.length?`<div style="font-size:20px">새 카드 <b>${got.length}장</b>이 도감에 들어갔어요!</div><div class="minis">${got.map((id,i)=>bookCard(BYID[id]).replace('class="card','style="animation-delay:'+(i*.08)+'s" class="card')).join('')}</div>`:''}
+     ${up.length?`<div style="font-size:20px">복습 카드 테두리가 올라갔어요! 🥉→🥈→🥇→🌈</div><div class="minis">${up.map(id=>bookCard(BYID[id])).join('')}</div>`:''}
+     ${bonus?`<div class="hint" style="font-size:20px">🎉 카드 ${S.milestone*MILESTONE}장 달성! 보너스 +${bonus}🪙</div>`:''}
+     <div class="row" style="justify-content:center"><button class="big-btn green" id="ok">🐱 ${esc(S.cat.name)}에게 자랑하기</button><button class="big-btn ghost" id="ok2">닫기</button></div>
+   </div></div>`;
+  document.body.appendChild(m);
+  fanfare(); speak('Treasure open! You got new cards!');
+  setTimeout(()=>{ const c=$('#ch'); if(c) c.textContent='✨'; }, 1500);
+  const fin=dest=>{ m.remove(); if(dest==='cat'){ catRoom({celebrate:true}); } else home(); };
+  addCoins(CHEST_COINS+bonus, ()=>{});
+  $('#ok').onclick=()=>fin('cat'); $('#ok2').onclick=()=>fin('home');
+}
+
+/* ================= CARD BOOK ================= */
+let bookTab='animal';
+function bookCard(w){
+  const c=S.cards[w.id];
+  if(!c) return `<button class="card unk" data-unk="1"><div class="e">${w.em}</div><div class="w">???</div></button>`;
+  return `<button class="card t${c.tier}" data-id="${esc(w.id)}"><span class="st">${w.book?'📖':TIER_EM[c.tier]}</span><div class="e">${w.em}</div><div class="w">${esc(w.word)}</div></button>`;
+}
+function cardBook(tab){
+  view='book'; if(tab) bookTab=tab;
+  const cnt=id=>{ const ws=WORDS.filter(w=>w.island===id); return [ws.filter(w=>S.cards[w.id]).length, ws.length]; };
+  const tabs=ISL.map(t=>{ const [a,b]=cnt(t.id); return `<button class="tab ${t.id===bookTab?'on':''}" data-t="${t.id}">${t.em} ${t.name} <small>${a}/${b}</small></button>`; }).join('');
+  const t=ISL.find(x=>x.id===bookTab); const list=WORDS.filter(w=>w.island===bookTab).sort((a,b)=>(!!S.cards[b.id])-(!!S.cards[a.id])||((S.cards[b.id]||{}).tier||0)-((S.cards[a.id]||{}).tier||0));
+  const [a,b]=cnt(bookTab); const total=Object.keys(S.cards).length; const toNext=MILESTONE-(total%MILESTONE);
+  app.innerHTML=`<div class="screen">${topbar()}
+    <div class="tabs">${tabs}</div>
+    <div class="bookhead"><b>${t.em} ${t.name}</b><span>${t.ko}</span><span>🗂️ ${a}/${b}</span><span class="spacer"></span>
+      <div class="legend"><span><i style="border-color:var(--bronze)"></i>동</span><span><i style="border-color:var(--silver)"></i>은</span><span><i style="border-color:var(--gold)"></i>금</span><span><i style="border-image:linear-gradient(120deg,#ff5d8f,#ffc23a,#2fae6b,#118bb0) 1"></i>무지개</span></div>
+      <span class="hint">전체 ${total}장 · ${toNext}장 더 모으면 +${MILESTONE_COINS}🪙</span></div>
+    <div class="scroll"><div class="grid">${list.map(bookCard).join('')}</div></div></div>`;
+  bindTop();
+  $$('.tab').forEach(b=>b.onclick=()=>cardBook(b.dataset.t));
+  $$('.card[data-id]').forEach(b=>b.onclick=()=>cardModal(BYID[b.dataset.id]));
+  $$('.card[data-unk]').forEach(b=>b.onclick=()=>{ toast('❔ 아직 못 만난 단어예요. 탐험하면 찾을 수 있어요!'); speak('Not found yet. Keep exploring!'); });
+}
+function cardModal(w){
+  const c=S.cards[w.id];
+  const m=document.createElement('div'); m.className='modal';
+  m.innerHTML=`<div class="sheet"><button class="close" aria-label="Close">✕</button>
+    <div class="detail"><div class="bigemoji">${w.em}</div>
+      <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+        <div class="qlabel"><span class="tag">${TIER_EM[c.tier]} ${TIER[c.tier].en} card</span><span class="tag ko">${TIER[c.tier].ko} 카드${c.tier<3?' · 복습에서 맞히면 다음 테두리로!':''}</span></div>
+        <div class="wordline">${esc(w.word)} <button class="speak" data-say="${esc(w.word)}">🔊</button></div>
+        <div><span class="ko">${esc(w.ko)}</span></div>
+        <div class="def"><button class="sm" data-say="${esc(w.def)}">🔊</button><span>${esc(w.def)}</span></div>
+        <div class="ex"><button class="sm" data-say="${esc(filled(w))}">🔊</button><span>${sentHTML(w)}</span></div>
+      </div></div>
+    ${w.syn.length?`<div class="wchips"><span class="tag ko">같은 뜻</span>${w.syn.map(s=>`<button class="wchip" data-say="${esc(s)}">${esc(s)}</button>`).join('')}</div>`:''}
+    ${w.ant.length?`<div class="wchips"><span class="tag ko">반대 뜻</span>${w.ant.map(s=>`<button class="wchip an" data-say="${esc(s)}">${esc(s)}</button>`).join('')}</div>`:''}
+    <div class="row"><button class="big-btn yellow" id="playcat">🐱 ${esc(S.cat.name)}랑 이 카드로 놀기</button></div></div>`;
+  document.body.appendChild(m); bindSay(m);
+  m.querySelector('.close').onclick=()=>m.remove(); m.onclick=e=>{ if(e.target===m) m.remove(); };
+  $('#playcat',m).onclick=()=>{ m.remove(); catRoom({play:w.id}); };
+  speak(w.word);
+}
+
+/* ================= CAT ================= */
+const SHOP=[
+  {id:'food', cat:'care', i:'🥫', en:'Cat Food', ko:'고양이 밥', price:2, inv:'food', n:1},
+  {id:'fish', cat:'care', i:'🐟', en:'Fish Treat', ko:'생선 간식', price:3, inv:'fish', n:1},
+  {id:'milk', cat:'care', i:'🥛', en:'Cat Milk', ko:'고양이 우유', price:1, inv:'milk', n:1},
+  {id:'bag',  cat:'care', i:'🧻', en:'Poop Bags x3', ko:'응가 봉투 3장', price:2, inv:'bag', n:3},
+  {id:'med',  cat:'care', i:'💊', en:'Cold Medicine', ko:'감기약', price:4, inv:'med', n:1},
+  {id:'tee',   cat:'clothes', slot:'body', i:'👕', en:'Blue T-shirt', ko:'파란 티셔츠', price:15, color:'#4aa3ff', style:'shirt'},
+  {id:'dress', cat:'clothes', slot:'body', i:'👗', en:'Pink Dress', ko:'분홍 원피스', price:20, color:'#ff7eb6', style:'dress'},
+  {id:'rain',  cat:'clothes', slot:'body', i:'🧥', en:'Raincoat', ko:'노란 우비', price:20, color:'#ffd23f', style:'coat'},
+  {id:'sweat', cat:'clothes', slot:'body', i:'🧶', en:'Striped Sweater', ko:'줄무늬 스웨터', price:18, color:'#7a4dff', style:'stripe'},
+  {id:'cape',  cat:'clothes', slot:'body', i:'🦸', en:'Hero Cape', ko:'히어로 망토', price:25, color:'#e8433a', style:'cape'},
+  {id:'snk',  cat:'shoes', slot:'feet', i:'👟', en:'Red Sneakers', ko:'빨간 운동화', price:12, color:'#ff4d4d'},
+  {id:'boot', cat:'shoes', slot:'feet', i:'🥾', en:'Rain Boots', ko:'장화', price:12, color:'#ffcf33'},
+  {id:'bal',  cat:'shoes', slot:'feet', i:'🩰', en:'Ballet Shoes', ko:'발레 슈즈', price:15, color:'#ffb3d1'},
+  {id:'mint', cat:'shoes', slot:'feet', i:'🥿', en:'Mint Slippers', ko:'민트 슬리퍼', price:10, color:'#5fd4b5'},
+  {id:'bow',   cat:'acc', slot:'head', i:'🎀', en:'Bow', ko:'리본', price:8},
+  {id:'flower',cat:'acc', slot:'head', i:'🌸', en:'Flower', ko:'꽃 핀', price:6},
+  {id:'cap',   cat:'acc', slot:'head', i:'🧢', en:'Cap', ko:'모자', price:10},
+  {id:'hat',   cat:'acc', slot:'head', i:'🎩', en:'Top Hat', ko:'신사 모자', price:15},
+  {id:'crown', cat:'acc', slot:'head', i:'👑', en:'Crown', ko:'왕관', price:30},
+  {id:'glass', cat:'acc', slot:'face', i:'🕶️', en:'Sunglasses', ko:'선글라스', price:10},
+  {id:'scarf', cat:'acc', slot:'neck', i:'🧣', en:'Scarf', ko:'목도리', price:9},
+  {id:'bell',  cat:'acc', slot:'neck', i:'🔔', en:'Bell', ko:'방울', price:7},
+  {id:'b1', cat:'home', slot:'bed', i:'🧺', en:'Basket Bed', ko:'바구니 침대', price:15},
+  {id:'b2', cat:'home', slot:'bed', i:'☁️', en:'Cloud Bed', ko:'구름 침대', price:25},
+  {id:'b3', cat:'home', slot:'bed', i:'🏰', en:'Castle Bed', ko:'성 침대', price:40},
+  {id:'yarn', cat:'home', slot:'toy', i:'🧶', en:'Yarn Ball', ko:'털실 공', price:8},
+  {id:'mouse',cat:'home', slot:'toy', i:'🐭', en:'Toy Mouse', ko:'장난감 쥐', price:10}
+];
+const SHOPBY=Object.fromEntries(SHOP.map(x=>[x.id,x]));
+const SHOPCATS=[{id:'care',en:'Food & Care',ko:'먹이·돌봄',i:'🍽️'},{id:'clothes',en:'Clothes',ko:'옷',i:'👕'},{id:'shoes',en:'Shoes',ko:'신발',i:'👟'},{id:'acc',en:'Accessories',ko:'액세서리',i:'🎀'},{id:'home',en:'Bed & Toys',ko:'침대·장난감',i:'🛏️'}];
+let catSeq=0;
+function catSVG(o){
+  o=o||{}; const c=S.cat; const size=o.size||200; const id='cc'+(catSeq++);
+  const body=c.wear.body&&SHOPBY[c.wear.body], feet=c.wear.feet&&SHOPBY[c.wear.feet];
+  const fur='#f6a95c', dark='#d9803a', belly='#fff1df';
+  const mood=o.mood||(c.sick?'sick':'normal');
+  const eyes = mood==='happy' ? `<path d="M70 94 Q80 82 90 94 M110 94 Q120 82 130 94" stroke="#3a2a20" stroke-width="5" fill="none" stroke-linecap="round"/>`
+    : mood==='sick' ? `<path d="M71 92 L89 92 M111 92 L129 92" stroke="#3a2a20" stroke-width="5" stroke-linecap="round"/>`
+    : `<g class="eyes"><ellipse cx="80" cy="92" rx="8" ry="11" fill="#3a2a20"/><ellipse cx="120" cy="92" rx="8" ry="11" fill="#3a2a20"/><circle cx="83" cy="88" r="3" fill="#fff"/><circle cx="123" cy="88" r="3" fill="#fff"/></g>`;
+  let cloth='', cape='';
+  if(body){
+    if(body.style==='cape') cape=`<path d="M58 132 Q100 120 142 132 L168 222 Q100 236 32 222 Z" fill="${body.color}"/>`;
+    else if(body.style==='dress') cloth=`<path d="M62 138 Q100 128 138 138 L164 214 Q100 226 36 214 Z" fill="${body.color}"/><circle cx="100" cy="160" r="5" fill="#fff" opacity=".8"/>`;
+    else { let extra='';
+      if(body.style==='stripe') extra=[150,170,190,210].map(y=>`<rect x="40" y="${y}" width="120" height="8" fill="#fff" opacity=".55"/>`).join('');
+      if(body.style==='coat') extra=`<circle cx="100" cy="160" r="4" fill="#3a2a20"/><circle cx="100" cy="180" r="4" fill="#3a2a20"/><circle cx="100" cy="200" r="4" fill="#3a2a20"/>`;
+      cloth=`<g clip-path="url(#${id})"><rect x="40" y="136" width="120" height="100" fill="${body.color}"/>${extra}</g>`; }
+  }
+  const paws = feet ? `<ellipse cx="78" cy="216" rx="21" ry="12" fill="${feet.color}"/><ellipse cx="122" cy="216" rx="21" ry="12" fill="${feet.color}"/><path d="M60 222 L96 222 M104 222 L140 222" stroke="rgba(0,0,0,.25)" stroke-width="3"/>`
+    : `<ellipse cx="78" cy="214" rx="17" ry="11" fill="${fur}"/><ellipse cx="122" cy="214" rx="17" ry="11" fill="${fur}"/>`;
+  const acc=[]; const head=c.wear.head&&SHOPBY[c.wear.head], face=c.wear.face&&SHOPBY[c.wear.face], neck=c.wear.neck&&SHOPBY[c.wear.neck];
+  if(head) acc.push(`<span class="acc" style="top:${head.id==='bow'||head.id==='flower'?'12%':'7%'};left:${head.id==='bow'||head.id==='flower'?'66%':'50%'};font-size:${size*.3}px">${head.i}</span>`);
+  if(face) acc.push(`<span class="acc" style="top:40%;font-size:${size*.3}px">${face.i}</span>`);
+  if(neck) acc.push(`<span class="acc" style="top:${neck.id==='bell'?'62%':'58%'};font-size:${size*(neck.id==='bell'?.14:.26)}px">${neck.i}</span>`);
+  if(c.sick&&mood==='sick') acc.push(`<span class="acc" style="top:52%;left:66%;font-size:${size*.16}px">🌡️</span>`);
+  return `<div class="catw" style="width:${size}px"><svg viewBox="0 0 200 232" aria-label="cat">
+    <defs><clipPath id="${id}"><ellipse cx="100" cy="172" rx="50" ry="52"/></clipPath></defs>
+    <g class="breath">
+    <path class="tail" d="M146 200 C 196 196, 196 140, 172 124" stroke="${fur}" stroke-width="15" fill="none" stroke-linecap="round"/>
+    ${cape}
+    <ellipse cx="100" cy="172" rx="50" ry="52" fill="${fur}"/>
+    <ellipse cx="100" cy="182" rx="30" ry="34" fill="${belly}"/>
+    ${cloth}${paws}
+    <polygon points="54,66 60,16 96,48" fill="${fur}"/><polygon points="146,66 140,16 104,48" fill="${fur}"/>
+    <polygon points="62,56 65,30 84,48" fill="#ffb3c4"/><polygon points="138,56 135,30 116,48" fill="#ffb3c4"/>
+    <circle cx="100" cy="92" r="52" fill="${fur}"/>
+    <path d="M92 44 L94 60 M100 42 L100 60 M108 44 L106 60" stroke="${dark}" stroke-width="4" stroke-linecap="round"/>
+    ${eyes}
+    <path d="M94 104 L106 104 L100 111 Z" fill="#ff8fa8"/>
+    <path d="M100 111 Q94 119 87 114 M100 111 Q106 119 113 114" stroke="#3a2a20" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M60 104 L36 100 M60 110 L36 114 M140 104 L164 100 M140 110 L164 114" stroke="#3a2a20" stroke-width="2" opacity=".6"/>
+    <circle cx="68" cy="108" r="8" fill="#ff8fa8" opacity="${mood==='sick'?'.9':'.45'}"/><circle cx="132" cy="108" r="8" fill="#ff8fa8" opacity="${mood==='sick'?'.9':'.45'}"/>
+    </g></svg>${acc.join('')}</div>`;
+}
+function tickCat(){
+  const c=S.cat, now=Date.now(), h=Math.max(0,(now-(c.tick||now))/36e5);
+  c.food=Math.max(0,c.food-4*h); c.joy=Math.max(0,c.joy-3*h); c.tick=now;
+  const day=dayNum();
+  if(c.checkDay!==day){ c.checkDay=day; if(c.named && c.born!=null && day-c.born>=2 && !c.sick && day-c.sickDay>=4 && Math.random()<.15){ c.sick=true; c.sickDay=day; } }
+  save();
+}
+function catMood(){
+  const c=S.cat;
+  if(c.sick) return {en:'Achoo! I have a cold.', ko:'감기 걸렸어요. 약을 주세요!'};
+  if(c.poops>0) return {en:'Oops! I made a poop.', ko:'응가를 치워 주세요!'};
+  if(c.food<30) return {en:"I'm hungry! Meow!", ko:'배고파요. 밥 주세요!'};
+  if(c.joy<40) return {en:"Let's play with a card!", ko:'카드로 같이 놀아요!'};
+  return {en:'I love you! Meow!', ko:'사랑해요! 야옹!'};
+}
+function catRoom(o){
+  o=o||{}; view='cat'; tickCat(); const c=S.cat;
+  if(!c.named){ return nameCat(()=>catRoom(o)); }
+  const bed=c.wear.bed&&SHOPBY[c.wear.bed], toy=c.wear.toy&&SHOPBY[c.wear.toy];
+  const md=catMood();
+  const bar=(icon,v,label)=>`<div class="stat"><span style="font-size:26px">${icon}</span><div class="b"><i class="${v<30?'low':''}" style="width:${Math.round(v)}%"></i></div><span>${label}</span></div>`;
+  const poops=Array.from({length:c.poops},(_,i)=>`<span class="poop" data-poop="${i}" style="left:${30+i*14}%">💩</span>`).join('');
+  app.innerHTML=`<div class="screen">${topbar()}
+    <div class="catroom">
+      <div class="room" id="room">
+        <div class="win"></div>
+        ${bed?`<div class="bed">${bed.i}</div><div class="bedname">${esc(bed.en)}</div>`:''}
+        ${toy?`<div class="toy">${toy.i}</div>`:''}
+        <div class="bowl">🥣</div>
+        ${poops}
+        <div class="bubble"><button class="sm" data-say="${esc(md.en)}">🔊</button><div>${esc(md.en)}<small>${esc(md.ko)}</small></div></div>
+        <div class="stagecat" id="scat">${catSVG({size:Math.min(290,Math.max(190,innerWidth*.24)), mood:c.sick?'sick':(c.joy>70?'happy':'normal')})}</div>
+      </div>
+      <div class="catside">
+        <h2>🐱 ${esc(c.name)}</h2>
+        ${bar('🍗',c.food,'밥')}${bar('🛁',Math.max(0,100-c.poops*35),'깨끗')}${bar('💗',c.joy,'기분')}
+        ${c.sick?'<div class="hint">🤧 감기에 걸렸어요. 감기약을 먹이면 금방 나아요.</div>':''}
+        <div class="acts">
+          <button class="act ${c.food<30?'hot':''}" id="feed"><span class="i">🥫</span>밥 주기<small>밥 ${c.inv.food} · 간식 ${c.inv.fish} · 우유 ${c.inv.milk}</small></button>
+          <button class="act ${c.poops?'hot':''}" id="clean"><span class="i">🧻</span>응가 치우기<small>봉투 ${c.inv.bag}장</small></button>
+          <button class="act ${c.sick?'hot':''}" id="med"><span class="i">💊</span>약 먹이기<small>감기약 ${c.inv.med}개</small></button>
+          <button class="act ${c.joy<40?'hot':''}" id="play"><span class="i">🃏</span>카드로 놀기<small>카드 ${Object.keys(S.cards).length}장</small></button>
+        </div>
+        <button class="big-btn yellow" id="shop">🛍️ Shop 상점</button>
+      </div>
+    </div></div>`;
+  bindTop(); bindSay();
+  $('#feed').onclick=feedCat; $('#clean').onclick=()=>cleanPoop(); $('#med').onclick=giveMed; $('#play').onclick=pickCard; $('#shop').onclick=()=>shop();
+  $$('[data-poop]').forEach(p=>p.onclick=()=>cleanPoop());
+  if(o.play) setTimeout(()=>playCard(o.play),300);
+  else if(o.celebrate){ setTimeout(()=>{ catAnim('hop'); hearts(6); speak(`${c.name} is so happy! You found new cards!`); },300); }
+  else if(!o.quiet) setTimeout(()=>speak(md.en),300);
+}
+function nameCat(cb){
+  const m=document.createElement('div'); m.className='modal';
+  m.innerHTML=`<div class="sheet" style="align-items:center;text-align:center">${catSVG({size:200,mood:'happy'})}
+    <h2 style="font-family:var(--display);margin:0">Meet your cat! 고양이 이름을 지어 주세요</h2>
+    <input class="namein" id="nm" maxlength="12" value="${esc(S.cat.name)}" aria-label="Cat name">
+    <button class="big-btn green" id="ok">좋아요!</button></div>`;
+  document.body.appendChild(m); speak('Meet your cat! What is its name?');
+  $('#ok',m).onclick=()=>{ const v=$('#nm',m).value.trim(); S.cat.name=v||'Mimi'; S.cat.named=true; S.cat.born=dayNum(); save(); m.remove(); cb(); };
+}
+function catAnim(k){ const s=$('#scat'); if(!s) return; s.classList.remove('hop','run'); void s.offsetWidth; s.classList.add(k); setTimeout(()=>s.classList.remove(k), k==='run'?2700:2000); }
+function hearts(n,ch){ const r=$('#room'); if(!r) return; for(let i=0;i<n;i++){ const h=document.createElement('span'); h.className='float'; h.textContent=ch||rnd(['💗','💖','✨','💕']); h.style.left=(35+Math.random()*30)+'%'; h.style.bottom=(30+Math.random()*25)+'%'; h.style.animationDelay=(i*.15)+'s'; r.appendChild(h); setTimeout(()=>h.remove(),2400); } }
+function refreshCat(){ catRoom({quiet:true}); }
+function feedCat(){
+  const c=S.cat; const k=c.inv.fish>0&&c.food<60?'fish':(c.inv.food>0?'food':(c.inv.milk>0?'milk':(c.inv.fish>0?'fish':null)));
+  if(!k){ speak('No food. Let\'s go to the shop!'); toast('먹이가 없어요. 상점에서 사요! 🛍️'); return; }
+  if(c.food>=95){ speak("I'm full! Thank you!"); toast('배불러요! 나중에 주세요.'); return; }
+  c.inv[k]--; c.food=Math.min(100,c.food+({food:30,fish:50,milk:15})[k]); c.joy=Math.min(100,c.joy+({food:5,fish:12,milk:5})[k]);
+  if(Math.random()<.55&&c.poops<3) c.poops++;
+  save(); refreshCat(); hearts(3, SHOPBY[k].i); catAnim('hop'); speak(k==='fish'?'Yummy fish! Thank you!':'Yum yum! Thank you!');
+}
+function cleanPoop(){
+  const c=S.cat; if(!c.poops){ toast('깨끗해요! ✨'); return; }
+  if(c.inv.bag<1){ speak('We need poop bags. Let\'s go to the shop!'); toast('응가 봉투가 없어요. 상점에서 사요!'); return; }
+  c.inv.bag--; c.poops--; c.joy=Math.min(100,c.joy+5); save(); refreshCat(); hearts(2,'✨'); speak('All clean! Thank you!');
+}
+function giveMed(){
+  const c=S.cat; if(!c.sick){ toast(`${c.name}는 건강해요! 💪`); speak("I'm not sick. I feel great!"); return; }
+  if(c.inv.med<1){ speak('We need cold medicine. Let\'s go to the shop!'); toast('감기약이 없어요. 상점에서 사요!'); return; }
+  c.inv.med--; c.sick=false; c.joy=Math.min(100,c.joy+10); save(); refreshCat(); catAnim('hop'); hearts(4); speak('I feel better! Thank you!');
+}
+function pickCard(){
+  const ids=Object.keys(S.cards).filter(id=>BYID[id]);
+  if(!ids.length){ toast('아직 카드가 없어요. 오늘의 탐험에서 카드를 모아요!'); speak('Find cards on today\'s adventure first!'); return; }
+  const m=document.createElement('div'); m.className='modal';
+  m.innerHTML=`<div class="sheet"><button class="close">✕</button><h2 style="font-family:var(--display);margin:0">Pick a card! 같이 놀 카드를 골라요</h2>
+    <div class="grid">${ids.map(id=>bookCard(BYID[id])).join('')}</div></div>`;
+  document.body.appendChild(m);
+  m.querySelector('.close').onclick=()=>m.remove();
+  $$('.card[data-id]',m).forEach(b=>b.onclick=()=>{ m.remove(); playCard(b.dataset.id); });
+}
+function playCard(id){
+  const w=BYID[id], c=S.cat, day=dayNum(); if(!w) return;
+  const first=c.played[id]!==day; c.played[id]=day;
+  c.joy=Math.min(100,c.joy+(first?15:4)); save();
+  const r=$('#room'); if(!r) return;
+  const f=document.createElement('div'); f.className='flycard'; f.innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border-radius:20px;padding:12px 18px;box-shadow:0 6px 0 rgba(0,0,0,.1)"><span>${w.em}</span><span style="font-family:var(--display);font-size:30px">${esc(w.word)}</span></div>`;
+  r.appendChild(f);
+  speak(`${w.word}! ${filled(w)}`);
+  catAnim('run'); setTimeout(()=>{ hearts(6); catAnim('hop'); }, 2600);
+  setTimeout(()=>{ f.remove(); refreshCat(); toast(first?`${c.name} 기분 +15 💗`:`${c.name} 기분 +4 💗`); }, 4200);
+}
+function shop(tab){
+  view='shop'; tab=tab||'care'; const c=S.cat;
+  const items=SHOP.filter(x=>x.cat===tab);
+  const card=x=>{
+    let btn;
+    if(x.inv){ btn=`<button class="buy" data-buy="${x.id}" ${S.coins<x.price?'disabled':''}>🪙 ${x.price} 사기</button><small>가지고 있음: ${c.inv[x.inv]}</small>`; }
+    else if(c.owned.includes(x.id)){ const on=c.wear[x.slot]===x.id; btn=`<button class="buy ${on?'off':'wear'}" data-wear="${x.id}">${on?'벗기기':'입히기 / 놓기'}</button>`; }
+    else btn=`<button class="buy" data-buy="${x.id}" ${S.coins<x.price?'disabled':''}>🪙 ${x.price} 사기</button>${S.coins<x.price?`<small>코인 ${x.price-S.coins}개 더 필요해요</small>`:''}`;
+    return `<div class="item ${c.owned.includes(x.id)?'own':''}"><div class="i">${x.i}</div><b>${esc(x.en)}</b><small>${esc(x.ko)}</small><button class="sm" data-say="${esc(x.en)}">🔊</button>${btn}</div>`;
+  };
+  app.innerHTML=`<div class="screen">${topbar()}
+    <div class="tabs">${SHOPCATS.map(t=>`<button class="tab ${t.id===tab?'on':''}" data-t="${t.id}">${t.i} ${t.en} <small>${t.ko}</small></button>`).join('')}</div>
+    <div class="catroom" style="grid-template-columns:minmax(0,1fr) 260px">
+      <div class="panel"><div class="shopgrid">${items.map(card).join('')}</div></div>
+      <div class="catside" style="align-items:center"><div id="scat2">${catSVG({size:200})}</div><h2>${esc(c.name)}</h2><button class="big-btn blue" id="back">🐱 방으로</button></div>
+    </div></div>`;
+  bindTop(); bindSay();
+  $$('.tab').forEach(b=>b.onclick=()=>shop(b.dataset.t));
+  $('#back').onclick=()=>catRoom();
+  $$('[data-buy]').forEach(b=>b.onclick=()=>{ const x=SHOPBY[b.dataset.buy]; if(S.coins<x.price) return;
+    S.coins-=x.price; if(x.inv) c.inv[x.inv]+=x.n; else { c.owned.push(x.id); c.wear[x.slot]=x.id; }
+    save(); coinSnd(); speak(`You bought ${x.en}!`); toast(`${x.ko} 샀어요! 🛍️`); shop(tab); });
+  $$('[data-wear]').forEach(b=>b.onclick=()=>{ const x=SHOPBY[b.dataset.wear]; if(c.wear[x.slot]===x.id) delete c.wear[x.slot]; else c.wear[x.slot]=x.id; save(); shop(tab); });
+}
+
+/* ================= REPORT ================= */
+const pct=(c,q)=>q?Math.round(c/q*100)+'%':'–';
+const mins=s=>(s>0&&s<60)?'1분 미만':Math.round(s/60)+'분';
+const SKO={s1:'1단계 그림',s2:'2단계 같은·반대',s3:'3단계 빈칸',s4:'4단계 이야기'};
+function rdata(){
+  const last7=[]; for(let i=6;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); const k=dateStr(d); last7.push(Object.assign({k,lab:(d.getMonth()+1)+'/'+d.getDate()},{q:0,c:0,sec:0},S.days[k]||{})); }
+  const today=last7[6], wk=last7.reduce((a,x)=>({q:a.q+x.q,c:a.c+x.c,sec:a.sec+x.sec}),{q:0,c:0,sec:0});
+  const wrong=Object.entries(S.wrong).filter(([id])=>BYID[id]).sort((a,b)=>b[1]-a[1]).slice(0,12).map(([id,n])=>({w:BYID[id],n,r:S.right[id]||0}));
+  const tiers=[0,0,0,0]; Object.values(S.cards).forEach(c=>tiers[c.tier]++);
+  return {last7,today,wk,wrong,tiers};
+}
+function reportText(){
+  const r=rdata(); const T=S.today;
+  let t=`[Word Explorer 리포트 ${dateStr()}]\n`;
+  t+=`오늘: ${r.today.q}문제, 정답률 ${pct(r.today.c,r.today.q)}, ${mins(r.today.sec)} · 오늘의 길 ${T&&T.chest?'완료':(T?T.stage+'/4단계':'-')}\n`;
+  t+=`최근 7일: ${r.wk.q}문제, 정답률 ${pct(r.wk.c,r.wk.q)}, ${mins(r.wk.sec)}\n`;
+  t+=`첫 시도 정답률: `+['s1','s2','s3','s4'].map(k=>`${SKO[k]} ${S.types[k]?pct(S.types[k][0],S.types[k][1]):'–'}`).join(', ')+'\n';
+  t+=`카드 ${Object.keys(S.cards).length}장 (동${r.tiers[0]} 은${r.tiers[1]} 금${r.tiers[2]} 무지개${r.tiers[3]}) · 끝낸 이야기 ${S.done.length}/${LESSONS.length}\n`;
+  if(r.wrong.length) t+=`자주 틀린 단어: `+r.wrong.map(x=>`${x.w.word}(${x.w.ko}) ${x.n}회`).join(', ');
+  return t;
+}
+function showReport(){
+  view='report'; try{speechSynthesis.cancel();}catch(e){}
+  const r=rdata(); const maxQ=Math.max(1,...r.last7.map(x=>x.q)); const T=S.today;
+  app.innerHTML=`<div class="screen">${topbar()}
+    <div class="panel report">
+      <h2>부모 리포트</h2>
+      <div class="kpis">
+        <div class="kpi"><span>오늘 푼 문제</span><b>${r.today.q}</b><span>정답률 ${pct(r.today.c,r.today.q)} · ${mins(r.today.sec)}</span></div>
+        <div class="kpi"><span>오늘의 길</span><b>${T&&T.chest?'완료 🎁':(T?T.stage+' / 4':'–')}</b><span>${T&&T.lesson?esc(LBYID[T.lesson].title):''}</span></div>
+        <div class="kpi"><span>최근 7일</span><b>${r.wk.q}</b><span>정답률 ${pct(r.wk.c,r.wk.q)} · ${mins(r.wk.sec)}</span></div>
+        <div class="kpi"><span>코인</span><b>🪙 ${S.coins}</b><span></span></div>
+        <div class="kpi"><span>모은 카드</span><b>${Object.keys(S.cards).length}</b><span>동${r.tiers[0]} 은${r.tiers[1]} 금${r.tiers[2]} 무지개${r.tiers[3]}</span></div>
+      </div>
+      <div><h3>최근 7일 (파랑: 푼 문제, 초록: 맞힌 문제)</h3>
+        <div class="week">${r.last7.map(x=>`<div class="d"><span>${x.q||''}</span><div style="display:flex;gap:3px;align-items:flex-end;width:100%;justify-content:center;height:90px"><i style="height:${x.q/maxQ*100}%"></i><i class="c" style="height:${x.c/maxQ*100}%"></i></div><span>${x.lab}</span></div>`).join('')}</div></div>
+      <div class="tw"><h3>단계별 첫 시도 정답률 (누적)</h3>
+        <table class="t"><tr><th>단계</th><th>푼 수</th><th>정답률</th></tr>${['s1','s2','s3','s4'].map(k=>{const v=S.types[k]||[0,0]; return `<tr><td>${SKO[k]}</td><td>${v[1]}</td><td>${pct(v[0],v[1])}</td></tr>`;}).join('')}</table></div>
+      <div class="tw"><h3>자주 틀리는 단어</h3>
+        ${r.wrong.length?`<table class="t"><tr><th>단어</th><th>뜻</th><th>틀림</th><th>맞힘</th></tr>${r.wrong.map(x=>`<tr><td><b>${esc(x.w.word)}</b></td><td>${esc(x.w.ko)}</td><td>${x.n}</td><td>${x.r}</td></tr>`).join('')}</table>`:'<div class="note">아직 틀린 단어가 없어요.</div>'}</div>
+      <div class="row"><button class="pbtn" id="cp">📋 리포트 복사 (카톡에 붙여넣기)</button><button class="pbtn ghost" id="hm2">닫기</button><span class="spacer"></span><button class="pbtn ghost" id="skip">오늘 길 새로 만들기</button><button class="pbtn danger" id="rs">기록 초기화</button></div>
+      <div id="extra"></div>
+      <div class="note">로고(🧭)를 1.5초 길게 누르면 이 화면이 열려요. 기록은 이 태블릿의 브라우저에만 저장돼요.</div>
+    </div></div>`;
+  bindTop();
+  $('#hm2').onclick=home;
+  $('#cp').onclick=()=>{ const t=reportText();
+    const fb=()=>{ $('#extra').innerHTML=`<div class="note">자동 복사가 안 돼서 아래 글을 길게 눌러 복사해 주세요.</div><textarea class="copy" id="ta" readonly>${esc(t)}</textarea>`; const ta=$('#ta'); ta.focus(); ta.select(); };
+    try{ navigator.clipboard.writeText(t).then(()=>toast('복사했어요. 카톡에 붙여넣기 하세요.'),fb); }catch(e){ fb(); } };
+  $('#skip').onclick=()=>{ $('#extra').innerHTML=`<div class="fb bad"><div class="msg">지금 진행 중인 오늘의 길을 버리고, 다음 단어 묶음으로 새로 시작할까요? (카드·코인은 그대로예요)</div><button class="pbtn danger" id="sy">새로 만들기</button><button class="pbtn ghost" id="sn">취소</button></div>`;
+    $('#sy').onclick=()=>{ if(S.today&&S.today.lesson&&!S.done.includes(S.today.lesson)) S.done.push(S.today.lesson); S.today=newPath(); save(); toast('새 길을 만들었어요.'); home(); }; $('#sn').onclick=()=>{$('#extra').innerHTML='';}; };
+  $('#rs').onclick=()=>{ $('#extra').innerHTML=`<div class="fb bad"><div class="msg">정말 모든 기록(카드, 코인, 고양이, 통계)을 지울까요? 되돌릴 수 없어요.</div><button class="pbtn danger" id="rsy">지우기</button><button class="pbtn ghost" id="rsn">취소</button></div>`;
+    $('#rsy').onclick=()=>{ S=fresh(); save(); toast('기록을 지웠어요.'); home(); }; $('#rsn').onclick=()=>{$('#extra').innerHTML='';}; };
+}
+
+if(location.protocol==='file:') window.__t={cur:()=>cur,S:()=>S};
+home();
+setInterval(()=>{ if(view==='cat'){ const old=S.cat.food; tickCat(); } else tickCat(); }, 60000);
+})();
+</script>

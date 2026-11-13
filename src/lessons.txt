@@ -1,0 +1,220 @@
+@L w1|The Fragile Nest
+W: fragile,sturdy,shelter,rescue,gather,peek,gentle,tiny,hide,protect,careful,scared
+S: A robin built her nest on a thin branch, and she laid three tiny, fragile eggs inside.
+S: One night, a storm came, and the robin was scared that the branch would break.
+S: A squirrel wanted to protect the eggs, so it carried them to the shelter of a sturdy old tree.
+S: It was very gentle and careful, and it moved the eggs one by one.
+S: In the morning, the robin came back to gather twigs. She was worried until she saw a tiny head peek out of the old tree. The squirrel had found a good place to hide them.
+S: The squirrel's rescue had kept her babies safe!
+Q: Why was the robin scared during the storm?|The thin branch might break.|She was hungry.|The squirrel was chasing her.
+Q: Why did the squirrel carry the eggs one by one?|The eggs were fragile, so it had to be careful.|The eggs were too heavy.|It wanted to eat them.
+Q: How did the robin know her babies were safe?|She saw a tiny head peek out.|The squirrel told her.|She found the eggs in her nest.
+@L h1|The Show-and-Tell
+W: nervous,embarrassed,grateful,curious,forgive,complain,proud,shy,kind,brave,whisper,share
+S: Ava was shy, and she felt nervous about show-and-tell.
+S: She brought a shell from the beach, but when she stood up, she could only whisper.
+S: A boy named Max began to complain, "I can't hear!" Ava was so embarrassed that her face turned red.
+S: Her friend Lily was kind. She said, "Be brave. Everyone is curious about your shell."
+S: Ava took a deep breath and talked loudly. She was proud that she could share her story.
+S: Later, Max said sorry, and Ava decided to forgive him. She felt grateful for Lily.
+Q: Why did Max complain?|Ava was talking too quietly.|He did not like shells.|Ava took his toy.
+Q: Why was Ava grateful for Lily?|Lily helped her be brave.|Lily gave her a shell.|Lily talked for her.
+Q: What made Ava feel proud?|She talked loudly and shared her story.|Max said sorry.|She found a new shell.
+@L f1|The Messy Room
+W: tidy,scrub,sort,chore,repair,dusty,messy,empty,heavy,throw,wash,spill
+S: Sam's room was so messy that he could not find his soccer ball.
+S: Mom said, "Your chore today is to make your room tidy."
+S: First, Sam had to sort his toys into boxes. He had to repair a broken car, and he decided to throw away an empty juice box.
+S: Under the bed, it was dusty, and he found a sticky spot where he had spilled milk.
+S: He had to scrub the floor and wash the cloth, and the box of books was too heavy to lift alone.
+S: At last, the room was clean, and there was his soccer ball, right in the toy box!
+Q: Why could Sam not find his soccer ball?|His room was too messy.|His brother took it.|It was at school.
+Q: Why was there a sticky spot under the bed?|Sam had spilled milk there.|The dog had been there.|It rained inside.
+Q: Where did Sam find his soccer ball?|in the toy box|under the bed|in the empty juice box
+@L w2|The Deep Sea Visitor
+W: enormous,creature,surface,explore,shallow,smooth,deep,float,sink,dive,colorful,shiny
+S: Mina liked to explore the shallow water near the beach, where she saw colorful fish and shiny shells.
+S: One day, she put on her mask so she could dive a little deeper.
+S: Suddenly, an enormous shadow moved under her. It was a sea creature as big as a bus!
+S: Mina was a little scared, but she held still and let herself float.
+S: The creature was a gentle whale shark with smooth, spotted skin. It swam up close to the surface.
+S: Then it began to sink back down into the deep sea, and Mina waved goodbye.
+Q: Why did Mina put on her mask?|She wanted to dive deeper.|The sun was too bright.|She was cold.
+Q: Why did Mina float and hold still?|She was surprised by a huge creature and wanted to stay calm.|She was tired.|She lost her mask.
+Q: Where did the whale shark go at the end?|back down into the deep sea|onto the beach|into a shallow pool
+@L h2|The Last Cookie
+W: polite,rude,honest,selfish,generous,argue,mean,friendly,silly,smile,hug,cry
+S: Jin and his sister Hana saw one last cookie on the plate, and they began to argue.
+S: Jin grabbed it. "That's mean and selfish!" said Hana, and she started to cry.
+S: Grandma said, "It is rude to grab. Can you be honest about who had more today?"
+S: Jin thought and said, "I had two already. Hana had none."
+S: So he broke the cookie and gave Hana the bigger half. "You are so generous!" Grandma said with a smile.
+S: Hana gave Jin a friendly hug, made a silly face, and said "Thank you" in her most polite voice.
+Q: Why did Hana cry?|Jin grabbed the last cookie.|She dropped the cookie.|Grandma was angry at her.
+Q: Why did Jin give Hana the bigger half?|He had already eaten two cookies, and Hana had none.|He did not like cookies.|Hana was older.
+Q: Why did Grandma call Jin generous?|He shared and gave the bigger part away.|He baked the cookies.|He said "Thank you."
+@L f2|Grandma's Secret Recipe
+W: recipe,blend,sprinkle,crisp,flavor,delicious,bake,mix,taste,sweet,sour,sticky
+S: Grandma had a secret recipe for apple pie, and today Jun would help her bake it.
+S: First, they had to mix flour and butter to make a crisp crust.
+S: Next, they had to blend sugar with the apples, but Jun's hands got sticky.
+S: Jun tasted an apple slice. "It's too sour!" he said.
+S: Grandma smiled. "Sprinkle a little more sugar and some cinnamon. That gives it a sweet flavor."
+S: When the pie came out of the oven, it smelled delicious, and everyone wanted a taste.
+Q: Why did Jun say the apple was too sour?|He tasted a slice before the sugar was added.|The pie was burned.|He did not like apples.
+Q: Why did Grandma add more sugar and cinnamon?|To make the pie taste sweet.|To make the crust crisp.|To make Jun's hands clean.
+Q: Why did everyone want a taste?|The pie smelled delicious.|Grandma told them to.|They were very sticky.
+@L w3|The Forest at Night
+W: fierce,silent,wander,dangerous,prickly,slimy,noisy,roar,chase,hungry,crawl,hop
+S: A little rabbit liked to wander and hop through the forest, but she never went out at night.
+S: "It is dangerous," her mother said. "A hungry fox might chase you."
+S: One night the rabbit could not sleep. The forest was not silent; it was noisy with frogs and owls.
+S: She saw a slimy snail crawl on a leaf and a prickly hedgehog rolled into a ball.
+S: Suddenly she heard a fierce roar! The rabbit ran home as fast as she could.
+S: It was only her big brother playing a trick. But she learned why her mother wanted her home at night.
+Q: Why did the rabbit's mother tell her to stay home at night?|It was dangerous, and a fox might chase her.|It was too cold.|The forest was closed.
+Q: Why did the rabbit run home?|She heard a fierce roar and got scared.|She was hungry.|The hedgehog chased her.
+Q: Who really made the roar?|her big brother|a fox|a lion
+@L h3|The Surprise Party
+W: celebrate,invite,cheerful,promise,decorate,include,giggle,cheer,gift,party,dance,surprised
+S: It was Dad's birthday, so Ella and her brother made a plan to celebrate.
+S: They wanted to invite Grandma and Uncle Joe, and they made sure to include the dog too.
+S: "Promise you won't tell Dad," Ella whispered, and her brother began to giggle.
+S: They decorated the room with balloons, and Ella wrapped a gift: a cheerful yellow mug she made at school.
+S: When Dad came home, everyone jumped out and cheered, "Surprise!" Dad was so surprised that he dropped his keys.
+S: Then they ate cake and danced at the party until bedtime.
+Q: Why did Ella ask her brother to promise?|She did not want Dad to know about the party.|She wanted him to clean his room.|She wanted his cake.
+Q: Why did Dad drop his keys?|He was very surprised.|His hands were wet.|The dog jumped on him.
+Q: What was Ella's gift?|a yellow mug she made at school|a balloon|a cake
+@L f3|The Toy Shop
+W: expensive,customer,crowded,select,spend,price,cheap,buy,sell,borrow,lend,pay
+S: Leo had five dollars to spend, and he went to the toy shop with Mom. The shop was crowded with customers.
+S: He wanted a robot, but the price was twenty dollars. It was too expensive.
+S: "Can I borrow some money?" he asked. Mom said, "I will not lend you money for that today."
+S: Leo looked for something cheap. He had to select between a yo-yo and a ball.
+S: He chose the yo-yo and went to pay at the counter. The man who sells the toys smiled.
+S: "Save your money each week," said Mom, "and one day you can buy the robot."
+Q: Why didn't Leo buy the robot?|It was too expensive for his five dollars.|The shop did not sell robots.|He did not like it.
+Q: Why did Leo look for something cheap?|He only had five dollars.|Mom told him to buy two things.|Cheap toys are better.
+Q: How can Leo buy the robot one day?|by saving his money each week|by borrowing from a friend|by selling his yo-yo
+@L w4|The Penguin's Sudden Swim
+W: flood,shiver,freezing,damp,sudden,breeze,melt,dry,cloudy,windy,puddle,sunny
+S: A little penguin lived where it was freezing cold. On a cloudy, windy day, he began to shiver.
+S: He stood close to his mother to stay dry.
+S: The next day was sunny and warm, and the snow began to melt. Puddles were everywhere.
+S: Then there was a sudden crack! The ice broke, and water began to flood the ground.
+S: The little penguin slid into the sea. He was scared, but then he found that he could swim!
+S: After his swim, his feathers were damp, but a soft breeze helped them dry.
+Q: Why did the little penguin shiver?|It was a cold, windy day.|He was hungry.|He was sick.
+Q: Why were there puddles everywhere?|The sun made the snow melt.|It was raining.|A whale splashed water.
+Q: What did the penguin find out after he slid into the sea?|He could swim.|The water was warm.|His mother was not there.
+@L h4|A Grumpy Day
+W: upset,worried,lonely,calm,frown,grumpy,sad,angry,bored,quiet,sleepy,alone
+S: Ben woke up feeling grumpy and sleepy. He had a big frown on his face.
+S: At breakfast, his toast fell on the floor, and he got angry.
+S: At school, his best friend was sick, so Ben sat alone at lunch. He felt lonely and sad.
+S: In class, he was bored, and he was worried that the day would never end.
+S: When he got home, Mom saw he was upset. She did not say a word. She just sat with him in the quiet room.
+S: Ben began to feel calm. "Tomorrow will be better," he said, and he gave a little smile.
+Q: Why did Ben sit alone at lunch?|His best friend was sick.|He was in trouble.|He wanted to read.
+Q: Why did Ben feel lonely?|His friend was not at school.|His mom was angry.|He lost his toast.
+Q: What helped Ben feel calm?|Mom sat quietly with him.|He ate more toast.|His friend called him.
+@L f4|The Bridge Builders
+W: design,crew,solid,invent,connect,modern,build,break,tall,wide,tool,soft
+S: A wide river ran between two towns, and people wanted a bridge to connect them.
+S: A crew of builders came with every tool they had. Their boss liked to invent new ideas.
+S: First, they made a design for a modern bridge with two tall towers.
+S: The ground by the river was soft and muddy, so the bridge might break or sink.
+S: So the crew dug deep and put the towers on solid rock.
+S: After a year of hard work to build the bridge, it was done, and the two towns had a big picnic in the middle!
+Q: Why did people want a bridge?|To connect the two towns across the river.|To catch fish.|To make the river smaller.
+Q: Why did the crew dig deep?|The ground was soft, so they needed solid rock.|They were looking for treasure.|They wanted to make a pond.
+Q: What did the towns do when the bridge was done?|They had a picnic in the middle.|They closed the bridge.|They built another river.
+@L w5|The Mountain Trail
+W: journey,steep,narrow,trail,echo,cave,climb,tired,rest,safe,lost,map
+S: Mia and her dad went on a journey up a mountain.
+S: The trail was steep and narrow, and Mia had to climb over big rocks.
+S: Soon she was tired, so they stopped to rest in a small cave.
+S: Mia shouted "Hello!" and her echo came back, "Hello... hello..."
+S: When they came out, they could not see the trail and felt lost.
+S: Dad took out the map, found the right path, and they got home safe.
+Q: Why did they stop in the cave?|Mia was tired and needed to rest.|It was raining.|They saw a bear.
+Q: Why did Mia hear "Hello" again?|It was her echo in the cave.|Her dad copied her.|Another girl was there.
+Q: How did they find the right path?|Dad used the map.|They followed a dog.|They asked a man.
+@L h5|The Spelling Test
+W: recess,review,complete,correct,confused,careless,learn,ready,fair,loud,late,early
+S: Tomorrow was a spelling test, and Noah wanted to be ready.
+S: He went to bed early, and in the morning he did a quick review.
+S: But at school, the room was loud, and he got confused. He made careless mistakes because he was in a hurry.
+S: He finished late and could not complete the last word before recess.
+S: The teacher said, "It is fair to give everyone a second try. Let's correct the mistakes together."
+S: Noah fixed his words slowly this time. He learned that being careful is better than being fast.
+Q: Why did Noah make careless mistakes?|He was in a hurry.|He did not study at all.|The words were too short.
+Q: Why couldn't Noah complete the last word?|He finished late, and it was time for recess.|He lost his pencil.|He went home early.
+Q: What did Noah learn?|Being careful is better than being fast.|Spelling is not important.|Recess is the best part of school.
+@L w6|The Garden Race
+W: sprout,bloom,harvest,soil,ripe,rotten,seed,plant,grow,fresh,healthy,dig
+S: Lucy and her brother each wanted to plant a garden. "Let's see whose garden grows best!" said Lucy.
+S: They began to dig holes in the soil and put a seed in each one.
+S: Lucy watered her seeds every day. Her brother forgot, so his seeds did not sprout.
+S: Soon Lucy's flowers began to bloom, and her tomatoes turned red and ripe.
+S: Her brother found one old tomato on the ground, but it was rotten.
+S: At harvest time, Lucy shared her fresh, healthy vegetables, and her brother promised to water every day next year.
+Q: Why didn't her brother's seeds sprout?|He forgot to water them.|There was too much sun.|A bird ate them.
+Q: Why was the tomato on the ground rotten?|It was old and left too long.|It was too fresh.|It was a toy.
+Q: What did her brother promise?|to water every day next year|to never plant again|to eat more tomatoes
+@L h6|The Shadow in the Hall
+W: frightened,glow,scream,creep,strange,shadow,dark,scary,ghost,noise,shout,jump
+S: One dark night, Lily heard a strange noise in the hall.
+S: She saw a big shadow on the wall. "It's a ghost!" she thought, and she felt frightened.
+S: Lily wanted to scream, but she took her flashlight and began to creep to the door.
+S: The flashlight made a little glow on the floor. The shadow moved, and Lily jumped.
+S: "Who's there?" she shouted. It was only her cat, sitting by the night-light!
+S: The night-light made the cat's shadow look big and scary. Lily laughed and went back to bed.
+Q: Why did Lily think there was a ghost?|She saw a big shadow and heard a noise.|Her brother told her.|She saw a ghost book.
+Q: Why did the cat's shadow look so big?|The night-light made it look big.|The cat was very fat.|It was a big dog.
+Q: How did Lily feel at the end?|She laughed and was not scared anymore.|She was still frightened.|She was angry at the cat.
+@L f5|The Lemonade Experiment
+W: explain,mistake,experiment,improve,measure,notice,guess,test,pour,fill,light,half
+S: Kai wanted to sell lemonade, so he did an experiment to make the best one.
+S: He had to measure the lemon juice and sugar. Then he poured them into a jug and filled it with water.
+S: He tasted it but noticed it was too sour. "I made a mistake," he said. "Can you guess what's wrong?"
+S: His sister said, "Let's test it with half a cup more sugar."
+S: Kai tried again, and the lemonade got better each time. He knew he could improve it.
+S: When people asked how he made it, he explained his steps. The lemonade was light and sweet!
+Q: Why did Kai do an experiment?|He wanted to make the best lemonade.|His teacher made him.|He wanted to break the jug.
+Q: What was Kai's mistake?|The lemonade was too sour.|He forgot the water.|He dropped the lemons.
+Q: How did Kai fix the lemonade?|He tested it with more sugar.|He added more lemon.|He bought new lemonade.
+@L w7|The Secret Fossil
+W: fossil,discover,clue,vanish,secret,treasure,excited,follow,huge,dirty,quick,search
+S: Max found a strange map in a book. It had a clue: "Follow the river to find the treasure."
+S: He was so excited that he took a shovel and began to search by the river.
+S: His hands got dirty, and he dug for a long time. Then he saw something huge in the mud.
+S: It was not gold. It was a dinosaur fossil!
+S: Max wanted to keep it secret, but he knew scientists would want to discover more.
+S: He took a quick photo before the river could wash the mud back and make the bone vanish again. Then he told the museum.
+Q: Why did Max dig by the river?|The clue said to follow the river.|He wanted to swim.|His dog was there.
+Q: Why did Max tell the museum?|Scientists would want to learn more.|He wanted money.|The fossil was too dirty.
+Q: Why did Max take a quick photo?|The river might cover the fossil with mud again.|He wanted to show his friends.|It was getting dark.
+@L h7|The Big Race
+W: goal,practice,trophy,stretch,trust,patient,try,win,lose,fall,easy,strong
+S: Emma's goal was to win the school race and get the trophy.
+S: Every day, she would stretch and practice running. It was not easy.
+S: Her coach said, "Be patient. Trust yourself, and your legs will get strong."
+S: On race day, Emma ran fast, but near the end she slipped. It is easy to fall when you run fast.
+S: She wanted to cry, but she got up. "I will try my best to finish," she said.
+S: She did not win the trophy, but everyone cheered. "You didn't lose," said her coach. "You never gave up."
+Q: Why did Emma practice every day?|She wanted to win the race.|Her mom made her.|She liked her shoes.
+Q: Why didn't Emma win the trophy?|She fell near the end.|She did not run.|She was late.
+Q: Why did the coach say "You didn't lose"?|Emma got up and never gave up.|Emma got the trophy.|The race was canceled.
+@L f6|The Train Trip
+W: arrive,passenger,nearby,ticket,station,schedule,ride,fast,slow,wait,leave,busy
+S: Today Hana would ride the train to visit her grandma in the next city.
+S: The station was very busy. Dad bought a ticket, and they looked at the schedule.
+S: "The train will leave at nine," Dad said. "We have to wait ten minutes."
+S: The train was fast, but Hana wished it was slow so she could look out the window longer. A passenger nearby gave her a candy.
+S: Then the train stopped. "Why did we stop?" Hana asked. "A cow is on the track!" said the passenger.
+S: They arrived a little late, but Grandma was waiting with a big hug.
+Q: Why did Dad look at the schedule?|To know when the train would leave.|To find a candy.|To count the passengers.
+Q: Why did the train stop?|A cow was on the track.|It ran out of gas.|Hana pulled the brake.
+Q: Why did they arrive late?|The train had to stop for a cow.|They missed the train.|Grandma was not home.
