@@ -132,6 +132,10 @@ button:disabled{cursor:default}
 .fb .em{font-size:54px;line-height:1}
 .fb .big{font-family:var(--display);font-weight:700;font-size:26px}
 .fb .msg{flex:1;min-width:0}
+.defs{margin-top:8px;display:grid;gap:6px}
+.drow{display:flex;gap:8px;align-items:flex-start;background:rgba(255,255,255,.7);border-radius:12px;padding:6px 10px}
+.drow b{font-size:20px}.dd{font-size:18px;color:var(--ink-soft)}
+.dtag{font-size:14px;background:#fff3c4;border-radius:8px;padding:1px 6px;margin-left:4px}
 .next{background:var(--sea-2);color:#fff;font-family:var(--display);font-weight:700;font-size:26px;border-radius:20px;padding:16px 28px;box-shadow:0 5px 0 #0a6b8a;flex:none}
 .next:active{transform:translateY(3px);box-shadow:0 2px 0 #0a6b8a}
 
@@ -293,252 +297,336 @@ textarea.copy{width:100%;min-height:160px;font:14px/1.5 var(--body);border:2px s
 
 <script type="text/plain" id="wordData">
 @book
-chips|n|🍟|thin, crunchy slices of potato you eat as a snack|We ate a bag of salty ___ at the picnic.|crisps||2|감자칩
-drill|n|🔩|a tool that spins fast to make holes; also practice you do again and again|Dad used a ___ to make a hole in the wall.|||3|드릴 / 반복 연습
-splits|n|🤸|a move where your legs stretch out straight in opposite directions|The gymnast slid down into the ___ on the mat.|||3|다리 찢기
+chips|n|🍟|thin, crunchy slices of potato you eat as a snack|We ate a bag of salty ___ at the picnic.|crisps||2|감자칩|ready,quick,light||drill,splits,tool
+drill|n|🔩|a tool that spins fast to make holes; also practice you do again and again|Dad used a ___ to make a hole in the wall.|||3|드릴 / 반복 연습|noise,connect,correct||chips,splits,schedule
+splits|n|🤸|a move where your legs stretch out straight in opposite directions|The gymnast slid down into the ___ on the mat.|||3|다리 찢기|fossil,flood,strange||drill,chips,promise
 @animal
-fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운
-sturdy|adj|🪵|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한
-shelter|n|⛺|a place that keeps you safe from rain, wind, or danger|We found ___ under a big rock when it rained.|cover||3|피난처, 쉼터
-rescue|v|🛟|to save someone from danger|The firefighter climbed up to ___ the kitten.|save||3|구조하다
-gather|v|🧺|to bring things together into one place|Squirrels ___ nuts before winter comes.|collect|scatter|3|모으다
-peek|v|👀|to look quickly or secretly|The baby bird tried to ___ out of the nest.|peep|stare|3|살짝 엿보다
-gentle|adj|🐑|kind and soft, not rough|Be ___ when you pet the kitten.|soft|rough|2|부드러운
-tiny|adj|🐜|very, very small|An ant is a ___ insect.|little|huge|2|아주 작은
-hide|v|🙈|to go where no one can see you|The mouse ran to ___ from the cat under the bed.||seek/show|2|숨다
-protect|v|🛡️|to keep someone safe from harm|A mother bear will ___ her cubs from danger.|guard|harm|2|보호하다
-careful|adj|🦺|paying attention so you do not make mistakes|Be ___ when you carry the hot soup.|cautious|careless|2|조심하는
-scared|adj|😨|feeling that something bad might happen|I was ___ of the loud thunder.|afraid|brave|2|무서워하는
-enormous|adj|🐋|very, very big|The blue whale is so ___ that it is longer than a bus.|huge/giant|tiny|3|거대한
-creature|n|🐙|any living animal|A strange ___ with eight arms lived in the sea.|animal||3|생물
-surface|n|🏊|the top or outside part of something|The whale came up to the ___ to breathe.|top|bottom|3|표면, 수면
-explore|v|🧭|to travel around a place to learn about it|The divers wanted to ___ the deep sea.|search||3|탐험하다
-shallow|adj|🏖️|not deep|Little kids swim in the ___ end of the pool.||deep|3|얕은
-smooth|adj|🪨|flat and even, with no bumps|The stone was ___ after years in the river.||rough/bumpy|3|매끄러운
-deep|adj|🌊|going far down|The ocean is very ___ in the middle.||shallow|2|깊은
-float|v|🛟|to stay on top of water|Ducks ___ on top of the pond.||sink|2|뜨다
-sink|v|⚓|to go down under water|A rock will ___ to the bottom of the pond.||float|2|가라앉다
-dive|v|🤿|to jump into water head first|The kids like to ___ into the pool.|plunge||2|다이빙하다
-colorful|adj|🦜|having many bright colors|The ___ parrot was red, blue, and yellow.|bright|dull|2|알록달록한
-shiny|adj|✨|bright because it reflects light|She found a ___ coin on the sidewalk.|bright/sparkly|dull|2|반짝이는
-fierce|adj|🐯|angry, strong, and ready to attack|The ___ tiger showed its sharp teeth.|savage|gentle/tame|3|사나운
-silent|adj|🤫|making no sound at all|The owl's wings are ___, so mice cannot hear it coming.|quiet|noisy/loud|3|조용한
-wander|v|🚶|to walk around without going anywhere special|The goats ___ around the hill all day.|roam|stay|3|돌아다니다
-dangerous|adj|⚠️|able to hurt you|It is ___ to swim near sharks.|unsafe|safe|3|위험한
-prickly|adj|🌵|covered with sharp points|The cactus is too ___ to touch.|spiky|smooth|3|가시가 많은
-slimy|adj|🐌|wet and slippery in a yucky way|The snail felt ___ in my hand.|slippery||3|끈적하고 미끈한
-noisy|adj|📢|making a lot of sound|The ___ birds woke me up early.|loud|quiet|2|시끄러운
-roar|v|🦁|to make a very loud, deep sound like a lion|The lion will ___ loudly to scare others away.|growl||2|으르렁거리다
-chase|v|🐕|to run after something to catch it|The dog likes to ___ the ball across the yard.|follow|flee|2|쫓다
-hungry|adj|🍽️|wanting to eat|I skipped lunch, so I was very ___.|starving|full|2|배고픈
-crawl|v|🐛|to move slowly on your hands and knees or on your belly|The baby can ___ across the floor.|creep||2|기어가다
-hop|v|🐇|to jump in small, quick jumps|Rabbits ___ across the grass.|jump||2|깡충 뛰다
-flood|n|🏞️|a lot of water covering land that is usually dry|After days of rain, a ___ covered the streets.||drought|3|홍수
-shiver|v|🥶|to shake because you are cold|We began to ___ when the cold wind blew.|shake||3|(추워서) 떨다
-freezing|adj|🧊|very, very cold|It was ___ outside, so we wore thick coats.|icy/frosty|scorching/boiling|3|몹시 추운
-damp|adj|💧|a little wet|My socks were still ___ after the rain.|wet|dry|3|축축한
-sudden|adj|⚡|happening very quickly with no warning|There was a ___ flash of lightning.|unexpected|gradual/slow|3|갑작스러운
-breeze|n|🌬️|a light, gentle wind|A cool ___ came in through the window.|wind||3|산들바람
-melt|v|🧊|to turn from solid to liquid when warm|Ice cream will ___ in the hot sun.||freeze|2|녹다
-dry|adj|🏜️|not wet|Hang the towel so it can get ___.||wet/damp|2|마른
-cloudy|adj|☁️|full of clouds|It was ___ all day, so we did not see the sun.|gray|sunny/clear|2|흐린
-windy|adj|🪁|with a lot of wind|It was a ___ day, so we flew our kite.|breezy|calm|2|바람 부는
-puddle|n|🌧️|a small pool of water on the ground|I jumped in a big ___ after the rain.|||2|물웅덩이
-sunny|adj|☀️|bright with sunshine|It was a ___ day, so we went to the beach.|bright/clear|cloudy|2|화창한
-journey|n|🎒|a long trip from one place to another|The ___ across the mountains took three days.|trip||3|여행, 여정
-steep|adj|⛰️|going up or down very sharply|The hill was so ___ that we had to walk slowly.||flat|3|가파른
-narrow|adj|↔️|not wide|The bridge was so ___ that only one person could cross.|thin/slim|wide/broad|3|좁은
-trail|n|🥾|a path through the woods or mountains|We followed the ___ through the forest.|path||3|오솔길
-echo|n|📣|a sound that bounces back to you|I shouted "Hello!" in the cave, and the ___ called back "Hello!"|||3|메아리
-cave|n|🕳️|a big hole in the side of a hill or under the ground|We used a flashlight to look inside the dark ___.|||3|동굴
-climb|v|🧗|to go up something using your hands and feet|Monkeys ___ trees to find fruit.|ascend|descend|2|오르다
-tired|adj|😴|needing rest or sleep|After the long hike, I was very ___.|sleepy/weary|energetic|2|피곤한
-rest|v|🛋️|to stop and relax|Let's ___ for a minute before we keep walking.|relax|work|2|쉬다
-safe|adj|🛡️|not in danger|The baby bird was ___ in its nest.|secure|dangerous|2|안전한
-lost|adj|🧭|not able to find your way|We were ___ in the woods until we found the map.||found|2|길을 잃은
-map|n|🗺️|a drawing that shows where places are|We used a ___ to find the way to the park.|||2|지도
-sprout|v|🌱|to begin to grow|The seeds will ___ in a few days.|grow||3|싹트다
-bloom|v|🌸|to open into flowers|The roses ___ in early summer.|blossom|wilt|3|꽃이 피다
-harvest|n|🌾|the time when crops are picked|The farmers worked hard during the ___.|crop||3|수확
-soil|n|🪴|the dirt that plants grow in|Plant the seeds in rich, dark ___.|dirt/earth||3|흙
-ripe|adj|🍌|ready to eat|The banana is yellow, so it is ___.|ready|unripe|3|잘 익은
-rotten|adj|🦠|old, bad, and not good to eat|The ___ apple was brown and smelled bad.|spoiled|fresh|3|썩은
-seed|n|🌱|a tiny thing that a new plant grows from|I planted a ___ and watered it every day.|||2|씨앗
-plant|v|🌱|to put a seed in the ground so it can grow|We will ___ tomato seeds in the garden.|sow||2|심다
-grow|v|🌻|to get bigger|Sunflowers can ___ taller than a man.|sprout|shrink|2|자라다
-fresh|adj|🥬|newly picked or made, not old|We bought ___ bread from the bakery this morning.|new|stale/rotten|2|신선한
-healthy|adj|🥦|good for your body|Vegetables are a ___ snack.|good for you|unhealthy|2|건강한
-dig|v|⛏️|to make a hole in the ground|Dogs like to ___ holes in the yard.|burrow||2|파다
-fossil|n|🦴|the hard remains of a plant or animal from long ago|We found a dinosaur ___ in the rock.|||3|화석
-discover|v|🔍|to find something for the first time|Scientists hope to ___ a new kind of frog.|find|lose|3|발견하다
-clue|n|🧩|a hint that helps you solve a problem|The torn paper was the first ___ in the mystery.|hint||3|단서
-vanish|v|🫥|to disappear suddenly|The magician made the rabbit ___.|disappear|appear|3|사라지다
-secret|n|🤐|something you do not tell other people|Can you keep a ___? Don't tell anyone!|||3|비밀
-treasure|n|💎|gold, jewels, or other things worth a lot|The pirates buried their ___ on an island.|riches||3|보물
-excited|adj|🤩|very happy and full of energy about something|I was so ___ about my birthday party.|thrilled|bored|2|신난
-follow|v|👣|to go after someone or something|___ me, and I will show you the way.|chase|lead|2|따라가다
-huge|adj|🐘|very, very big|An elephant is a ___ animal.|enormous/giant|tiny|2|거대한
-dirty|adj|🐷|not clean|My shoes were ___ after the muddy walk.|muddy/filthy|clean|2|더러운
-quick|adj|⚡|fast|The ___ rabbit ran across the field.|fast/rapid|slow|2|빠른
-search|v|🔍|to look carefully to find something|We had to ___ the whole house for my lost key.|look for||2|찾다
+fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
+sturdy|adj|🪵|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful
+shelter|n|⛺|a place that keeps you safe from rain, wind, or danger|We found ___ under a big rock when it rained.|cover||3|피난처, 쉼터|taste,recipe,throw||passenger,recess,price
+rescue|v|🛟|to save someone from danger|The firefighter climbed up to ___ the kitten.|save||3|구조하다|dusty,dark,ticket|s:save:measure,complete,roar|spill,melt,taste
+gather|v|🐿️|to bring things together into one place|Squirrels ___ nuts before winter comes.|collect|scatter|3|모으다|invent,review,sprinkle|s:collect:improve,plant,forgive|peek,giggle,melt
+peek|v|🫣|to look quickly or secretly|The baby bird tried to ___ out of the nest.|peep|stare|3|살짝 엿보다|calm,station,goal||gather,protect,sell
+gentle|adj|🐑|kind and soft, not rough|Be ___ when you pet the kitten.|soft|rough|2|부드러운|wait,alone,crew|o:rough:solid,empty,ready|scared,tiny,sturdy
+tiny|adj|🐜|very, very small|An ant is a ___ insect.|little|huge|2|아주 작은|sweet,fill,modern|o:huge:expensive,bored,heavy|careful,scared,shallow
+hide|v|🙈|to go where no one can see you|The mouse ran to ___ from the cat under the bed.|||2|숨다|forgive,tool,station||protect,gather,bake
+protect|v|🛡️|to keep someone safe from harm|A mother bear will ___ her cubs from danger.|guard|harm|2|보호하다|notice,correct,blend|s:guard:spend,forgive,discover|peek,borrow,spill
+careful|adj|🦺|paying attention so you do not make mistakes|Be ___ when you carry the hot soup.|cautious|careless|2|조심하는|mix,measure,argue|o:careless:brave,sour,enormous|tiny,shallow,sturdy
+scared|adj|😨|feeling that something bad might happen|I was ___ of the loud thunder.|afraid|brave|2|무서워하는|ready,empty,customer|o:brave:sticky,dangerous,dark|tiny,sturdy,shallow
+enormous|adj|🐋|very, very big|The blue whale is so ___ that it is longer than a bus.|huge/giant|tiny|3|거대한|invent,whisper,messy|s:huge:sour,shy,careless|shiny,smooth,sudden
+creature|n|🐙|any living animal|A strange ___ with eight arms lived in the sea.|animal||3|생물|win,customer,calm|s:animal:chore,journey,tool|surface,customer,station
+surface|n|🏊|the top or outside part of something|The whale came up to the ___ to breathe.|top|bottom|3|표면, 수면|share,chore,jump|s:top:flood,flavor,trophy|creature,trail,flood
+explore|v|🧭|to travel around a place to learn about it|The divers wanted to ___ the deep sea.|||3|탐험하다|calm,dusty,cheap||gather,sprout,sell
+shallow|adj|🏖️|not deep|Little kids swim in the ___ end of the pool.||deep|3|얕은|trophy,busy,share|o:deep:damp,correct,upset|smooth,shiny,correct
+smooth|adj|🪨|flat and even, with no bumps|The stone was ___ after years in the river.||rough/bumpy|3|매끄러운|dark,test,sweet|o:rough:nearby,windy,ready|deep,hungry,noisy
+deep|adj|🌊|going far down|The ocean is very ___ in the middle.||shallow|2|깊은|loud,review,fair|o:shallow:lost,grumpy,fragile|hungry,sticky,careful
+float|v|🦆|to stay on top of water|Ducks ___ on top of the pond.||sink|2|뜨다|invite,glow,late|o:sink:ride,break,hug|bake,smile,borrow
+sink|v|⚓|to go down under water|A rock will ___ to the bottom of the pond.||float|2|가라앉다|sort,glow,repair|o:float:scrub,smile,hide|bake,taste,giggle
+dive|v|🤿|to jump into water head first|The kids like to ___ into the pool.|plunge||2|다이빙하다|connect,crowded,arrive||complete,bake,sell
+colorful|adj|🦜|having many bright colors|The ___ parrot was red, blue, and yellow.|bright|dull|2|알록달록한|lend,crew,modern|o:dull:upset,huge,fresh|shallow,empty,sour
+shiny|adj|✨|bright because it reflects light|She found a ___ coin on the sidewalk.|bright/sparkly|dull|2|반짝이는|invent,station,tall|s:sparkly:sour,steep,slimy|shallow,hungry,noisy
+fierce|adj|🐯|angry, strong, and ready to attack|The ___ tiger showed its sharp teeth.|savage|gentle/tame|3|사나운|borrow,invite,party|o:gentle:messy,sleepy,steep|polite,shallow,sticky
+silent|adj|🔇|making no sound at all|The owl's wings are ___, so mice cannot hear it coming.|quiet|noisy/loud|3|조용한|careless,fall,crisp|s:quiet:sour,nearby,grateful|dangerous,prickly,hungry
+wander|v|🚶|to walk around without going anywhere special|The goats ___ around the hill all day.|roam|stay|3|돌아다니다|mix,measure,spend||roar,trust,throw
+dangerous|adj|⚠️|able to hurt you|It is ___ to swim near sharks.|unsafe|safe|3|위험한|practice,strong,invent|o:safe:correct,patient,tiny|prickly,hungry,silent
+prickly|adj|🌵|covered with sharp points|The cactus is too ___ to touch.|spiky|smooth|3|가시가 많은|spill,careless,pay|s:spiky:shallow,generous,sweet|fierce,hungry,noisy
+slimy|adj|🐌|wet and slippery in a yucky way|The snail felt ___ in my hand.|slippery||3|끈적하고 미끈한|mistake,tool,alone|s:slippery:dark,selfish,worried|fierce,hungry,silent
+noisy|adj|📢|making a lot of sound|The ___ birds woke me up early.|loud|quiet|2|시끄러운|practice,complete,glow|o:quiet:sour,proud,smooth|prickly,slimy,shallow
+roar|v|🦁|to make a very loud, deep sound like a lion|The lion will ___ loudly to scare others away.|growl||2|으르렁거리다|shadow,passenger,careless|s:growl:connect,sort,wait|hop,sort,explain
+chase|v|🐕|to run after something to catch it|The dog likes to ___ the ball across the yard.|||2|쫓다|spill,spend,wide||roar,melt,complain
+hungry|adj|🍽️|wanting to eat|I skipped lunch, so I was very ___.||full|2|배고픈|throw,borrow,tall|o:full:honest,brave,loud|fierce,prickly,noisy
+crawl|v|🐛|to move slowly on your hands and knees or on your belly|The baby can ___ across the floor.|creep||2|기어가다|heavy,late,notice|s:creep:arrive,connect,peek|roar,wash,break
+hop|v|🐇|to jump in small, quick jumps|Rabbits ___ across the grass.|jump||2|깡충 뛰다|sprinkle,fair,sticky|s:jump:lend,plant,connect|roar,improve,pay
+flood|n|🌊🏠|a lot of water covering land that is usually dry|After days of rain, a ___ covered the streets.||drought|3|홍수|arrive,strange,fall||fossil,chore,secret
+shiver|v|🥶|to shake because you are cold|We began to ___ when the cold wind blew.|shake||3|(추워서) 떨다|pour,include,scrub|s:shake:guess,whisper,discover|trust,pay,sell
+freezing|adj|❄️|very, very cold|It was ___ outside, so we wore thick coats.|icy/frosty|scorching/boiling|3|몹시 추운|wide,pour,party|o:hot:noisy,cheerful,brave|sudden,slimy,huge
+damp|adj|💧|a little wet|My socks were still ___ after the rain.|wet|dry|3|축축한|borrow,bake,tall|s:wet:hungry,gentle,shy|sudden,friendly,fragile
+sudden|adj|⚡|happening very quickly with no warning|There was a ___ flash of lightning.|unexpected|gradual/slow|3|갑작스러운|dusty,wait,sour||freezing,fragile,generous
+breeze|n|🌬️|a light, gentle wind|A cool ___ came in through the window.|wind||3|산들바람|slow,dusty,solid|s:wind:creature,noise,party|clue,half,recipe
+melt|v|🫠|to turn from solid to liquid when warm|Ice cream will ___ in the hot sun.||freeze|2|녹다|buy,celebrate,try|o:freeze:measure,dig,complain|sort,borrow,follow
+dry|adj|🏜️|not wet|Hang the towel so it can get ___.||wet/damp|2|마른|sticky,leave,fill|o:wet:shallow,worried,modern|sudden,angry,honest
+cloudy|adj|☁️|full of clouds|It was ___ all day, so we did not see the sun.|gray|sunny/clear|2|흐린|careless,tidy,soft|o:sunny:upset,expensive,ready|sudden,honest,sticky
+windy|adj|🪁|with a lot of wind|It was a ___ day, so we flew our kite.|breezy|calm|2|바람 부는|tool,brave,throw|s:breezy:ripe,dirty,huge|sudden,mean,shy
+puddle|n|🌧️|a small pool of water on the ground|I jumped in a big ___ after the rain.|||2|물웅덩이|pay,strong,ghost||fossil,price,recipe
+sunny|adj|☀️|bright with sunshine|It was a ___ day, so we went to the beach.|bright/clear|cloudy|2|화창한|calm,include,busy|o:cloudy:crowded,ready,polite|sudden,gentle,empty
+journey|n|🎒|a long trip from one place to another|The ___ across the mountains took three days.|trip||3|여행, 여정|review,throw,buy|s:trip:trophy,seed,tool|echo,cave,map
+steep|adj|⛰️|going up or down very sharply|The hill was so ___ that we had to walk slowly.||flat|3|가파른|price,careless,ride|o:flat:dangerous,crowded,dusty|tired,safe,lost
+narrow|adj|🪡|not wide|The bridge was so ___ that only one person could cross.|thin/slim|wide/broad|3|좁은|gift,heavy,sort|o:wide:fierce,sturdy,calm|safe,tired,lost
+trail|n|🥾|a path through the woods or mountains|We followed the ___ through the forest.|path||3|오솔길|slow,test,include|s:path:mistake,recipe,shadow|echo,recipe,price
+echo|n|📣|a sound that bounces back to you|I shouted "Hello!" in the cave, and the ___ called back "Hello!"|||3|메아리|complete,review,dark||map,journey,cave
+cave|n|🕳️|a big hole in the side of a hill or under the ground|We used a flashlight to look inside the dark ___.|||3|동굴|schedule,late,jump||trail,echo,map
+climb|v|🧗|to go up something using your hands and feet|Monkeys ___ trees to find fruit.|ascend|descend|2|오르다|notice,empty,proud||rest,peek,explain
+tired|adj|😴|needing rest or sleep|After the long hike, I was very ___.|sleepy/weary|energetic|2|피곤한|repair,include,forgive|s:sleepy:soft,surprised,enormous|steep,narrow,shiny
+rest|v|🛋️|to stop and relax|Let's ___ for a minute before we keep walking.|relax||2|쉬다|pour,crisp,schedule|s:relax:trust,complain,include|trust,sell,melt
+safe|adj|🔒|not in danger|The baby bird was ___ in its nest.|secure|dangerous|2|안전한|notice,half,careless|o:dangerous:worried,light,strange|steep,narrow,sour
+lost|adj|🌲❓|not able to find your way|We were ___ in the woods until we found the map.||found|2|길을 잃은|lend,invite,party||steep,narrow,polite
+map|n|🗺️|a drawing that shows where places are|We used a ___ to find the way to the park.|||2|지도|passenger,include,noise||echo,cave,journey
+sprout|v|🌱|to begin to grow|The seeds will ___ in a few days.|||3|싹트다|dusty,test,modern||wander,notice,float
+bloom|v|🌸|to open into flowers|The roses ___ in early summer.|blossom|wilt|3|꽃이 피다|measure,borrow,recipe||try,pour,cheer
+harvest|n|🌾|the time when crops are picked|The farmers worked hard during the ___.|||3|수확|proud,gift,solid||price,tool,trail
+soil|n|🪴|the dirt that plants grow in|Plant the seeds in rich, dark ___.|dirt/earth||3|흙|test,strong,sprinkle|s:dirt:flood,tool,journey|goal,half,echo
+ripe|adj|🍌|ready to eat|The banana is yellow, so it is ___.|ready|unripe|3|잘 익은|solid,ghost,try||noisy,honest,quick
+rotten|adj|🍎🪱|old, bad, and not good to eat|The ___ apple was brown and smelled bad.|spoiled|fresh|3|썩은|invite,goal,shy|o:fresh:deep,kind,careful|brave,sunny,grateful
+seed|n|🫘|a tiny thing that a new plant grows from|I planted a ___ and watered it every day.|||2|씨앗|half,sweet,invent||mistake,party,recipe
+plant|v|🧑‍🌾|to put a seed in the ground so it can grow|We will ___ tomato seeds in the garden.|sow||2|심다|whisper,sweet,connect||crawl,giggle,melt
+grow|v|🌻|to get bigger|Sunflowers can ___ taller than a man.||shrink|2|자라다|schedule,throw,select|o:shrink:lose,sell,search|practice,chase,scream
+fresh|adj|🥖|newly picked or made, not old|We bought ___ bread from the bakery this morning.|new|stale/rotten|2|신선한|late,goal,design|o:rotten:sunny,narrow,busy|polite,mean,shy
+healthy|adj|🥦|good for your body|Vegetables are a ___ snack.||unhealthy|2|건강한|improve,sell,careless||smooth,sad,loud
+dig|v|⛏️|to make a hole in the ground|Dogs like to ___ holes in the yard.|burrow||2|파다|dusty,passenger,late||buy,creep,celebrate
+fossil|n|🦴|the hard remains of a plant or animal from long ago|We found a dinosaur ___ in the rock.|||3|화석|customer,strong,forgive||secret,recipe,price
+discover|v|🏝️|to find something for the first time|Scientists hope to ___ a new kind of frog.|find|lose|3|발견하다|blend,schedule,strong|s:find:ride,hug,climb|follow,borrow,select
+clue|n|🧩|a hint that helps you solve a problem|The torn paper was the first ___ in the mystery.|hint||3|단서|ticket,throw,crisp|s:hint:schedule,creature,promise|treasure,fossil,puddle
+vanish|v|🫥|to disappear suddenly|The magician made the rabbit ___.|disappear|appear|3|사라지다|expensive,share,break|s:disappear:invent,blend,shout|borrow,select,measure
+secret|n|🤐|something you do not tell other people|Can you keep a ___? Don't tell anyone!|||3|비밀|passenger,trophy,bake||fossil,shadow,flood
+treasure|n|💎|gold, jewels, or other things worth a lot|The pirates buried their ___ on an island.|riches||3|보물|fast,learn,crisp||clue,shelter,puddle
+excited|adj|🤩|very happy and full of energy about something|I was so ___ about my birthday party.|thrilled|bored|2|신난|test,glow,spend|o:bored:scared,cheap,hungry|dirty,huge,quick
+follow|v|👣|to go after someone or something|___ me, and I will show you the way.||lead|2|따라가다|glow,generous,dance|o:lead:rescue,shout,leave|search,bloom,share
+huge|adj|🐘|very, very big|An elephant is a ___ animal.|enormous/giant|tiny|2|거대한|strange,bake,busy|o:tiny:sweet,generous,careful|sour,shallow,sticky
+dirty|adj|🐷|not clean|My shoes were ___ after the muddy walk.|muddy/filthy|clean|2|더러운|friendly,fast,learn|o:clean:fierce,wide,worried|quick,huge,excited
+quick|adj|💨|fast|The ___ rabbit ran across the field.|fast/rapid|slow|2|빠른|leave,strange,win|s:fast:careless,shy,fresh|sour,shallow,empty
+search|v|🔍|to look carefully to find something|We had to ___ the whole house for my lost key.|look||2|찾다|glow,polite,dance|s:look:build,creep,pour|follow,improve,invent
 @food
-tidy|adj|🧹|neat and in order|Please keep your room ___.|neat|messy|3|깔끔한
-scrub|v|🧽|to rub hard to clean|We had to ___ the muddy floor.|rub/wash||3|문질러 닦다
-sort|v|🧦|to put things into groups|Can you help me ___ the socks by color?|group||3|분류하다
-chore|n|🧺|a small job you do at home|Feeding the cat is my daily ___.|task/job||3|집안일
-repair|v|🔧|to fix something that is broken|Dad will ___ the broken chair.|fix/mend|break/damage|3|수리하다
-dusty|adj|🪶|covered with dust|The old books in the attic were ___.|dirty|clean|3|먼지투성이의
-messy|adj|🧸|not neat; with things all over the place|My room was so ___ that I could not find my shoes.|untidy|neat/tidy|2|지저분한
-empty|adj|🫙|having nothing inside|The cookie jar was ___ because we ate them all.||full|2|빈
-heavy|adj|🏋️|weighing a lot; hard to lift|The box of books was too ___ to carry.||light|2|무거운
-throw|v|⚾|to send something through the air with your hand|___ the ball to me!|toss|catch|2|던지다
-wash|v|🫧|to clean with water and soap|Please ___ your hands before dinner.|clean||2|씻다
-spill|v|🥛|to let a liquid fall out by mistake|Be careful not to ___ your milk.|drip||2|엎지르다
-recipe|n|📝|directions that tell you how to cook something|We followed the ___ to bake cookies.|||3|요리법
-blend|v|🥤|to mix things together until smooth|First, ___ the bananas and milk to make a smoothie.|mix|separate|3|섞다
-sprinkle|v|🍩|to drop tiny bits over something|Let's ___ cheese on top of the pasta.|dust||3|뿌리다
-crisp|adj|🥬|firm and making a crunchy sound|The lettuce was fresh and ___.|crunchy|soggy|3|바삭한, 아삭한
-flavor|n|🍦|the taste of food|Chocolate is my favorite ice cream ___.|taste||3|맛
-delicious|adj|😋|tasting very, very good|Mom's cookies are ___!|tasty/yummy|disgusting/yucky|3|아주 맛있는
-bake|v|🧁|to cook in an oven|Let's ___ a cake in the oven.|cook||2|굽다(오븐)
-mix|v|🥣|to put things together and stir them|First, ___ the flour and the eggs.|blend/combine|separate|2|섞다
-taste|v|👅|to try a food to see what it is like|Can I ___ your soup to see if it is good?|try||2|맛보다
-sweet|adj|🍬|tasting like sugar|Candy tastes very ___.||sour/bitter|2|달콤한
-sour|adj|🍋|tasting sharp like a lemon|The lemon was so ___ that my face scrunched up.||sweet|2|신
-sticky|adj|🍯|able to stick to things|My fingers were ___ after eating honey.|gooey||2|끈적끈적한
-expensive|adj|💰|costing a lot of money|The diamond ring was very ___.|costly/pricey|cheap|3|비싼
-customer|n|🧍|a person who buys things at a store|The shop gave every ___ a free sticker.|shopper|seller|3|손님
-crowded|adj|👥|full of people|The market was so ___ that we could barely walk.|packed/busy|empty|3|붐비는
-select|v|☝️|to choose|Please ___ one book from the shelf.|choose/pick||3|고르다
-spend|v|💸|to use money to buy things|I will ___ my coins on a new toy.|use|save|3|(돈을) 쓰다
-price|n|🏷️|how much money something costs|The ___ of the toy was ten dollars.|cost||3|가격
-cheap|adj|🪙|not costing much money|The pencils were ___, so I bought two.||expensive|2|싼
-buy|v|🛒|to get something by paying money|We need to ___ milk at the store.|purchase|sell|2|사다
-sell|v|🏪|to give something to someone for money|The farmer will ___ apples at the market.||buy|2|팔다
-borrow|v|📕|to take something and give it back later|Can I ___ your pencil?||lend|2|빌리다
-lend|v|🤲|to give something to someone for a short time|Can you ___ me your eraser?||borrow|2|빌려주다
-pay|v|💵|to give money for something|We have to ___ for the ice cream.|||2|돈을 내다
-design|n|📐|a drawing or plan of how something will look|The builder showed us the ___ for our new house.|plan/drawing||3|설계, 디자인
-crew|n|👷|a group of people who work together|The building ___ worked all day.|team||3|작업반, 팀
-solid|adj|🏠|hard and strong all the way through|The house was built on ___ rock.|firm/hard|weak/flimsy|3|단단한
-invent|v|💡|to make something new that never existed before|Thomas Edison helped ___ the light bulb.|create||3|발명하다
-connect|v|🔌|to join two things together|First, ___ the two wires to turn on the light.|join/link|separate/disconnect|3|연결하다
-modern|adj|🏙️|new and up to date|The ___ train is fast and quiet.|new|ancient/old|3|현대의
-build|v|🧱|to make something by putting parts together|Let's ___ a sandcastle on the beach.|make|break|2|짓다
-break|v|💔|to make something fall into pieces|Don't drop the glass, or it will ___.|smash|fix|2|깨다, 부수다
-tall|adj|🦒|high from top to bottom|The giraffe is very ___.|high|short|2|키가 큰
-wide|adj|🛣️|large from side to side|The river was too ___ to swim across.|broad|narrow|2|넓은
-tool|n|🔨|something you hold in your hand to do a job|A hammer is a ___ for hitting nails.|||2|도구
-soft|adj|🧸|not hard; nice to touch|The kitten's fur was very ___.|smooth|hard/rough|2|부드러운
-explain|v|👩‍🏫|to tell about something so others can understand|Can you ___ how you got the answer?|describe||3|설명하다
-mistake|n|❌|something that is wrong|I made a ___ on my math test.|error||3|실수
-experiment|n|🧪|a test to find out something|Our class did a science ___ with eggs.|test||3|실험
-improve|v|📈|to make something better|Practice will help you ___ your reading.|get better|worsen|3|향상시키다
-measure|v|📏|to find out how long, tall, or heavy something is|Let's ___ how tall you are.|||3|재다
-notice|v|👀|to see or become aware of something|Did you ___ that the leaves are turning red?|see/spot|miss/ignore|3|알아차리다
-guess|v|🤔|to give an answer when you are not sure|Can you ___ what is in the box?|||2|추측하다
-test|n|📝|questions to see what you know|I studied hard for the spelling ___.|quiz||2|시험
-pour|v|🫗|to make a liquid flow out of a container|Please ___ the milk into my cup.|||2|붓다
-fill|v|🪣|to put things in until there is no more space|___ the bucket with sand.||empty|2|채우다
-light|adj|🪶|not heavy|A feather is very ___.||heavy|2|가벼운
-half|n|🌗|one of two equal parts|I gave my sister ___ of my sandwich.|||2|절반
-arrive|v|🛬|to get to a place|We will ___ at Grandma's house before lunch.|reach/come|leave/depart|3|도착하다
-passenger|n|🧳|a person riding in a car, bus, train, or plane|Every ___ on the plane wore a seat belt.|rider|driver|3|승객
-nearby|adj|📍|close to here|We walked to a ___ park.|close/near|distant/far|3|가까운
-ticket|n|🎫|a small paper that lets you ride or enter|I showed my ___ to get on the train.|pass||3|표
-station|n|🚉|a place where trains or buses stop|We waited for the train at the ___.|stop||3|역
-schedule|n|🗓️|a plan that shows when things will happen|The train ___ says it leaves at nine.|timetable/plan||3|일정, 시간표
-ride|v|🚲|to sit on and move with a bike, horse, bus, or train|I like to ___ my bike in the park.|||2|타다
-fast|adj|🏎️|moving very quickly|The race car was very ___.|quick/speedy|slow|2|빠른
-slow|adj|🐢|not fast|The turtle is very ___.|sluggish|fast/quick|2|느린
-wait|v|⏳|to stay until something happens|We had to ___ for the bus in the rain.|stay||2|기다리다
-leave|v|🚪|to go away from a place|We will ___ the house at eight.|go/depart|arrive|2|떠나다
-busy|adj|🐝|having a lot to do|Mom was ___ cooking dinner.|occupied|free|2|바쁜
+tidy|adj|🧹|neat and in order|Please keep your room ___.|neat|messy|3|깔끔한|sprout,ripe,win|o:messy:calm,ripe,light|heavy,lonely,sour
+scrub|v|🧽|to rub hard to clean|We had to ___ the muddy floor.|||3|문질러 닦다|prickly,climb,cloudy||throw,giggle,melt
+sort|v|🧦|to put things into groups|Can you help me ___ the socks by color?|group||3|분류하다|harvest,ripe,scary|s:group:lose,borrow,wander|spill,melt,borrow
+chore|n|🧺|a small job you do at home|Feeding the cat is my daily ___.|task/job||3|집안일|calm,fossil,gather|s:job:recipe,half,flavor|station,seed,trophy
+repair|v|🔧|to fix something that is broken|Dad will ___ the broken chair.|fix/mend|break/damage|3|수리하다|ripe,windy,noisy|s:fix:decorate,taste,sprout|spill,giggle,taste
+dusty|adj|🕸️|covered with dust|The old books in the attic were ___.|dirty|clean|3|먼지투성이의|search,flood,deep||fast,sour,hungry
+messy|adj|🧦📚|not neat; with things all over the place|My room was so ___ that I could not find my shoes.|untidy|neat/tidy|2|지저분한|generous,float,windy|o:tidy:loud,selfish,easy|heavy,silly,sour
+empty|adj|🫙|having nothing inside|The cookie jar was ___ because we ate them all.||full|2|빈|shadow,dry,kind|o:full:grumpy,light,tiny|messy,heavy,colorful
+heavy|adj|🏋️|weighing a lot; hard to lift|The box of books was too ___ to carry.||light|2|무거운|seed,sunny,celebrate|o:light:selfish,cloudy,lonely|nervous,sour,shy
+throw|v|⚾|to send something through the air with your hand|___ the ball to me!|toss|catch|2|던지다|climb,narrow,ghost|o:catch:climb,discover,glow|repair,sort,spill
+wash|v|🫧|to clean with water and soap|Please ___ your hands before dinner.|clean||2|씻다|fresh,fossil,celebrate|s:clean:argue,dive,bake|repair,throw,spill
+spill|v|🥛|to let a liquid fall out by mistake|Be careful not to ___ your milk.|||2|엎지르다|quick,roar,breeze||sort,repair,climb
+recipe|n|👩‍🍳|directions that tell you how to cook something|We followed the ___ to bake cookies.|||3|요리법|review,wander,noise||flavor,chore,promise
+blend|v|🥤|to mix things together until smooth|First, ___ the bananas and milk to make a smoothie.|mix||3|섞다|windy,plant,roar|s:mix:review,peek,repair|bake,climb,sell
+sprinkle|v|🍩|to drop tiny bits over something|Let's ___ cheese on top of the pasta.|||3|뿌리다|strange,trophy,float||climb,whisper,repair
+crisp|adj|🥬|firm and making a crunchy sound|The lettuce was fresh and ___.|crunchy|soggy|3|바삭한, 아삭한|shadow,celebrate,kind|s:crunchy:scary,steep,tired|messy,shy,silent
+flavor|n|🍦|the taste of food|Chocolate is my favorite ice cream ___.|taste||3|맛|friendly,try,creature|s:taste:ticket,design,echo|recipe,clue,price
+delicious|adj|😋|tasting very, very good|Mom's cookies are ___!|tasty/yummy|disgusting/yucky|3|아주 맛있는|deep,complete,sudden|s:yummy:friendly,scary,lonely|early,polite,scared
+bake|v|🧁|to cook in an oven|Let's ___ a cake in the oven.|cook||2|굽다(오븐)|practice,noise,learn|s:cook:throw,sprout,share|climb,sort,whisper
+mix|v|🥣|to put things together and stir them|First, ___ the flour and the eggs.|blend||2|섞다|ghost,cloudy,goal|s:blend:jump,discover,argue|climb,repair,whisper
+taste|v|👅|to try a food to see what it is like|Can I ___ your soup to see if it is good?|||2|맛보다|sprout,careful,kind||climb,whisper,repair
+sweet|adj|🍬|tasting like sugar|Candy tastes very ___.||sour/bitter|2|달콤한|glow,dirty,protect|o:sour:steep,enormous,silent|fast,alone,dark
+sour|adj|🍋|tasting sharp like a lemon|The lemon was so ___ that my face scrunched up.||sweet|2|신|try,treasure,party|o:sweet:slimy,quiet,scary|ready,empty,silent
+sticky|adj|🍯|able to stick to things|My fingers were ___ after eating honey.|gooey||2|끈적끈적한|brave,try,fierce|s:gooey:loud,narrow,cheerful|sudden,nervous,steep
+expensive|adj|💰|costing a lot of money|The diamond ring was very ___.|costly/pricey|cheap|3|비싼|strong,grow,explore|o:cheap:slimy,brave,kind|crowded,wide,sweet
+customer|n|🛍️|a person who buys things at a store|The shop gave every ___ a free sticker.|shopper|seller|3|손님|noisy,gift,soil|s:shopper:crew,chore,treasure|tool,surface,shadow
+crowded|adj|👥|full of people|The market was so ___ that we could barely walk.|packed|empty|3|붐비는|argue,trophy,bloom|o:empty:heavy,tiny,dark|expensive,ready,sour
+select|v|☝️|to choose|Please ___ one book from the shelf.|choose/pick||3|고르다|slimy,cave,complete|s:choose:break,stretch,protect|improve,sprout,melt
+spend|v|💸|to use money to buy things|I will ___ my coins on a new toy.||save|3|(돈을) 쓰다|decorate,freezing,practice||select,vanish,smile
+price|n|🏷️|how much money something costs|The ___ of the toy was ten dollars.|cost||3|가격|whisper,rotten,creature|s:cost:experiment,creature,recipe|flavor,party,echo
+cheap|adj|🪙|not costing much money|The pencils were ___, so I bought two.||expensive|2|싼|prickly,polite,gift|o:expensive:sudden,fierce,dry|crowded,ready,correct
+buy|v|🛒|to get something by paying money|We need to ___ milk at the store.|purchase|sell|2|사다|noise,safe,windy|o:sell:explain,notice,wander|float,dig,climb
+sell|v|🏪|to give something to someone for money|The farmer will ___ apples at the market.||buy|2|팔다|cave,enormous,protect|o:buy:cheer,bake,protect|fall,celebrate,climb
+borrow|v|📕|to take something and give it back later|Can I ___ your pencil?||lend|2|빌리다|invite,fall,gather|o:lend:sort,decorate,gather|creep,melt,dance
+lend|v|🤲|to give something to someone for a short time|Can you ___ me your eraser?||borrow|2|빌려주다|careful,creature,try|o:borrow:mix,fill,dig|select,measure,climb
+pay|v|💵|to give money for something|We have to ___ for the ice cream.|||2|돈을 내다|alone,strange,windy||select,build,bake
+design|n|📐|a drawing or plan of how something will look|The builder showed us the ___ for our new house.|plan||3|설계, 디자인|complete,noisy,polite|s:plan:harvest,journey,clue|echo,party,flavor
+crew|n|👷|a group of people who work together|The building ___ worked all day.|team||3|작업반, 팀|creature,fresh,share|s:team:journey,soil,flavor|design,secret,experiment
+solid|adj|🏠|hard and strong all the way through|The house was built on ___ rock.|firm/hard|weak/flimsy|3|단단한|bloom,fossil,try|s:hard:healthy,lonely,deep|generous,sour,shy
+invent|v|💡|to make something new that never existed before|Thomas Edison helped ___ the light bulb.|create||3|발명하다|trophy,loud,gentle|s:create:scream,float,vanish|sort,lose,grow
+connect|v|🔌|to join two things together|First, ___ the two wires to turn on the light.|join/link|separate/disconnect|3|연결하다|noise,wander,rest|s:join:notice,wander,decorate|pour,hide,hug
+modern|adj|🏙️|new and up to date|The ___ train is fast and quiet.|new|ancient/old|3|현대의|breeze,rest,noisy|o:old:bored,surprised,curious|tall,soft,honest
+build|v|🧱|to make something by putting parts together|Let's ___ a sandcastle on the beach.|make|break|2|짓다|narrow,bloom,brave|o:break:measure,spend,argue|sort,borrow,pour
+break|v|💔|to make something fall into pieces|Don't drop the glass, or it will ___.|smash|fix|2|깨다, 부수다|shy,grow,whisper|o:fix:arrive,rest,gather|include,lose,sink
+tall|adj|🦒|high from top to bottom|The giraffe is very ___.|high|short|2|키가 큰|rescue,careless,fragile|o:short:grateful,lost,heavy|modern,sour,shallow
+wide|adj|🛣️|large from side to side|The river was too ___ to swim across.|broad|narrow|2|넓은|explore,echo,share|o:narrow:smooth,proud,colorful|solid,modern,hungry
+tool|n|🔨|something you hold in your hand to do a job|A hammer is a ___ for hitting nails.|||2|도구|celebrate,fresh,loud||crew,half,schedule
+soft|adj|🧸|not hard; nice to touch|The kitten's fur was very ___.|smooth|hard/rough|2|부드러운|fierce,calm,freezing|o:hard:dark,expensive,bored|modern,wide,excited
+explain|v|👩‍🏫|to tell about something so others can understand|Can you ___ how you got the answer?|describe||3|설명하다|shallow,rotten,grow|s:describe:ride,dig,mix|fill,pour,measure
+mistake|n|❌|something that is wrong|I made a ___ on my math test.|error||3|실수|explore,argue,steep|s:error:party,customer,shadow|half,experiment,flavor
+experiment|n|🧪|a test to find out something|Our class did a science ___ with eggs.|||3|실험|silent,map,freezing||half,mistake,ticket
+improve|v|📈|to make something better|Practice will help you ___ your reading.||worsen|3|향상시키다|wander,narrow,protect||pour,fill,spill
+measure|v|📏|to find out how long, tall, or heavy something is|Let's ___ how tall you are.|||3|재다|fierce,careless,quick||pour,fill,spill
+notice|v|👀|to see or become aware of something|Did you ___ that the leaves are turning red?|see/spot|miss/ignore|3|알아차리다|noise,win,ghost|s:see:mix,dig,protect|pour,fill,improve
+guess|v|🤔|to give an answer when you are not sure|Can you ___ what is in the box?|||2|추측하다|scary,fragile,echo||pour,fill,improve
+test|n|📝|questions to see what you know|I studied hard for the spelling ___.|quiz||2|시험|sturdy,freezing,win|s:quiz:station,seed,chore|experiment,mistake,half
+pour|v|🫗|to make a liquid flow out of a container|Please ___ the milk into my cup.|||2|붓다|noise,generous,late||explain,guess,improve
+fill|v|🪣|to put things in until there is no more space|___ the bucket with sand.||empty|2|채우다|crawl,discover,friendly|o:empty:blend,vanish,invent|notice,measure,guess
+light|adj|🪶|not heavy|A feather is very ___.||heavy|2|가벼운|rotten,huge,trophy|o:heavy:cloudy,expensive,grateful|cloudy,worried,selfish
+half|n|🌗|one of two equal parts|I gave my sister ___ of my sandwich.|||2|절반|goal,healthy,rest||mistake,experiment,test
+arrive|v|🛬|to get to a place|We will ___ at Grandma's house before lunch.|reach/come|leave/depart|3|도착하다|enormous,ghost,proud|o:leave:dig,smile,hop|lend,scrub,fall
+passenger|n|🧳|a person riding in a car, bus, train, or plane|Every ___ on the plane wore a seat belt.|rider|driver|3|승객|discover,fair,tiny|s:rider:trophy,puddle,seed|half,fossil,chore
+nearby|adj|📍|close to here|We walked to a ___ park.|close/near|distant/far|3|가까운|float,steep,polite|o:far:healthy,curious,safe|slow,sour,shy
+ticket|n|🎫|a small paper that lets you ride or enter|I showed my ___ to get on the train.|pass||3|표|party,complete,glow||secret,crew,seed
+station|n|🚉|a place where trains or buses stop|We waited for the train at the ___.|stop||3|역|lost,late,roar||flood,soil,treasure
+schedule|n|🗓️|a plan that shows when things will happen|The train ___ says it leaves at nine.|timetable/plan||3|일정, 시간표|slimy,flood,calm||recipe,recess,mistake
+ride|v|🚲|to sit on and move with a bike, horse, bus, or train|I like to ___ my bike in the park.|||2|타다|seed,shiny,gather||spend,gather,pour
+fast|adj|🏎️|moving very quickly|The race car was very ___.|quick/speedy|slow|2|빠른|dig,rest,include|o:slow:correct,slimy,shiny|nearby,sour,shy
+slow|adj|🐢|not fast|The turtle is very ___.|sluggish|fast/quick|2|느린|explore,shy,sink|o:fast:dark,correct,huge|nearby,sour,noisy
+wait|v|⏳|to stay until something happens|We had to ___ for the bus in the rain.|||2|기다리다|complete,dark,seed||practice,review,share
+leave|v|🚪|to go away from a place|We will ___ the house at eight.|go/depart|arrive|2|떠나다|kind,recess,party|o:arrive:sell,whisper,bake|pour,connect,giggle
+busy|adj|🐝|having a lot to do|Mom was ___ cooking dinner.||free|2|바쁜|strong,narrow,decorate||nearby,fast,lonely
 @feel
-nervous|adj|😬|a little worried about what will happen|I felt ___ before my first piano recital.|uneasy/anxious|calm/relaxed|3|긴장한
-embarrassed|adj|😳|feeling silly in front of others|I was ___ when I tripped on stage.|awkward|proud|3|창피한
-grateful|adj|🙏|feeling thankful|I am ___ for my family.|thankful|ungrateful|3|감사하는
-curious|adj|🧐|wanting to know or learn about something|The ___ kitten looked inside every box.|interested|uninterested|3|호기심 많은
-forgive|v|💞|to stop being angry at someone|Please ___ me for breaking your crayon.|pardon|blame|3|용서하다
-complain|v|😤|to say you are not happy about something|Don't ___ about the rain; let's play inside.|grumble||3|불평하다
-proud|adj|🏅|feeling good about something you did well|I felt ___ when I read the whole book by myself.||ashamed|2|자랑스러운
-shy|adj|🙈|a little scared to talk to new people|The ___ boy hid behind his mom.|timid|bold|2|수줍은
-kind|adj|💗|nice and caring to others|It was ___ of you to help me pick up my books.|nice|mean|2|친절한
-brave|adj|🦸|ready to do something even if it is scary|The ___ girl climbed the tall ladder to save the cat.|bold/fearless|scared/afraid|2|용감한
-whisper|v|🤫|to speak very softly and quietly|Let's ___ so we don't wake the baby.|murmur|shout/yell|2|속삭이다
-share|v|🤝|to give part of what you have to someone else|Let's ___ the pizza so everyone gets a slice.||keep|2|나누다
-polite|adj|🎩|using good manners|It is ___ to say "please" and "thank you."|courteous|rude|3|예의 바른
-rude|adj|😝|not polite; having bad manners|It is ___ to talk with food in your mouth.|impolite|polite|3|무례한
-honest|adj|🗣️|always telling the truth|An ___ person does not tell lies.|truthful|dishonest|3|정직한
-selfish|adj|🙅|caring only about yourself|It is ___ to keep all the toys for yourself.|greedy|generous|3|이기적인
-generous|adj|🫶|happy to give and share|My ___ friend gave me half of her sandwich.|giving|selfish/greedy|3|너그러운
-argue|v|🗯️|to talk in an angry way because you disagree|My brothers ___ about who gets the last cookie.|fight/quarrel|agree|3|말다툼하다
-mean|adj|👿|not nice to others|It is ___ to laugh when someone falls.|unkind|kind/nice|2|못된
-friendly|adj|👋|kind and nice to others|Our ___ neighbor always waves and says hello.|nice|unfriendly|2|다정한
-silly|adj|🤪|funny and not serious|We made ___ faces at each other and laughed.|goofy|serious|2|우스꽝스러운
-smile|v|😃|to make your mouth curve up because you are happy|Everyone will ___ for the picture.|grin|frown|2|미소 짓다
-hug|v|🤗|to hold someone close with your arms|I like to ___ my mom when I get home.|cuddle||2|안다
-cry|v|😭|to have tears coming from your eyes|The baby started to ___ when she was hungry.|weep|laugh|2|울다
-celebrate|v|🎊|to do something fun for a special day|We ___ my birthday with cake and games.|party||3|축하하다
-invite|v|💌|to ask someone to come to something|I will ___ all my friends to my party.|ask||3|초대하다
-cheerful|adj|😊|happy and bright|Her ___ smile made everyone feel good.|joyful/happy|gloomy/grumpy|3|쾌활한
-promise|n|🤞|words that say you will really do something|I made a ___ to clean my room, and I did it.|||3|약속
-decorate|v|🎄|to make something look pretty by adding things|Let's ___ the room with balloons.|trim||3|장식하다
-include|v|➕|to let someone be part of a group|Let's ___ the new girl in our game.|involve|exclude/leave out|3|포함하다
-giggle|v|🤭|to laugh in a silly way|My sister began to ___ at the funny cartoon.|laugh||2|킥킥 웃다
-cheer|v|🥳|to shout with joy to help someone|The crowd began to ___ when our team scored.|clap|boo|2|응원하다
-gift|n|🎁|something you give to someone for a special day|I wrapped a ___ for my mom's birthday.|present||2|선물
-party|n|🎉|a time when people get together to have fun|We had balloons and cake at the ___.|celebration||2|파티
-dance|v|💃|to move your body to music|We love to ___ when our favorite song plays.|||2|춤추다
-surprised|adj|😮|feeling something you did not expect|I was ___ to see a cake on the table.|amazed||2|놀란
-upset|adj|😣|unhappy or worried about something|He was ___ that he lost the game.||calm|3|속상한
-worried|adj|😟|thinking that something bad might happen|Mom was ___ when I came home late.|anxious|relaxed|3|걱정하는
-lonely|adj|🥺|sad because you are alone|The puppy felt ___ without its family.|alone||3|외로운
-calm|adj|🧘|quiet and not upset|Take a deep breath and stay ___.|peaceful/relaxed|upset/nervous|3|침착한
-frown|v|☹️|to pull your face down because you are unhappy|I saw him ___ when he got a bad grade.|scowl|smile/grin|3|얼굴을 찡그리다
-grumpy|adj|😾|in a bad mood and easily annoyed|Grandpa is ___ when he wakes up too early.|cranky|cheerful|3|심술궂은
-sad|adj|😢|feeling unhappy|She felt ___ when her balloon flew away.|unhappy|happy|2|슬픈
-angry|adj|😠|feeling upset because something is not fair|He was ___ when his brother broke his toy.|mad|calm|2|화난
-bored|adj|🥱|tired because nothing fun is happening|I was ___ because there was nothing to do.||excited/interested|2|지루한
-quiet|adj|🤫|making little or no sound|Please be ___ in the library.|silent|loud/noisy|2|조용한
-sleepy|adj|😪|tired and wanting to sleep|I felt ___ after the long car ride.|drowsy|awake|2|졸린
-alone|adj|🧍|by yourself, with no one else|The puppy did not like being ___ at home.|lonely|together|2|혼자인
-recess|n|🛝|a break time to play at school|We played tag during ___.|break||3|쉬는 시간
-review|v|🔁|to look at something again to learn it better|Let's ___ our spelling words before the test.|go over/study||3|복습하다
-complete|v|☑️|to finish|You must ___ your homework before you play.|finish|start/begin|3|끝내다
-correct|adj|✔️|right; with no mistakes|Your answer is ___! Great job.|right|wrong/incorrect|3|맞는
-confused|adj|😕|not able to understand something|I was ___ by the tricky math problem.|puzzled||3|헷갈리는
-careless|adj|💥|not paying attention|He was ___ and dropped the glass.|sloppy|careful|3|부주의한
-learn|v|🎓|to find out something new or how to do something|We ___ new words at school every day.|study|forget|2|배우다
-ready|adj|🏁|prepared to do something|Are you ___ to go to school?|set|unready|2|준비된
-fair|adj|⚖️|treating everyone the same way|It is ___ to take turns on the swing.|just|unfair|2|공평한
-loud|adj|🔊|making a big sound|The music was so ___ that I covered my ears.|noisy|quiet|2|시끄러운
-late|adj|⏰|after the time you should be there|I was ___ for school because I missed the bus.|tardy|early|2|늦은
-early|adj|🌅|before the usual time|I woke up ___ to watch the sunrise.||late|2|일찍, 이른
-frightened|adj|😨|afraid|The ___ kitten hid under the bed.|scared/afraid|brave/fearless|3|겁먹은
-glow|v|🏮|to give off a soft light|The fireflies ___ in the dark.|shine/gleam||3|은은하게 빛나다
-scream|v|😱|to make a very loud, high cry|I heard her ___ when she saw the snake.|shriek||3|비명을 지르다
-creep|v|🐈|to move slowly and quietly so no one hears you|The cat began to ___ toward the bird.|sneak||3|살금살금 가다
-strange|adj|👽|not normal; hard to understand|We heard a ___ sound coming from the closet.|odd/weird|normal|3|이상한
-shadow|n|👤|a dark shape made when something blocks the light|My ___ looked long and thin in the evening.|||3|그림자
-dark|adj|🌑|without light|It was too ___ to see anything in the cave.|dim|bright/light|2|어두운
-scary|adj|😱|making you feel afraid|The movie was too ___ for my little sister.|frightening|funny|2|무서운
-ghost|n|👻|a spooky spirit in stories|The ___ in the story said "Boo!"|spirit||2|유령
-noise|n|🔊|a sound, often a loud one|The ___ from the street woke me up.|sound|silence|2|소음
-shout|v|📣|to say something very loudly|You don't need to ___; I can hear you.|yell|whisper|2|소리치다
-jump|v|🦘|to push off the ground into the air|Frogs can ___ very high.|leap||2|뛰다
-goal|n|🥅|something you want to do or get|My ___ is to read fifty books this year.|aim/target||3|목표
-practice|v|🎹|to do something again and again to get better|I ___ the piano every day after school.|rehearse||3|연습하다
-trophy|n|🏆|a big shiny cup you win for doing your best|Our team won a gold ___ at the game.|prize||3|트로피
-stretch|v|🙆|to make your arms or body longer by reaching|I ___ my arms when I wake up.|reach||3|쭉 펴다
-trust|v|🤞|to believe that someone is honest and good|I ___ my best friend with my secrets.|believe|doubt|3|믿다
-patient|adj|⏳|able to wait without getting upset|Be ___; the cookies will be ready soon.||impatient|3|참을성 있는
-try|v|💪|to work to do something|I will ___ to swim across the pool.|attempt|give up|2|노력하다, 해 보다
-win|v|🏆|to come first in a game or race|Our team wants to ___ the game.|succeed|lose|2|이기다
-lose|v|😞|to not win|It's okay to ___ a game sometimes.||win|2|지다
-fall|v|🍂|to drop down to the ground|Be careful, or you might ___ off the wall.|drop/tumble|rise|2|떨어지다, 넘어지다
-easy|adj|🙂|not hard to do|The first puzzle was ___, so I finished fast.|simple|hard/difficult|2|쉬운
-strong|adj|💪|having a lot of power|The ___ man lifted the heavy box.|powerful|weak|2|힘센
+nervous|adj|😬|a little worried about what will happen|I felt ___ before my first piano recital.|uneasy/anxious|calm/relaxed|3|긴장한|harvest,protect,schedule|o:calm:fragile,alone,nearby|steep,sticky,shallow
+embarrassed|adj|😳|feeling silly in front of others|I was ___ when I tripped on stage.|awkward|proud|3|창피한|cheap,light,flood||grateful,steep,sticky
+grateful|adj|🙏|feeling thankful|I am ___ for my family.|thankful|ungrateful|3|감사하는|throw,damp,build|s:thankful:dry,steep,careful|dusty,steep,sticky
+curious|adj|🧐|wanting to know or learn about something|The ___ kitten looked inside every box.|interested|uninterested|3|호기심 많은|dirty,steep,creature|s:interested:upset,fierce,dark|steep,sticky,empty
+forgive|v|💞|to stop being angry at someone|Please ___ me for breaking your crayon.|pardon|blame|3|용서하다|dusty,slimy,narrow||complain,whisper,share
+complain|v|😤|to say you are not happy about something|Don't ___ about the rain; let's play inside.|grumble||3|불평하다|empty,flood,shelter|s:grumble:chase,dig,mix|forgive,share,whisper
+proud|adj|🏅|feeling good about something you did well|I felt ___ when I read the whole book by myself.||ashamed|2|자랑스러운|tidy,schedule,spill||shy,sticky,steep
+shy|adj|👉👈|a little scared to talk to new people|The ___ boy hid behind his mom.|timid|bold|2|수줍은|design,sweet,clue||kind,sticky,steep
+kind|adj|💗|nice and caring to others|It was ___ of you to help me pick up my books.|nice|mean|2|친절한|wide,sell,busy|o:mean:sunny,enormous,calm|proud,shy,nervous
+brave|adj|🦸|ready to do something even if it is scary|The ___ girl climbed the tall ladder to save the cat.|bold/fearless|scared/afraid|2|용감한|deep,expensive,crew|o:scared:cloudy,patient,noisy|sticky,shallow,sour
+whisper|v|👂|to speak very softly and quietly|Let's ___ so we don't wake the baby.|murmur|shout/yell|2|속삭이다|dirty,sell,empty|o:shout:include,win,crawl|complain,share,forgive
+share|v|🍕|to give part of what you have to someone else|Let's ___ the pizza so everyone gets a slice.||keep|2|나누다|flood,fresh,borrow|o:keep:select,smile,sell|forgive,complain,whisper
+polite|adj|🎩|using good manners|It is ___ to say "please" and "thank you."|courteous|rude|3|예의 바른|nearby,ride,repair|o:rude:tiny,quick,sticky|mean,silly,crowded
+rude|adj|😝|not polite; having bad manners|It is ___ to talk with food in your mouth.|impolite|polite|3|무례한|windy,narrow,bloom|o:polite:cloudy,sticky,shiny|honest,generous,steep
+honest|adj|😇|always telling the truth|An ___ person does not tell lies.|truthful|dishonest|3|정직한|puddle,wait,customer|s:truthful:heavy,strange,confused|empty,early,expensive
+selfish|adj|🙅|caring only about yourself|It is ___ to keep all the toys for yourself.|greedy|generous|3|이기적인|discover,tidy,careful|o:generous:slimy,embarrassed,worried|silly,honest,sweet
+generous|adj|🫶|happy to give and share|My ___ friend gave me half of her sandwich.|giving|selfish/greedy|3|너그러운|invent,fossil,price|o:selfish:windy,crisp,early|rude,silly,messy
+argue|v|🗯️|to talk in an angry way because you disagree|My brothers ___ about who gets the last cookie.|fight/quarrel|agree|3|말다툼하다|dry,nearby,climb|o:agree:wait,peek,lend|hug,pour,climb
+mean|adj|👿|not nice to others|It is ___ to laugh when someone falls.|unkind|kind/nice|2|못된|cloudy,arrive,sour|o:kind:shallow,expensive,sunny|honest,crisp,steep
+friendly|adj|👋|kind and nice to others|Our ___ neighbor always waves and says hello.|nice|unfriendly|2|다정한|blend,dig,float|s:nice:ripe,scared,expensive|selfish,sturdy,sour
+silly|adj|🤪|funny and not serious|We made ___ faces at each other and laughed.|goofy|serious|2|우스꽝스러운|sprinkle,recipe,climb|s:goofy:sticky,angry,sudden|generous,safe,steep
+smile|v|😃|to make your mouth curve up because you are happy|Everyone will ___ for the picture.|grin|frown|2|미소 짓다|enormous,sticky,quick|o:frown:connect,mix,lend|cry,argue,pour
+hug|v|🤗|to hold someone close with your arms|I like to ___ my mom when I get home.|||2|안다|crawl,ripe,passenger||cry,argue,smile
+cry|v|😭|to have tears coming from your eyes|The baby started to ___ when she was hungry.|weep|laugh|2|울다|notice,hungry,treasure|o:laugh:bake,climb,share|smile,hug,argue
+celebrate|v|🎊|to do something fun for a special day|We ___ my birthday with cake and games.|||3|축하하다|improve,ticket,noisy||invite,borrow,repair
+invite|v|💌|to ask someone to come to something|I will ___ all my friends to my party.|ask||3|초대하다|borrow,deep,slimy||decorate,giggle,repair
+cheerful|adj|😊|happy and bright|Her ___ smile made everyone feel good.|joyful/happy|gloomy/grumpy|3|쾌활한|price,sticky,plant|s:happy:sturdy,frightened,rude|safe,alone,steep
+promise|n|🤞|words that say you will really do something|I made a ___ to clean my room, and I did it.|||3|약속|treasure,soil,cave||party,gift,flood
+decorate|v|🎄|to make something look pretty by adding things|Let's ___ the room with balloons.|||3|장식하다|bake,tidy,smooth||include,celebrate,dance
+include|v|➕|to let someone be part of a group|Let's ___ the new girl in our game.|involve|exclude/leave out|3|포함하다|plant,sprinkle,measure||giggle,decorate,dance
+giggle|v|🤭|to laugh in a silly way|My sister began to ___ at the funny cartoon.|||2|킥킥 웃다|grow,tiny,treasure||dance,invite,decorate
+cheer|v|🥳|to shout with joy to help someone|The crowd began to ___ when our team scored.||boo|2|응원하다|crew,soft,fast||invite,decorate,borrow
+gift|n|🎁|something you give to someone for a special day|I wrapped a ___ for my mom's birthday.|present||2|선물|passenger,experiment,pour|s:present:surface,schedule,flavor|party,promise,crew
+party|n|🎉|a time when people get together to have fun|We had balloons and cake at the ___.|||2|파티|breeze,price,prickly||gift,promise,mistake
+dance|v|💃|to move your body to music|We love to ___ when our favorite song plays.|||2|춤추다|crowded,ride,soil||invite,borrow,repair
+surprised|adj|😮|feeling something you did not expect|I was ___ to see a cake on the table.|amazed||2|놀란|hop,sturdy,explain|s:amazed:kind,confused,deep|scared,lost,sour
+upset|adj|😣|unhappy or worried about something|He was ___ that he lost the game.||calm|3|속상한|busy,shallow,seed||sleepy,sticky,steep
+worried|adj|😟|thinking that something bad might happen|Mom was ___ when I came home late.|anxious|relaxed|3|걱정하는|heavy,cave,silent||bored,tall,sticky
+lonely|adj|🥺|sad because you are alone|The puppy felt ___ without its family.|||3|외로운|light,dig,blend||steep,sticky,tall
+calm|adj|🧘|quiet and not upset|Take a deep breath and stay ___.|peaceful/relaxed|upset/nervous|3|침착한|deep,throw,rescue|o:upset:ready,late,sunny|tiny,sticky,steep
+frown|v|☹️|to pull your face down because you are unhappy|I saw him ___ when he got a bad grade.|scowl|smile/grin|3|얼굴을 찡그리다|lend,leave,mistake|o:smile:dig,break,notice|celebrate,hop,forgive
+grumpy|adj|😾|in a bad mood and easily annoyed|Grandpa is ___ when he wakes up too early.|cranky|cheerful|3|심술궂은|sweet,spend,spill|o:cheerful:sudden,solid,lost|tall,sticky,steep
+sad|adj|😢|feeling unhappy|She felt ___ when her balloon flew away.|unhappy|happy|2|슬픈|bake,fill,healthy|o:happy:sweet,dirty,confused|crisp,steep,shiny
+angry|adj|😠|feeling upset because something is not fair|He was ___ when his brother broke his toy.|mad|calm|2|화난|steep,test,hop|s:mad:ripe,honest,empty|crisp,shiny,tall
+bored|adj|🥱|tired because nothing fun is happening|I was ___ because there was nothing to do.||excited/interested|2|지루한|busy,map,sell|o:excited:cloudy,gentle,sour|delicious,crisp,tall
+quiet|adj|🤫|making little or no sound|Please be ___ in the library.|silent|loud/noisy|2|조용한|gather,pour,flavor|o:loud:messy,embarrassed,light|upset,worried,sleepy
+sleepy|adj|😪|tired and wanting to sleep|I felt ___ after the long car ride.|drowsy|awake|2|졸린|explore,tall,sturdy|o:awake:fragile,nervous,slow|alone,worried,quiet
+alone|adj|🧍|by yourself, with no one else|The puppy did not like being ___ at home.||together|2|혼자인|sink,slow,experiment|o:together:crisp,early,wide|crisp,shiny,tall
+recess|n|🛝|a break time to play at school|We played tag during ___.|break||3|쉬는 시간|experiment,blend,damp||crew,flavor,recipe
+review|v|🔁|to look at something again to learn it better|Let's ___ our spelling words before the test.|||3|복습하다|crisp,leave,wide||hide,pour,melt
+complete|v|☑️|to finish|You must ___ your homework before you play.|finish|start/begin|3|끝내다|lend,tall,modern|s:finish:spill,wander,grow|connect,pour,melt
+correct|adj|✔️|right; with no mistakes|Your answer is ___! Great job.|right|wrong/incorrect|3|맞는|notice,surface,colorful|o:wrong:shallow,tidy,scared|loud,fair,early
+confused|adj|😕|not able to understand something|I was ___ by the tricky math problem.|puzzled||3|헷갈리는|rotten,solid,harvest||fair,loud,late
+careless|adj|💥|not paying attention|He was ___ and dropped the glass.|sloppy|careful|3|부주의한|safe,test,dry|o:careful:calm,enormous,alone|fair,loud,ready
+learn|v|🎓|to find out something new or how to do something|We ___ new words at school every day.|study|forget|2|배우다|scrub,steep,search|o:forget:buy,vanish,bloom|pour,melt,climb
+ready|adj|🏁|prepared to do something|Are you ___ to go to school?|set|unready|2|준비된|sprout,cave,flood||loud,fair,correct
+fair|adj|⚖️|treating everyone the same way|It is ___ to take turns on the swing.|just|unfair|2|공평한|mix,flood,steep||careless,late,ready
+loud|adj|🔊|making a big sound|The music was so ___ that I covered my ears.|noisy|quiet|2|시끄러운|empty,damp,busy|o:quiet:messy,healthy,wide|correct,late,fair
+late|adj|⏰|after the time you should be there|I was ___ for school because I missed the bus.|tardy|early|2|늦은|follow,flavor,build|o:early:delicious,nearby,nervous|loud,careless,ready
+early|adj|🌅|before the usual time|I woke up ___ to watch the sunrise.||late|2|일찍, 이른|deep,safe,windy|o:late:surprised,lonely,sleepy|confused,ready,fair
+frightened|adj|😰|afraid|The ___ kitten hid under the bed.|scared/afraid|brave/fearless|3|겁먹은|windy,dusty,improve|s:afraid:light,lonely,narrow|polite,sticky,crisp
+glow|v|🏮|to give off a soft light|The fireflies ___ in the dark.|shine/gleam||3|은은하게 빛나다|fresh,steep,freezing|s:shine:scrub,repair,complain|shout,win,pour
+scream|v|😱|to make a very loud, high cry|I heard her ___ when she saw the snake.|shriek||3|비명을 지르다|shelter,sudden,gentle||glow,taste,melt
+creep|v|🐈|to move slowly and quietly so no one hears you|The cat began to ___ toward the bird.|sneak||3|살금살금 가다|sprinkle,improve,freezing|s:sneak:measure,discover,taste|glow,frown,melt
+strange|adj|👽|not normal; hard to understand|We heard a ___ sound coming from the closet.|odd/weird|normal|3|이상한|notice,invent,cheap|s:weird:enormous,careless,sticky|crisp,sticky,shallow
+shadow|n|👤|a dark shape made when something blocks the light|My ___ looked long and thin in the evening.|||3|그림자|soil,improve,rotten||noise,recipe,price
+dark|adj|🌑|without light|It was too ___ to see anything in the cave.|dim|bright/light|2|어두운|build,station,pay|o:bright:worried,sturdy,slow|tidy,sticky,crisp
+scary|adj|👹|making you feel afraid|The movie was too ___ for my little sister.|frightening|funny|2|무서운|flood,hop,select||sticky,crisp,shallow
+ghost|n|👻|a spooky spirit in stories|The ___ in the story said "Boo!"|spirit||2|유령|sort,puddle,spill||noise,mistake,price
+noise|n|🥁|a sound, often a loud one|The ___ from the street woke me up.|sound|silence|2|소음|build,gather,dusty|o:silence:half,customer,chore|design,recipe,price
+shout|v|🗣️|to say something very loudly|You don't need to ___; I can hear you.|yell|whisper|2|소리치다|quick,breeze,soft|o:whisper:wander,ride,mix|jump,glow,leave
+jump|v|🦘|to push off the ground into the air|Frogs can ___ very high.|leap||2|뛰다|rescue,nearby,spill|s:leap:ride,share,repair|glow,scream,sell
+goal|n|🥅|something you want to do or get|My ___ is to read fifty books this year.|aim/target||3|목표|sturdy,dusty,dive|s:aim:tool,ticket,map|recipe,station,map
+practice|v|🎹|to do something again and again to get better|I ___ the piano every day after school.|rehearse||3|연습하다|recipe,leave,flood||fall,trust,taste
+trophy|n|🏆|a big shiny cup you win for doing your best|Our team won a gold ___ at the game.|prize||3|트로피|slow,half,healthy|s:prize:experiment,ghost,half|secret,cave,crew
+stretch|v|🙆|to make your arms or body longer by reaching|I ___ my arms when I wake up.|||3|쭉 펴다|huge,repair,flavor||win,trust,repair
+trust|v|🤝|to believe that someone is honest and good|I ___ my best friend with my secrets.|believe|doubt|3|믿다|wide,sprout,ripe||practice,stretch,leave
+patient|adj|😌|able to wait without getting upset|Be ___; the cookies will be ready soon.||impatient|3|참을성 있는|smooth,chore,shallow||strong,wide,nervous
+try|v|🎯|to work to do something|I will ___ to swim across the pool.|attempt|give up|2|노력하다, 해 보다|rescue,tiny,borrow||fall,trust,complain
+win|v|🥇|to come first in a game or race|Our team wants to ___ the game.|succeed|lose|2|이기다|climb,mistake,improve|o:lose:gather,hug,scream|fall,trust,measure
+lose|v|😞|to not win|It's okay to ___ a game sometimes.||win|2|지다|chore,build,dangerous|o:win:improve,rest,cry|fall,trust,float
+fall|v|🍂|to drop down to the ground|Be careful, or you might ___ off the wall.|drop/tumble|rise|2|떨어지다, 넘어지다|crisp,blend,heavy||practice,trust,hide
+easy|adj|🙂|not hard to do|The first puzzle was ___, so I finished fast.|simple|hard/difficult|2|쉬운|notice,roar,customer|o:hard:careless,excited,calm|patient,crisp,shallow
+strong|adj|💪|having a lot of power|The ___ man lifted the heavy box.|powerful|weak|2|힘센|creature,wait,sudden|o:weak:polite,surprised,safe|patient,sleepy,ripe
+</script>
+<script type="text/plain" id="glossData">
+afraid|feeling scared
+agree|to think the same as someone else
+aim|something you are trying to do
+amazed|very surprised
+animal|a living thing that can move, like a dog or a fish
+awake|not sleeping
+breezy|with a light wind blowing
+bright|full of light
+catch|to take something with your hands as it comes to you
+choose|to pick one thing from many
+clean|without dirt; also, to take the dirt away
+collect|to bring things together and keep them
+cook|to make food ready to eat by heating it
+cost|how much money you must pay for something
+create|to make something new
+crunchy|making a loud sound when you bite it
+describe|to tell what something is like
+dirt|loose earth on the ground
+disappear|to go away so no one can see it
+dull|not bright or shiny
+error|something that is wrong; a mistake
+far|a long way away
+find|to see or get something you were looking for
+finish|to come to the end of something
+fix|to make something work again
+flat|smooth and level, with no hills
+forget|to not remember
+freeze|to turn into ice when very cold
+full|having no space left inside; not hungry anymore
+gooey|soft and sticky
+goofy|silly in a funny way
+group|to put things together because they are alike
+growl|to make a deep, angry sound
+grumble|to say in a low voice that you are not happy
+guard|to watch over and keep safe
+happy|feeling good and glad
+hard|not soft; also, not easy
+hint|a small clue
+hot|very warm
+interested|wanting to know more about something
+job|work that someone has to do
+join|to put things together
+keep|to have something and not give it away
+laugh|to make sounds because something is funny
+lead|to go first and show others the way
+leap|to jump high or far
+look|to use your eyes to see; to try to find
+mad|angry
+nice|kind and pleasant
+old|not new; from long ago
+path|a small road for walking
+plan|an idea of how to do something
+present|a gift
+prize|something you get for winning
+quiz|a short test
+relax|to rest and feel calm
+rider|a person who rides on something
+rough|not smooth; bumpy
+save|to keep someone safe from danger
+see|to look at something with your eyes
+shake|to move quickly back and forth
+shine|to give off bright light
+shopper|a person who shops at a store
+short|not tall; not long
+shrink|to get smaller
+silence|no sound at all
+slippery|so smooth or wet that it is hard to hold
+sneak|to move quietly so no one notices
+sparkly|shining with little flashes of light
+spiky|having sharp points
+team|a group that works or plays together
+thankful|glad and wanting to say thank you
+together|with each other
+top|the highest part of something
+trip|a time when you travel somewhere
+truthful|always saying what is true
+weak|not strong
+weird|strange
+wet|covered with water
+wind|air that moves
+wrong|not right; not correct
+yummy|very tasty
 </script>
 <script type="text/plain" id="lessonData">
 @L w1|The Fragile Nest
@@ -792,9 +880,14 @@ const WORDS=[], BYID={}, BYW={};
     const f=l.split('|'); if(f.length<9) return;
     const sp=s=>s?s.split('/').map(x=>x.trim()).filter(Boolean):[];
     const w={word:f[0],pos:f[1],em:f[2],def:f[3],sent:f[4],syn:sp(f[5]),ant:sp(f[6]),lvl:+f[7]||2,ko:f[8],island:isl,book:isl==='book'};
+    const cs=s=>s?s.split(',').map(x=>x.trim()).filter(Boolean):[];
+    w.p1=cs(f[9]); w.f3=cs(f[11]); if(f[10]){ const [t,a,dd]=f[10].split(':'); w.q2={t,a,d:cs(dd)}; }
     w.id=isl+':'+w.word; WORDS.push(w); BYID[w.id]=w; BYW[w.word]=w;
   });
 })();
+const GLOSS={};
+document.getElementById('glossData').textContent.split('\n').forEach(l=>{ const i=l.indexOf('|'); if(i>0) GLOSS[l.slice(0,i).trim()]=l.slice(i+1).trim(); });
+function defOf(x){ return (BYW[x]&&BYW[x].def)||GLOSS[x]||''; }
 const LESSONS=[];
 (function(){
   let L=null;
@@ -990,34 +1083,27 @@ function makeQ(n, w){
   if(n===1){
     const used=new Set([w.em]); const tw=TW();
     let pool;
-    pool=shuffle(WORDS.filter(x=>x!==w&&x.island!==w.island&&!x.book&&!close(w,x)));
-    const d=distinctEmo(pool,3,used); if(d.length<3) d.push(...distinctEmo(shuffle(WORDS),3-d.length,used));
+    let d=w.p1.map(x=>BYW[x]).filter(Boolean);
+    if(d.length<3){ pool=shuffle(WORDS.filter(x=>x!==w&&x.island!==w.island&&!x.book&&!close(w,x))); d=d.concat(distinctEmo(pool,3-d.length,new Set([w.em].concat(d.map(x=>x.em))))); }
     return {n, w, key:w.id, layout:'emo',
-      opts:shuffle([w].concat(d)).map(x=>({label:x.em, ok:x===w})),
+      opts:shuffle([w].concat(d.slice(0,3))).map(x=>({label:x.em, ok:x===w, word:x.word})),
       head:`<div class="row" style="gap:16px"><div class="bigword">${esc(w.word)}</div><button class="speak" data-say="${esc(w.word)}">🔊</button></div>
             <div class="def"><button class="sm" data-say="${esc(w.def)}">🔊</button><span>${esc(w.def)}</span></div>
             <div class="row"><button class="hint" id="kohint">🇰🇷 한국어 힌트</button></div>`,
       ask:'Find the picture.', say:`${w.word}. ${w.def}. Find the picture.`};
   }
   if(n===2){
-    const type = (w.syn.length&&w.ant.length) ? rnd(['syn','ant']) : (w.syn.length?'syn':'ant');
-    const answer=(type==='syn'?w.syn:w.ant)[0];
-    const bad=new Set([w.word].concat(lc(w.syn),lc(w.ant)));
-    const d=[]; const trap=type==='syn'?w.ant[0]:w.syn[0];
-    if(trap&&Math.random()<.5) d.push(trap);
-    const tw=TW();
-    const ok=x=>x.pos===w.pos&&x!==w&&!bad.has(x.word)&&!lc(x.syn).some(s=>bad.has(s))&&!lc(x.ant).some(s=>bad.has(s));
-    shuffle(tw.filter(ok)).concat(shuffle(WORDS.filter(ok))).forEach(x=>{ if(d.length<3&&!d.includes(x.word)) d.push(x.word); });
+    const type = w.q2.t==='s'?'syn':'ant';
+    const answer=w.q2.a; const d=w.q2.d.slice(0,3);
     const p = type==='syn' ? `Which word means the <em>SAME</em> as <em>${esc(w.word)}</em>?` : `Which word is the <em>OPPOSITE</em> of <em>${esc(w.word)}</em>?`;
     const s = type==='syn' ? `Which word means the same as ${w.word}?` : `Which word is the opposite of ${w.word}?`;
-    return {n, w, key:w.id, sub:type, opts:shuffle([answer].concat(d.slice(0,3))).map(x=>({label:x, ok:x===answer, say:x})),
+    return {n, w, key:w.id, sub:type, opts:shuffle([answer].concat(d)).map(x=>({label:x, ok:x===answer, say:x, word:x})),
       label: type==='syn'?'같은 뜻':'반대 뜻',
       head:`<div class="prompt"><div class="txt">${p}</div><button class="speak" data-say="${esc(s)}">🔊</button></div>`, say:s};
   }
   if(n===3){
-    const tw=TW(); const okx=x=>x.pos===w.pos&&x!==w&&!close(w,x)&&!lc(w.syn).includes(x.word);
-    const d=[]; shuffle(tw.filter(okx)).concat(shuffle(WORDS.filter(okx))).forEach(x=>{ if(d.length<3&&!d.includes(x)&&!d.some(y=>close(x,y))) d.push(x); });
-    return {n, w, key:w.id, opts:shuffle([w].concat(d)).map(x=>({label:x.word, ok:x===w, say:x.word})),
+    const d=w.f3.map(x=>BYW[x]).filter(Boolean).slice(0,3);
+    return {n, w, key:w.id, opts:shuffle([w].concat(d)).map(x=>({label:x.word, ok:x===w, say:x.word, word:x.word})),
       head:`<div class="prompt"><div class="txt sent">${esc(w.sent).replace('___','<span class="blank" id="bl">?</span>')}</div><button class="speak" data-say="${esc(w.sent)}">🔊</button></div>`, say:w.sent};
   }
 }
@@ -1029,7 +1115,7 @@ function makeStoryQ(L, i){
 function stageItems(n){
   const tw=TW();
   if(n===4){ const L=S.today.lesson&&LBYID[S.today.lesson]; return L?L.qs.map((_,i)=>()=>makeStoryQ(L,i)):[]; }
-  let list=tw; if(n===2) list=tw.filter(w=>w.syn.length||w.ant.length);
+  let list=tw; if(n===2) list=tw.filter(w=>w.q2);
   return list.map(w=>()=>makeQ(n,w));
 }
 function startStage(n){
@@ -1085,14 +1171,22 @@ function answer(i){
   save();
   $$('.opt').forEach((b,j)=>{ const oj=cur.opts[j]; if(oj.ok) b.classList.add('right'); else if(j===i) b.classList.add('wrong'); else b.classList.add('dim'); });
   const bl=$('#bl'); if(bl&&w) bl.textContent=w.word;
-  let extra='', sayAfter='';
-  if(w){ extra=`<div class="em">${w.em}</div>`; sayAfter=run.n===1?`${w.word}. ${filled(w)}`:filled(w); }
+  let extra='', sayAfter='', defs='';
   const right=cur.opts.find(x=>x.ok);
   const rl = run.n===1 ? w.word : right.label;
+  if(w){ extra=`<div class="em">${w.em}</div>`;
+    const rows=[]; const add=(x,tag)=>{ if(!x||rows.some(r=>r.x===x)) return; const df=defOf(x); if(df) rows.push({x,df,tag}); };
+    add(w.word,'');
+    if(run.n===2) add(right.word, w.q2.t==='s'?'같은 뜻':'반대 뜻');
+    if(o.word&&o.word!==w.word&&!(run.n===2&&o.ok)) add(o.word, ok?'':'내가 고른 단어');
+    defs=`<div class="defs">${rows.map(r=>`<div class="drow"><button class="sm" data-say="${esc(r.x+'. '+r.df)}">🔊</button><div>${run.n===1&&BYW[r.x]?BYW[r.x].em+' ':''}<b>${esc(r.x)}</b>${r.tag?` <span class="dtag">${r.tag}</span>`:''}<div class="dd">${esc(r.df)}</div></div></div>`).join('')}</div>`;
+    sayAfter=rows.map(r=>`${r.x}: ${r.df}.`).join(' ');
+  }
   $('#fbwrap').innerHTML=`<div class="fb ${ok?'good':'bad'}">${extra}
     <div class="msg">${ok?`<div class="big">${rnd(['Great!','Awesome!','You got it!','Super!','Yes!'])}</div>`:`<div class="big">Nice try!</div><div>The answer is <b>${esc(rl)}</b>.${w?` <span class="ko">${esc(w.ko)}</span>`:''} 이따가 다시 풀어요.</div>`}
-    ${w?`<div style="margin-top:4px;color:var(--ink-soft)">${sentHTML(w)}</div>`:''}</div>
+    ${w?`<div style="margin-top:4px;color:var(--ink-soft)">${sentHTML(w)}</div>${defs}`:''}</div>
     <button class="next" id="nx">Next →</button></div>`;
+  bindSay($('#fbwrap'));
   if(ok) ding(); else bonk();
   setTimeout(()=>speak(ok?(sayAfter||'Great!'):('The answer is '+rl+'. '+(sayAfter||''))),400);
   $('#nx').onclick=()=>{ run.i++; nextQ(); };
@@ -1334,7 +1428,9 @@ function catRoom(o){
         ${bar('🍗',c.food,'밥')}${bar('🛁',Math.max(0,100-c.poops*35),'깨끗')}${bar('💗',c.joy,'기분')}
         ${c.sick?'<div class="hint">🤧 감기에 걸렸어요. 감기약을 먹이면 금방 나아요.</div>':''}
         <div class="acts">
-          <button class="act ${c.food<30?'hot':''}" id="feed"><span class="i">🥫</span>밥 주기<small>밥 ${c.inv.food} · 간식 ${c.inv.fish} · 우유 ${c.inv.milk}</small></button>
+          <button class="act ${c.food<30?'hot':''}" id="feed" data-k="food"><span class="i">🥫</span>밥 주기<small>밥 ${c.inv.food}개</small></button>
+          <button class="act" id="snack" data-k="fish"><span class="i">🐟</span>간식 주기<small>생선 간식 ${c.inv.fish}개</small></button>
+          <button class="act" id="milk" data-k="milk"><span class="i">🥛</span>우유 주기<small>우유 ${c.inv.milk}개</small></button>
           <button class="act ${c.poops?'hot':''}" id="clean"><span class="i">🧻</span>응가 치우기<small>봉투 ${c.inv.bag}장</small></button>
           <button class="act ${c.sick?'hot':''}" id="med"><span class="i">💊</span>약 먹이기<small>감기약 ${c.inv.med}개</small></button>
           <button class="act ${c.joy<40?'hot':''}" id="play"><span class="i">🃏</span>카드로 놀기<small>카드 ${Object.keys(S.cards).length}장</small></button>
@@ -1343,7 +1439,7 @@ function catRoom(o){
       </div>
     </div></div>`;
   bindTop(); bindSay();
-  $('#feed').onclick=feedCat; $('#clean').onclick=()=>cleanPoop(); $('#med').onclick=giveMed; $('#play').onclick=pickCard; $('#shop').onclick=()=>shop();
+  ['#feed','#snack','#milk'].forEach(s=>{ const b=$(s); b.onclick=()=>feedCat(b.dataset.k); }); $('#clean').onclick=()=>cleanPoop(); $('#med').onclick=giveMed; $('#play').onclick=pickCard; $('#shop').onclick=()=>shop();
   $$('[data-poop]').forEach(p=>p.onclick=()=>cleanPoop());
   if(o.play) setTimeout(()=>playCard(o.play),300);
   else if(o.celebrate){ setTimeout(()=>{ catAnim('hop'); hearts(6); speak(`${c.name} is so happy! You found new cards!`); },300); }
@@ -1361,23 +1457,23 @@ function nameCat(cb){
 function catAnim(k){ const s=$('#scat'); if(!s) return; s.classList.remove('hop','run'); void s.offsetWidth; s.classList.add(k); setTimeout(()=>s.classList.remove(k), k==='run'?2700:2000); }
 function hearts(n,ch){ const r=$('#room'); if(!r) return; for(let i=0;i<n;i++){ const h=document.createElement('span'); h.className='float'; h.textContent=ch||rnd(['💗','💖','✨','💕']); h.style.left=(35+Math.random()*30)+'%'; h.style.bottom=(30+Math.random()*25)+'%'; h.style.animationDelay=(i*.15)+'s'; r.appendChild(h); setTimeout(()=>h.remove(),2400); } }
 function refreshCat(){ catRoom({quiet:true}); }
-function feedCat(){
-  const c=S.cat; const k=c.inv.fish>0&&c.food<60?'fish':(c.inv.food>0?'food':(c.inv.milk>0?'milk':(c.inv.fish>0?'fish':null)));
-  if(!k){ speak('No food. Let\'s go to the shop!'); toast('먹이가 없어요. 상점에서 사요! 🛍️'); return; }
-  if(c.food>=95){ speak("I'm full! Thank you!"); toast('배불러요! 나중에 주세요.'); return; }
-  c.inv[k]--; c.food=Math.min(100,c.food+({food:30,fish:50,milk:15})[k]); c.joy=Math.min(100,c.joy+({food:5,fish:12,milk:5})[k]);
-  if(Math.random()<.55&&c.poops<3) c.poops++;
-  save(); refreshCat(); hearts(3, SHOPBY[k].i); catAnim('hop'); speak(k==='fish'?'Yummy fish! Thank you!':'Yum yum! Thank you!');
+function feedCat(k){
+  const c=S.cat; const nm={food:'밥이',fish:'생선 간식이',milk:'우유가'}[k];
+  if(c.inv[k]<1){ speak('We need more. Let\'s go to the shop!'); toast(`${nm} 없어요. 상점에서 사요! 🛍️`); return; }
+  if(c.food>=90){ speak("I'm full! Thank you!"); toast('배불러요! 나중에 주세요.'); return; }
+  c.inv[k]--; c.food=Math.min(100,c.food+({food:15,fish:8,milk:5})[k]); c.joy=Math.min(100,c.joy+({food:2,fish:5,milk:3})[k]);
+  save(); refreshCat(); hearts(3, SHOPBY[k].i); catAnim('hop'); speak(k==='fish'?'Yummy fish! Thank you!':(k==='milk'?'Yummy milk! Thank you!':'Yum yum! Thank you!'));
+  if(k==='food' && c.poops<3){ setTimeout(()=>{ c.poops++; save(); if(view==='cat'){ refreshCat(); speak('Oops! I made a poop.'); } }, 1800); }
 }
 function cleanPoop(){
   const c=S.cat; if(!c.poops){ toast('깨끗해요! ✨'); return; }
   if(c.inv.bag<1){ speak('We need poop bags. Let\'s go to the shop!'); toast('응가 봉투가 없어요. 상점에서 사요!'); return; }
-  c.inv.bag--; c.poops--; c.joy=Math.min(100,c.joy+5); save(); refreshCat(); hearts(2,'✨'); speak('All clean! Thank you!');
+  c.inv.bag--; c.poops--; c.joy=Math.min(100,c.joy+3); save(); refreshCat(); hearts(2,'✨'); speak('All clean! Thank you!');
 }
 function giveMed(){
   const c=S.cat; if(!c.sick){ toast(`${c.name}는 건강해요! 💪`); speak("I'm not sick. I feel great!"); return; }
   if(c.inv.med<1){ speak('We need cold medicine. Let\'s go to the shop!'); toast('감기약이 없어요. 상점에서 사요!'); return; }
-  c.inv.med--; c.sick=false; c.joy=Math.min(100,c.joy+10); save(); refreshCat(); catAnim('hop'); hearts(4); speak('I feel better! Thank you!');
+  c.inv.med--; c.sick=false; c.joy=Math.min(100,c.joy+5); save(); refreshCat(); catAnim('hop'); hearts(4); speak('I feel better! Thank you!');
 }
 function pickCard(){
   const ids=Object.keys(S.cards).filter(id=>BYID[id]);
@@ -1392,13 +1488,13 @@ function pickCard(){
 function playCard(id){
   const w=BYID[id], c=S.cat, day=dayNum(); if(!w) return;
   const first=c.played[id]!==day; c.played[id]=day;
-  c.joy=Math.min(100,c.joy+(first?15:4)); save();
+  c.joy=Math.min(100,c.joy+(first?6:1)); save();
   const r=$('#room'); if(!r) return;
   const f=document.createElement('div'); f.className='flycard'; f.innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border-radius:20px;padding:12px 18px;box-shadow:0 6px 0 rgba(0,0,0,.1)"><span>${w.em}</span><span style="font-family:var(--display);font-size:30px">${esc(w.word)}</span></div>`;
   r.appendChild(f);
   speak(`${w.word}! ${filled(w)}`);
   catAnim('run'); setTimeout(()=>{ hearts(6); catAnim('hop'); }, 2600);
-  setTimeout(()=>{ f.remove(); refreshCat(); toast(first?`${c.name} 기분 +15 💗`:`${c.name} 기분 +4 💗`); }, 4200);
+  setTimeout(()=>{ f.remove(); refreshCat(); toast(first?`${c.name} 기분 +6 💗`:`${c.name} 기분 +1 💗`); }, 4200);
 }
 function shop(tab){
   view='shop'; tab=tab||'care'; const c=S.cat;

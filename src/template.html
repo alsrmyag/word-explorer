@@ -130,6 +130,10 @@ button:disabled{cursor:default}
 .fb .em{font-size:54px;line-height:1}
 .fb .big{font-family:var(--display);font-weight:700;font-size:26px}
 .fb .msg{flex:1;min-width:0}
+.defs{margin-top:8px;display:grid;gap:6px}
+.drow{display:flex;gap:8px;align-items:flex-start;background:rgba(255,255,255,.7);border-radius:12px;padding:6px 10px}
+.drow b{font-size:20px}.dd{font-size:18px;color:var(--ink-soft)}
+.dtag{font-size:14px;background:#fff3c4;border-radius:8px;padding:1px 6px;margin-left:4px}
 .next{background:var(--sea-2);color:#fff;font-family:var(--display);font-weight:700;font-size:26px;border-radius:20px;padding:16px 28px;box-shadow:0 5px 0 #0a6b8a;flex:none}
 .next:active{transform:translateY(3px);box-shadow:0 2px 0 #0a6b8a}
 
@@ -292,6 +296,9 @@ textarea.copy{width:100%;min-height:160px;font:14px/1.5 var(--body);border:2px s
 <script type="text/plain" id="wordData">
 /*WORDS*/
 </script>
+<script type="text/plain" id="glossData">
+/*GLOSS*/
+</script>
 <script type="text/plain" id="lessonData">
 /*LESSONS*/
 </script>
@@ -325,9 +332,14 @@ const WORDS=[], BYID={}, BYW={};
     const f=l.split('|'); if(f.length<9) return;
     const sp=s=>s?s.split('/').map(x=>x.trim()).filter(Boolean):[];
     const w={word:f[0],pos:f[1],em:f[2],def:f[3],sent:f[4],syn:sp(f[5]),ant:sp(f[6]),lvl:+f[7]||2,ko:f[8],island:isl,book:isl==='book'};
+    const cs=s=>s?s.split(',').map(x=>x.trim()).filter(Boolean):[];
+    w.p1=cs(f[9]); w.f3=cs(f[11]); if(f[10]){ const [t,a,dd]=f[10].split(':'); w.q2={t,a,d:cs(dd)}; }
     w.id=isl+':'+w.word; WORDS.push(w); BYID[w.id]=w; BYW[w.word]=w;
   });
 })();
+const GLOSS={};
+document.getElementById('glossData').textContent.split('\n').forEach(l=>{ const i=l.indexOf('|'); if(i>0) GLOSS[l.slice(0,i).trim()]=l.slice(i+1).trim(); });
+function defOf(x){ return (BYW[x]&&BYW[x].def)||GLOSS[x]||''; }
 const LESSONS=[];
 (function(){
   let L=null;
@@ -523,34 +535,27 @@ function makeQ(n, w){
   if(n===1){
     const used=new Set([w.em]); const tw=TW();
     let pool;
-    pool=shuffle(WORDS.filter(x=>x!==w&&x.island!==w.island&&!x.book&&!close(w,x)));
-    const d=distinctEmo(pool,3,used); if(d.length<3) d.push(...distinctEmo(shuffle(WORDS),3-d.length,used));
+    let d=w.p1.map(x=>BYW[x]).filter(Boolean);
+    if(d.length<3){ pool=shuffle(WORDS.filter(x=>x!==w&&x.island!==w.island&&!x.book&&!close(w,x))); d=d.concat(distinctEmo(pool,3-d.length,new Set([w.em].concat(d.map(x=>x.em))))); }
     return {n, w, key:w.id, layout:'emo',
-      opts:shuffle([w].concat(d)).map(x=>({label:x.em, ok:x===w})),
+      opts:shuffle([w].concat(d.slice(0,3))).map(x=>({label:x.em, ok:x===w, word:x.word})),
       head:`<div class="row" style="gap:16px"><div class="bigword">${esc(w.word)}</div><button class="speak" data-say="${esc(w.word)}">🔊</button></div>
             <div class="def"><button class="sm" data-say="${esc(w.def)}">🔊</button><span>${esc(w.def)}</span></div>
             <div class="row"><button class="hint" id="kohint">🇰🇷 한국어 힌트</button></div>`,
       ask:'Find the picture.', say:`${w.word}. ${w.def}. Find the picture.`};
   }
   if(n===2){
-    const type = (w.syn.length&&w.ant.length) ? rnd(['syn','ant']) : (w.syn.length?'syn':'ant');
-    const answer=(type==='syn'?w.syn:w.ant)[0];
-    const bad=new Set([w.word].concat(lc(w.syn),lc(w.ant)));
-    const d=[]; const trap=type==='syn'?w.ant[0]:w.syn[0];
-    if(trap&&Math.random()<.5) d.push(trap);
-    const tw=TW();
-    const ok=x=>x.pos===w.pos&&x!==w&&!bad.has(x.word)&&!lc(x.syn).some(s=>bad.has(s))&&!lc(x.ant).some(s=>bad.has(s));
-    shuffle(tw.filter(ok)).concat(shuffle(WORDS.filter(ok))).forEach(x=>{ if(d.length<3&&!d.includes(x.word)) d.push(x.word); });
+    const type = w.q2.t==='s'?'syn':'ant';
+    const answer=w.q2.a; const d=w.q2.d.slice(0,3);
     const p = type==='syn' ? `Which word means the <em>SAME</em> as <em>${esc(w.word)}</em>?` : `Which word is the <em>OPPOSITE</em> of <em>${esc(w.word)}</em>?`;
     const s = type==='syn' ? `Which word means the same as ${w.word}?` : `Which word is the opposite of ${w.word}?`;
-    return {n, w, key:w.id, sub:type, opts:shuffle([answer].concat(d.slice(0,3))).map(x=>({label:x, ok:x===answer, say:x})),
+    return {n, w, key:w.id, sub:type, opts:shuffle([answer].concat(d)).map(x=>({label:x, ok:x===answer, say:x, word:x})),
       label: type==='syn'?'같은 뜻':'반대 뜻',
       head:`<div class="prompt"><div class="txt">${p}</div><button class="speak" data-say="${esc(s)}">🔊</button></div>`, say:s};
   }
   if(n===3){
-    const tw=TW(); const okx=x=>x.pos===w.pos&&x!==w&&!close(w,x)&&!lc(w.syn).includes(x.word);
-    const d=[]; shuffle(tw.filter(okx)).concat(shuffle(WORDS.filter(okx))).forEach(x=>{ if(d.length<3&&!d.includes(x)&&!d.some(y=>close(x,y))) d.push(x); });
-    return {n, w, key:w.id, opts:shuffle([w].concat(d)).map(x=>({label:x.word, ok:x===w, say:x.word})),
+    const d=w.f3.map(x=>BYW[x]).filter(Boolean).slice(0,3);
+    return {n, w, key:w.id, opts:shuffle([w].concat(d)).map(x=>({label:x.word, ok:x===w, say:x.word, word:x.word})),
       head:`<div class="prompt"><div class="txt sent">${esc(w.sent).replace('___','<span class="blank" id="bl">?</span>')}</div><button class="speak" data-say="${esc(w.sent)}">🔊</button></div>`, say:w.sent};
   }
 }
@@ -562,7 +567,7 @@ function makeStoryQ(L, i){
 function stageItems(n){
   const tw=TW();
   if(n===4){ const L=S.today.lesson&&LBYID[S.today.lesson]; return L?L.qs.map((_,i)=>()=>makeStoryQ(L,i)):[]; }
-  let list=tw; if(n===2) list=tw.filter(w=>w.syn.length||w.ant.length);
+  let list=tw; if(n===2) list=tw.filter(w=>w.q2);
   return list.map(w=>()=>makeQ(n,w));
 }
 function startStage(n){
@@ -618,14 +623,22 @@ function answer(i){
   save();
   $$('.opt').forEach((b,j)=>{ const oj=cur.opts[j]; if(oj.ok) b.classList.add('right'); else if(j===i) b.classList.add('wrong'); else b.classList.add('dim'); });
   const bl=$('#bl'); if(bl&&w) bl.textContent=w.word;
-  let extra='', sayAfter='';
-  if(w){ extra=`<div class="em">${w.em}</div>`; sayAfter=run.n===1?`${w.word}. ${filled(w)}`:filled(w); }
+  let extra='', sayAfter='', defs='';
   const right=cur.opts.find(x=>x.ok);
   const rl = run.n===1 ? w.word : right.label;
+  if(w){ extra=`<div class="em">${w.em}</div>`;
+    const rows=[]; const add=(x,tag)=>{ if(!x||rows.some(r=>r.x===x)) return; const df=defOf(x); if(df) rows.push({x,df,tag}); };
+    add(w.word,'');
+    if(run.n===2) add(right.word, w.q2.t==='s'?'같은 뜻':'반대 뜻');
+    if(o.word&&o.word!==w.word&&!(run.n===2&&o.ok)) add(o.word, ok?'':'내가 고른 단어');
+    defs=`<div class="defs">${rows.map(r=>`<div class="drow"><button class="sm" data-say="${esc(r.x+'. '+r.df)}">🔊</button><div>${run.n===1&&BYW[r.x]?BYW[r.x].em+' ':''}<b>${esc(r.x)}</b>${r.tag?` <span class="dtag">${r.tag}</span>`:''}<div class="dd">${esc(r.df)}</div></div></div>`).join('')}</div>`;
+    sayAfter=rows.map(r=>`${r.x}: ${r.df}.`).join(' ');
+  }
   $('#fbwrap').innerHTML=`<div class="fb ${ok?'good':'bad'}">${extra}
     <div class="msg">${ok?`<div class="big">${rnd(['Great!','Awesome!','You got it!','Super!','Yes!'])}</div>`:`<div class="big">Nice try!</div><div>The answer is <b>${esc(rl)}</b>.${w?` <span class="ko">${esc(w.ko)}</span>`:''} 이따가 다시 풀어요.</div>`}
-    ${w?`<div style="margin-top:4px;color:var(--ink-soft)">${sentHTML(w)}</div>`:''}</div>
+    ${w?`<div style="margin-top:4px;color:var(--ink-soft)">${sentHTML(w)}</div>${defs}`:''}</div>
     <button class="next" id="nx">Next →</button></div>`;
+  bindSay($('#fbwrap'));
   if(ok) ding(); else bonk();
   setTimeout(()=>speak(ok?(sayAfter||'Great!'):('The answer is '+rl+'. '+(sayAfter||''))),400);
   $('#nx').onclick=()=>{ run.i++; nextQ(); };
@@ -867,7 +880,9 @@ function catRoom(o){
         ${bar('🍗',c.food,'밥')}${bar('🛁',Math.max(0,100-c.poops*35),'깨끗')}${bar('💗',c.joy,'기분')}
         ${c.sick?'<div class="hint">🤧 감기에 걸렸어요. 감기약을 먹이면 금방 나아요.</div>':''}
         <div class="acts">
-          <button class="act ${c.food<30?'hot':''}" id="feed"><span class="i">🥫</span>밥 주기<small>밥 ${c.inv.food} · 간식 ${c.inv.fish} · 우유 ${c.inv.milk}</small></button>
+          <button class="act ${c.food<30?'hot':''}" id="feed" data-k="food"><span class="i">🥫</span>밥 주기<small>밥 ${c.inv.food}개</small></button>
+          <button class="act" id="snack" data-k="fish"><span class="i">🐟</span>간식 주기<small>생선 간식 ${c.inv.fish}개</small></button>
+          <button class="act" id="milk" data-k="milk"><span class="i">🥛</span>우유 주기<small>우유 ${c.inv.milk}개</small></button>
           <button class="act ${c.poops?'hot':''}" id="clean"><span class="i">🧻</span>응가 치우기<small>봉투 ${c.inv.bag}장</small></button>
           <button class="act ${c.sick?'hot':''}" id="med"><span class="i">💊</span>약 먹이기<small>감기약 ${c.inv.med}개</small></button>
           <button class="act ${c.joy<40?'hot':''}" id="play"><span class="i">🃏</span>카드로 놀기<small>카드 ${Object.keys(S.cards).length}장</small></button>
@@ -876,7 +891,7 @@ function catRoom(o){
       </div>
     </div></div>`;
   bindTop(); bindSay();
-  $('#feed').onclick=feedCat; $('#clean').onclick=()=>cleanPoop(); $('#med').onclick=giveMed; $('#play').onclick=pickCard; $('#shop').onclick=()=>shop();
+  ['#feed','#snack','#milk'].forEach(s=>{ const b=$(s); b.onclick=()=>feedCat(b.dataset.k); }); $('#clean').onclick=()=>cleanPoop(); $('#med').onclick=giveMed; $('#play').onclick=pickCard; $('#shop').onclick=()=>shop();
   $$('[data-poop]').forEach(p=>p.onclick=()=>cleanPoop());
   if(o.play) setTimeout(()=>playCard(o.play),300);
   else if(o.celebrate){ setTimeout(()=>{ catAnim('hop'); hearts(6); speak(`${c.name} is so happy! You found new cards!`); },300); }
@@ -894,23 +909,23 @@ function nameCat(cb){
 function catAnim(k){ const s=$('#scat'); if(!s) return; s.classList.remove('hop','run'); void s.offsetWidth; s.classList.add(k); setTimeout(()=>s.classList.remove(k), k==='run'?2700:2000); }
 function hearts(n,ch){ const r=$('#room'); if(!r) return; for(let i=0;i<n;i++){ const h=document.createElement('span'); h.className='float'; h.textContent=ch||rnd(['💗','💖','✨','💕']); h.style.left=(35+Math.random()*30)+'%'; h.style.bottom=(30+Math.random()*25)+'%'; h.style.animationDelay=(i*.15)+'s'; r.appendChild(h); setTimeout(()=>h.remove(),2400); } }
 function refreshCat(){ catRoom({quiet:true}); }
-function feedCat(){
-  const c=S.cat; const k=c.inv.fish>0&&c.food<60?'fish':(c.inv.food>0?'food':(c.inv.milk>0?'milk':(c.inv.fish>0?'fish':null)));
-  if(!k){ speak('No food. Let\'s go to the shop!'); toast('먹이가 없어요. 상점에서 사요! 🛍️'); return; }
-  if(c.food>=95){ speak("I'm full! Thank you!"); toast('배불러요! 나중에 주세요.'); return; }
-  c.inv[k]--; c.food=Math.min(100,c.food+({food:30,fish:50,milk:15})[k]); c.joy=Math.min(100,c.joy+({food:5,fish:12,milk:5})[k]);
-  if(Math.random()<.55&&c.poops<3) c.poops++;
-  save(); refreshCat(); hearts(3, SHOPBY[k].i); catAnim('hop'); speak(k==='fish'?'Yummy fish! Thank you!':'Yum yum! Thank you!');
+function feedCat(k){
+  const c=S.cat; const nm={food:'밥이',fish:'생선 간식이',milk:'우유가'}[k];
+  if(c.inv[k]<1){ speak('We need more. Let\'s go to the shop!'); toast(`${nm} 없어요. 상점에서 사요! 🛍️`); return; }
+  if(c.food>=90){ speak("I'm full! Thank you!"); toast('배불러요! 나중에 주세요.'); return; }
+  c.inv[k]--; c.food=Math.min(100,c.food+({food:15,fish:8,milk:5})[k]); c.joy=Math.min(100,c.joy+({food:2,fish:5,milk:3})[k]);
+  save(); refreshCat(); hearts(3, SHOPBY[k].i); catAnim('hop'); speak(k==='fish'?'Yummy fish! Thank you!':(k==='milk'?'Yummy milk! Thank you!':'Yum yum! Thank you!'));
+  if(k==='food' && c.poops<3){ setTimeout(()=>{ c.poops++; save(); if(view==='cat'){ refreshCat(); speak('Oops! I made a poop.'); } }, 1800); }
 }
 function cleanPoop(){
   const c=S.cat; if(!c.poops){ toast('깨끗해요! ✨'); return; }
   if(c.inv.bag<1){ speak('We need poop bags. Let\'s go to the shop!'); toast('응가 봉투가 없어요. 상점에서 사요!'); return; }
-  c.inv.bag--; c.poops--; c.joy=Math.min(100,c.joy+5); save(); refreshCat(); hearts(2,'✨'); speak('All clean! Thank you!');
+  c.inv.bag--; c.poops--; c.joy=Math.min(100,c.joy+3); save(); refreshCat(); hearts(2,'✨'); speak('All clean! Thank you!');
 }
 function giveMed(){
   const c=S.cat; if(!c.sick){ toast(`${c.name}는 건강해요! 💪`); speak("I'm not sick. I feel great!"); return; }
   if(c.inv.med<1){ speak('We need cold medicine. Let\'s go to the shop!'); toast('감기약이 없어요. 상점에서 사요!'); return; }
-  c.inv.med--; c.sick=false; c.joy=Math.min(100,c.joy+10); save(); refreshCat(); catAnim('hop'); hearts(4); speak('I feel better! Thank you!');
+  c.inv.med--; c.sick=false; c.joy=Math.min(100,c.joy+5); save(); refreshCat(); catAnim('hop'); hearts(4); speak('I feel better! Thank you!');
 }
 function pickCard(){
   const ids=Object.keys(S.cards).filter(id=>BYID[id]);
@@ -925,13 +940,13 @@ function pickCard(){
 function playCard(id){
   const w=BYID[id], c=S.cat, day=dayNum(); if(!w) return;
   const first=c.played[id]!==day; c.played[id]=day;
-  c.joy=Math.min(100,c.joy+(first?15:4)); save();
+  c.joy=Math.min(100,c.joy+(first?6:1)); save();
   const r=$('#room'); if(!r) return;
   const f=document.createElement('div'); f.className='flycard'; f.innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border-radius:20px;padding:12px 18px;box-shadow:0 6px 0 rgba(0,0,0,.1)"><span>${w.em}</span><span style="font-family:var(--display);font-size:30px">${esc(w.word)}</span></div>`;
   r.appendChild(f);
   speak(`${w.word}! ${filled(w)}`);
   catAnim('run'); setTimeout(()=>{ hearts(6); catAnim('hop'); }, 2600);
-  setTimeout(()=>{ f.remove(); refreshCat(); toast(first?`${c.name} 기분 +15 💗`:`${c.name} 기분 +4 💗`); }, 4200);
+  setTimeout(()=>{ f.remove(); refreshCat(); toast(first?`${c.name} 기분 +6 💗`:`${c.name} 기분 +1 💗`); }, 4200);
 }
 function shop(tab){
   view='shop'; tab=tab||'care'; const c=S.cat;
