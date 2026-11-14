@@ -1471,7 +1471,7 @@ function catSVG(o){
 }
 function tickCat(){
   const c=S.cat, now=Date.now(), h=Math.max(0,(now-(c.tick||now))/36e5);
-  c.food=Math.max(0,c.food-4*h); c.joy=Math.max(0,c.joy-3*h); c.clean=Math.max(0,(c.clean==null?80:c.clean)-1.5*h); c.tick=now;
+  c.food=Math.max(0,c.food-6*h); c.joy=Math.max(0,c.joy-4*h); c.clean=Math.max(0,(c.clean==null?80:c.clean)-4*h); c.tick=now;
   const day=dayNum();
   if(c.checkDay!==day){ c.checkDay=day; if(c.named && c.born!=null && day-c.born>=2 && !c.sick && day-c.sickDay>=4 && Math.random()<.15){ c.sick=true; c.sickDay=day; } }
   save();
@@ -1480,8 +1480,8 @@ function catMood(){
   const c=S.cat;
   if(c.sick) return {en:'Achoo! I have a cold.', ko:'감기 걸렸어요. 약을 주세요!'};
   if(c.poops>0) return {en:'Oops! I made a poop.', ko:'응가를 치워 주세요!'};
-  if(c.food<30) return {en:"I'm hungry! Meow!", ko:'배고파요. 밥 주세요!'};
-  if((c.clean==null?80:c.clean)<30) return {en:'I feel dirty. Bath time, please!', ko:'목욕시켜 주세요!'};
+  if(c.food<50) return {en:"I'm hungry! Meow!", ko:'배고파요. 밥 주세요!'};
+  if((c.clean==null?80:c.clean)<50) return {en:'I feel dirty. Bath time, please!', ko:'목욕시켜 주세요!'};
   if(c.joy<40) return {en:"Let's play with a card!", ko:'카드로 같이 놀아요!'};
   return {en:'I love you! Meow!', ko:'사랑해요! 야옹!'};
 }
@@ -1517,11 +1517,11 @@ function catRoom(o){
         ${bar('🍗',c.food,'밥')}${bar('🛁',Math.max(0,(c.clean==null?80:c.clean)-c.poops*15),'깨끗')}${bar('💗',c.joy,'기분')}
         ${c.sick?'<div class="hint">🤧 감기에 걸렸어요. 감기약을 먹이면 금방 나아요.</div>':''}
         <div class="acts">
-          <button class="act ${c.food<30?'hot':''}" id="feed" data-k="food"><span class="i">🥫</span>밥 주기<small>밥 ${c.inv.food}개</small></button>
+          <button class="act ${c.food<50?'hot':''}" id="feed" data-k="food"><span class="i">🥫</span>밥 주기<small>밥 ${c.inv.food}개</small></button>
           <button class="act" id="snack" data-k="fish"><span class="i">🐟</span>간식 주기<small>생선 간식 ${c.inv.fish}개</small></button>
           <button class="act" id="milk" data-k="milk"><span class="i">🥛</span>우유 주기<small>우유 ${c.inv.milk}개</small></button>
           <button class="act ${c.poops?'hot':''}" id="clean"><span class="i">🧻</span>응가 치우기<small>봉투 ${c.inv.bag}장</small></button>
-          <button class="act ${(c.clean||0)<30?'hot':''}" id="bath"><span class="i">🛁</span>목욕시키기<small>비누 ${c.inv.soap||0}개</small></button>
+          <button class="act ${(c.clean||0)<50?'hot':''}" id="bath"><span class="i">🛁</span>목욕시키기<small>비누 ${c.inv.soap||0}개</small></button>
           <button class="act" id="salon"><span class="i">✂️</span>미용실 가기<small>🪙 ${SALON_PRICE}</small></button>
           <button class="act ${c.sick?'hot':''}" id="med"><span class="i">💊</span>약 먹이기<small>감기약 ${c.inv.med}개</small></button>
           <button class="act ${c.joy<40?'hot':''}" id="play"><span class="i">🃏</span>카드로 놀기<small>카드 ${Object.keys(S.cards).length}장</small></button>
