@@ -79,6 +79,15 @@ button:disabled{cursor:default}
 .stone.lock b,.stone.lock small{color:#9aabb5}
 .stone b,.stone small{background:var(--paper);border-radius:8px;padding:0 6px}
 .stone.cur b{margin-top:16px}
+.lmap{background:#eef6fb;border-radius:18px;padding:10px 14px;display:flex;flex-direction:column;gap:8px}
+.lmhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:17px}
+.lmbar{flex:1;min-width:120px;height:12px;border-radius:999px;background:#d6e4ec;overflow:hidden}.lmbar i{display:block;height:100%;background:var(--leaf);border-radius:999px}
+.lmrow{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.ld{position:relative;aspect-ratio:1;border-radius:14px;border:0;background:#dfe8ee;display:grid;place-items:center;font-size:clamp(18px,2.2vw,26px);max-height:64px}
+.ld .ln{position:absolute;top:2px;left:6px;font-size:12px;font-weight:700;color:#6b7f8a}
+.ld.done{background:#bfe9d1;color:#1f7d4b;font-weight:700}
+.ld.now{background:#fff;box-shadow:0 0 0 3px var(--coral);animation:glow 1.4s infinite}
+.ld.lock .le{opacity:.45;filter:grayscale(.6)}
 .stone small{white-space:nowrap}
 @media (orientation:portrait) and (min-width:700px){ .path{height:340px} .stone{width:132px} .stone .rock{font-size:46px} .stone b{font-size:16px} }
 .stone.done .rock{background:#bfe9d1;box-shadow:0 8px 0 #7cc79f}
@@ -223,7 +232,23 @@ button:disabled{cursor:default}
 .room .bed{position:absolute;left:6%;bottom:8%;font-size:clamp(70px,8vw,110px);line-height:1}
 .room .bedname{position:absolute;left:6%;bottom:3%;font-size:13px;color:#6b4a22;font-weight:700}
 .room .toy{position:absolute;right:18%;bottom:12%;font-size:52px}
-.room .bowl{position:absolute;right:4%;bottom:5%;font-size:46px}
+.room .bowl{position:absolute;left:21%;bottom:3%;font-size:46px}
+.room .fu{position:absolute;background:none;border:0;padding:0;line-height:1;cursor:pointer;z-index:1}
+.room .wallit{top:12%;left:36%;font-size:clamp(48px,5vw,70px)}
+.room .decoit{left:1%;bottom:34%;font-size:clamp(50px,5.5vw,76px)}
+.room .towerit{right:2%;bottom:5%;width:clamp(110px,13vw,165px);z-index:0}
+.room .stagecat{z-index:2}
+.room .tankbox{display:grid;place-items:center;width:clamp(80px,8vw,110px);aspect-ratio:1.3;background:linear-gradient(#bdeeff,#7fd0f5);border:5px solid #9ad;border-radius:10px;font-size:.6em;box-shadow:0 6px 0 #6a8fa8}
+.item .i svg{height:64px;width:auto}
+.room .towerit svg{width:100%;height:auto}
+.room .rug{position:absolute;left:28%;right:28%;bottom:2%;height:9%;border-radius:50%;opacity:.85}
+.room .tub{position:absolute;left:50%;bottom:2%;transform:translateX(-50%);font-size:clamp(120px,13vw,170px);z-index:3;line-height:1}
+.room .stagecat.climb .catw{animation:climb 1.6s ease-in-out}
+@keyframes climb{40%{transform:translate(60%,-40%)}60%{transform:translate(60%,-40%)}}
+.furs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.fur{width:70px;height:70px;border-radius:50%;border:4px solid #fff;box-shadow:0 0 0 2px var(--line);display:grid;place-items:end center;padding-bottom:4px;font-weight:700;font-size:14px;color:#3a2a20}
+.fur span{background:rgba(255,255,255,.85);border-radius:8px;padding:0 4px}
+.fur.on{box-shadow:0 0 0 5px var(--coral)}
 .room .poop{position:absolute;bottom:4%;font-size:46px;cursor:pointer;animation:bump 1.4s infinite}
 .room .stagecat{position:absolute;left:50%;bottom:6%;transform:translateX(-50%);width:clamp(190px,24vw,290px)}
 .room .stagecat.hop .catw{animation:hop .45s ease-in-out 4}
@@ -913,7 +938,7 @@ const LBYID = Object.fromEntries(LESSONS.map(l=>[l.id,l]));
 /* ================= STORAGE ================= */
 const KEY='wordExplorer.v2', OLD='wordExplorer.v1';
 function freshCat(){ return {name:'Mimi', named:false, food:70, joy:70, poops:0, sick:false, tick:Date.now(), checkDay:-1, sickDay:-99,
-  inv:{food:2,fish:1,milk:0,bag:3,med:0}, owned:[], wear:{}, played:{}}; }
+  inv:{food:2,fish:1,milk:0,bag:3,med:0,soap:1}, owned:[], wear:{}, played:{}, clean:80, fur:'orange', tapped:{}}; }
 function fresh(){ return {v:2, wv:4, coins:0, cards:{}, today:null, done:[], days:{}, types:{}, wrong:{}, right:{}, milestone:0, streak:0, lastDay:null, cat:freshCat()}; }
 let S=fresh();
 function dayNum(d){ d=d||new Date(); return Math.floor((d.getTime()-d.getTimezoneOffset()*60000)/864e5); }
@@ -965,6 +990,12 @@ const ding=()=>tone([[660,.12],[880,.12],[1175,.22]]);
 const bonk=()=>tone([[300,.15],[220,.25]]);
 const fanfare=()=>tone([[523,.14],[659,.14],[784,.14],[1047,.4]]);
 const coinSnd=()=>tone([[988,.08],[1319,.18]]);
+function clink(){ try{ ac=ac||new (window.AudioContext||window.webkitAudioContext)(); const t=ac.currentTime;
+  const o=ac.createOscillator(),g=ac.createGain(); o.type='sine'; o.frequency.setValueAtTime(2400+Math.random()*1400,t); o.frequency.exponentialRampToValueAtTime(1800,t+.08);
+  g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.09,t+.005); g.gain.exponentialRampToValueAtTime(.0001,t+.12); o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t+.14);
+  const n=ac.createBufferSource(), b=ac.createBuffer(1,ac.sampleRate*.06,ac.sampleRate), d=b.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*(1-i/d.length);
+  const f=ac.createBiquadFilter(); f.type='highpass'; f.frequency.value=5000; const ng=ac.createGain(); ng.gain.value=.05; n.buffer=b; n.connect(f); f.connect(ng); ng.connect(ac.destination); n.start(t); }catch(e){} }
+const saveSnd=()=>tone([[784,.07],[1047,.07],[1568,.3]]);
 function bindSay(root){ $$('[data-say]',root||document).forEach(b=>{ if(b._s) return; b._s=1; b.addEventListener('click',e=>{ e.stopPropagation(); speak(b.dataset.say); }); }); }
 
 /* ================= TODAY PATH ================= */
@@ -1006,10 +1037,12 @@ function addCoins(n, cb){
     c.style.left=(innerWidth/2-22+(Math.random()*240-120))+'px'; c.style.top=(innerHeight/2-22+(Math.random()*160-80))+'px';
     b.appendChild(c);
     setTimeout(()=>{ const cr=c.getBoundingClientRect(); c.style.transform=`translate(${tx-cr.left-22}px,${ty-cr.top-22}px) scale(.5)`; c.style.opacity='.2'; }, 500+i*60);
+    setTimeout(clink, 1250+i*60);
   }
   const start=S.coins; S.coins+=n; save();
   setTimeout(()=>{ let v=start; const step=Math.max(1,Math.round(n/15));
     const iv=setInterval(()=>{ v=Math.min(S.coins,v+step); const p=$('#coinpill'); if(p){ p.querySelector('span').textContent=v; p.classList.remove('bump'); void p.offsetWidth; p.classList.add('bump'); } if(v>=S.coins){ clearInterval(iv); } }, 50); }, 1100);
+  setTimeout(saveSnd, 1350+k*60);
   setTimeout(()=>{ b.remove(); cb&&cb(); }, 2100);
 }
 
@@ -1058,6 +1091,9 @@ function home(opts){
   const sub = T.chest
     ? `<div class="cardsnote">모은 카드는 도감에 들어갔어요. 고양이와 카드로 놀아 보세요! <span class="spacer"></span><button class="big-btn ghost" id="bonus" style="font-size:20px;padding:12px 18px">⛵ 새 단어 더 탐험하기</button></div>`
     : `<div class="cardsnote"><b>오늘의 카드 ${words.length}장</b> · 단계를 하나 끝낼 때마다 모든 카드에 퍼즐 조각이 하나씩 붙어요. 4조각을 다 모으면 보물상자가 열려요!</div>`;
+  const LEM={w:'🐾',h:'💗',f:'🏘️'}; const nDone=LESSONS.filter(l=>S.done.includes(l.id)).length;
+  const lmap=`<div class="lmap"><div class="lmhead"><b>🗺️ 전체 탐험 지도</b><span>레슨 ${LESSONS.length}개 중 <b>${nDone}개</b> 끝!</span><div class="lmbar"><i style="width:${Math.round(nDone/LESSONS.length*100)}%"></i></div></div>
+    <div class="lmrow">${LESSONS.map((l,i)=>{ const d=S.done.includes(l.id), c=!d&&T.lesson===l.id; return `<button class="ld ${d?'done':c?'now':'lock'}" data-ls="${l.id}"><span class="ln">${i+1}</span><span class="le">${d?'✓':(LEM[l.id[0]]||'⭐')}</span></button>`; }).join('')}</div></div>`;
   app.innerHTML=`<div class="screen">${topbar()}
     <div class="pathcard">
       <div class="pathhead"><span class="tag ko">오늘의 탐험 길</span>${head}</div>
@@ -1066,10 +1102,12 @@ function home(opts){
         ${stones}${chest}
         <div class="pathcat" id="pcat" style="left:${POS[fromIdx][0]}%;top:${POS[fromIdx][1]-6}%">${catSVG({size:84,mood:'happy'})}</div>
       </div>
+      ${lmap}
       ${sub}
       <div class="todaycards">${words.map(w=>pzHTML(w, T.chest?4:st, opts.justPiece)).join('')}</div>
     </div></div>`;
   bindTop(); bindSay();
+  $$('[data-ls]').forEach(b=>b.onclick=()=>{ const l=LBYID[b.dataset.ls], i=LESSONS.indexOf(l)+1, d=S.done.includes(l.id); toast(`레슨 ${i}. ${l.title} · ${d?'끝냈어요 ✓':(T.lesson===l.id?'오늘 하는 레슨':'아직이에요')}`); speak(`Lesson ${i}. ${l.title}`); });
   $$('.stone[data-stage]').forEach(b=>b.onclick=()=>{ const n=+b.dataset.stage;
     if(T.chest){ toast('오늘 탐험은 끝났어요! 내일 또 만나요.'); return; }
     if(n<=st){ speak('You already finished this step!'); toast('이미 끝낸 단계예요 ✓'); return; }
@@ -1329,6 +1367,7 @@ const SHOP=[
   {id:'milk', cat:'care', i:'🥛', en:'Cat Milk', ko:'고양이 우유', price:1, inv:'milk', n:1},
   {id:'bag',  cat:'care', i:'🧻', en:'Poop Bags x3', ko:'응가 봉투 3장', price:2, inv:'bag', n:3},
   {id:'med',  cat:'care', i:'💊', en:'Cold Medicine', ko:'감기약', price:4, inv:'med', n:1},
+  {id:'soap', cat:'care', i:'🧼', en:'Soap', ko:'목욕 비누', price:2, inv:'soap', n:1},
   {id:'tee',   cat:'clothes', slot:'body', i:'👕', en:'Blue T-shirt', ko:'파란 티셔츠', price:15, color:'#4aa3ff', style:'shirt'},
   {id:'dress', cat:'clothes', slot:'body', i:'👗', en:'Pink Dress', ko:'분홍 원피스', price:20, color:'#ff7eb6', style:'dress'},
   {id:'rain',  cat:'clothes', slot:'body', i:'🧥', en:'Raincoat', ko:'노란 우비', price:20, color:'#ffd23f', style:'coat'},
@@ -1350,15 +1389,34 @@ const SHOP=[
   {id:'b2', cat:'home', slot:'bed', i:'☁️', en:'Cloud Bed', ko:'구름 침대', price:25},
   {id:'b3', cat:'home', slot:'bed', i:'🏰', en:'Castle Bed', ko:'성 침대', price:40},
   {id:'yarn', cat:'home', slot:'toy', i:'🧶', en:'Yarn Ball', ko:'털실 공', price:8},
-  {id:'mouse',cat:'home', slot:'toy', i:'🐭', en:'Toy Mouse', ko:'장난감 쥐', price:10}
+  {id:'mouse',cat:'home', slot:'toy', i:'🐭', en:'Toy Mouse', ko:'장난감 쥐', price:10},
+  {id:'mirror',cat:'room', slot:'wall', i:'🪞', en:'Mirror', ko:'거울', price:12, say:'I look great!'},
+  {id:'frame', cat:'room', slot:'wall', i:'🖼️', en:'Picture', ko:'그림 액자', price:10, say:'What a pretty picture!'},
+  {id:'clock', cat:'room', slot:'wall', i:'🕰️', en:'Clock', ko:'시계', price:10, say:'Tick tock!'},
+  {id:'tower1',cat:'room', slot:'tower', i:'🗼', en:'Cat Tower', ko:'캣타워', price:30, color:'#8fc7ff', say:'I can climb up high!'},
+  {id:'tower2',cat:'room', slot:'tower', i:'🗼', en:'Pink Cat Tower', ko:'분홍 캣타워', price:35, color:'#ff9cc2', say:'I can climb up high!'},
+  {id:'rug1',  cat:'room', slot:'rug', i:'🟥', en:'Red Rug', ko:'빨간 러그', price:10, color:'#ff8a80'},
+  {id:'rug2',  cat:'room', slot:'rug', i:'🟦', en:'Blue Rug', ko:'파란 러그', price:10, color:'#82b1ff'},
+  {id:'rug3',  cat:'room', slot:'rug', i:'🌈', en:'Rainbow Rug', ko:'무지개 러그', price:18, color:'rainbow'},
+  {id:'plant', cat:'room', slot:'deco', i:'🪴', en:'Plant', ko:'화분', price:8, say:'It smells like a garden!'},
+  {id:'tank',  cat:'room', slot:'deco', i:'🐠', en:'Fish Tank', ko:'어항', price:22, say:'Fishy fishy! I want to watch them!'},
+  {id:'sofa',  cat:'room', slot:'deco', i:'🛋️', en:'Sofa', ko:'소파', price:25, say:'So soft and comfy!'},
+  {id:'wmint', cat:'room', slot:'wallp', i:'🟩', en:'Mint Wallpaper', ko:'민트 벽지', price:12, wall:'mint'},
+  {id:'wsky',  cat:'room', slot:'wallp', i:'🟦', en:'Sky Wallpaper', ko:'하늘 벽지', price:12, wall:'sky'},
+  {id:'wlemon',cat:'room', slot:'wallp', i:'🟨', en:'Lemon Wallpaper', ko:'레몬 벽지', price:12, wall:'lemon'},
+  {id:'wlilac',cat:'room', slot:'wallp', i:'🟪', en:'Lilac Wallpaper', ko:'보라 벽지', price:12, wall:'lilac'}
 ];
 const SHOPBY=Object.fromEntries(SHOP.map(x=>[x.id,x]));
-const SHOPCATS=[{id:'care',en:'Food & Care',ko:'먹이·돌봄',i:'🍽️'},{id:'clothes',en:'Clothes',ko:'옷',i:'👕'},{id:'shoes',en:'Shoes',ko:'신발',i:'👟'},{id:'acc',en:'Accessories',ko:'액세서리',i:'🎀'},{id:'home',en:'Bed & Toys',ko:'침대·장난감',i:'🛏️'}];
+const FURS={orange:{f:'#f6a95c',d:'#d9803a',b:'#fff1df',ko:'주황',en:'Orange'},gray:{f:'#a9aeb8',d:'#7d838f',b:'#eef0f3',ko:'회색',en:'Gray'},cream:{f:'#f1d9ae',d:'#d4b47c',b:'#fffaf0',ko:'크림',en:'Cream'},brown:{f:'#b07a50',d:'#86573a',b:'#f3e2d0',ko:'갈색',en:'Brown'},black:{f:'#4a4a55',d:'#2c2c33',b:'#9a9aa6',ko:'검정',en:'Black'},white:{f:'#fafaf6',d:'#d6d6cf',b:'#ffffff',ko:'흰색',en:'White'}};
+const WALLS={pink:'#ffe6ef',mint:'#dff7ec',sky:'#ddefff',lemon:'#fff6c9',lilac:'#ece3ff'};
+const SALON_PRICE=6;
+function towerSVG(col){ return `<svg viewBox="0 0 120 230" class="tw" aria-label="cat tower"><rect x="20" y="40" width="14" height="180" fill="#d8b98c"/><rect x="82" y="110" width="14" height="110" fill="#d8b98c"/>${[60,90,130,170,200].map(y=>`<path d="M20 ${y} h14 M82 ${y+10} h14" stroke="#a4835a" stroke-width="3"/>`).join('')}<rect x="4" y="210" width="112" height="16" rx="6" fill="${col}"/><rect x="60" y="104" width="56" height="12" rx="6" fill="${col}"/><rect x="2" y="30" width="50" height="14" rx="7" fill="${col}"/><ellipse cx="27" cy="26" rx="22" ry="9" fill="${col}" opacity=".7"/><circle cx="96" cy="140" r="8" fill="#ff6a8a"/><path d="M96 116 v16" stroke="#555" stroke-width="2"/></svg>`; }
+const SHOPCATS=[{id:'care',en:'Food & Care',ko:'먹이·돌봄',i:'🍽️'},{id:'clothes',en:'Clothes',ko:'옷',i:'👕'},{id:'shoes',en:'Shoes',ko:'신발',i:'👟'},{id:'acc',en:'Accessories',ko:'액세서리',i:'🎀'},{id:'home',en:'Bed & Toys',ko:'침대·장난감',i:'🛏️'},{id:'room',en:'Furniture',ko:'가구·벽지',i:'🪞'}];
 let catSeq=0;
 function catSVG(o){
   o=o||{}; const c=S.cat; const size=o.size||200; const id='cc'+(catSeq++);
   const body=c.wear.body&&SHOPBY[c.wear.body], feet=c.wear.feet&&SHOPBY[c.wear.feet];
-  const fur='#f6a95c', dark='#d9803a', belly='#fff1df';
+  const FC=FURS[c.fur]||FURS.orange; const fur=FC.f, dark=FC.d, belly=FC.b;
   const mood=o.mood||(c.sick?'sick':'normal');
   const eyes = mood==='happy' ? `<path d="M70 94 Q80 82 90 94 M110 94 Q120 82 130 94" stroke="#3a2a20" stroke-width="5" fill="none" stroke-linecap="round"/>`
     : mood==='sick' ? `<path d="M71 92 L89 92 M111 92 L129 92" stroke="#3a2a20" stroke-width="5" stroke-linecap="round"/>`
@@ -1400,7 +1458,7 @@ function catSVG(o){
 }
 function tickCat(){
   const c=S.cat, now=Date.now(), h=Math.max(0,(now-(c.tick||now))/36e5);
-  c.food=Math.max(0,c.food-4*h); c.joy=Math.max(0,c.joy-3*h); c.tick=now;
+  c.food=Math.max(0,c.food-4*h); c.joy=Math.max(0,c.joy-3*h); c.clean=Math.max(0,(c.clean==null?80:c.clean)-1.5*h); c.tick=now;
   const day=dayNum();
   if(c.checkDay!==day){ c.checkDay=day; if(c.named && c.born!=null && day-c.born>=2 && !c.sick && day-c.sickDay>=4 && Math.random()<.15){ c.sick=true; c.sickDay=day; } }
   save();
@@ -1410,6 +1468,7 @@ function catMood(){
   if(c.sick) return {en:'Achoo! I have a cold.', ko:'감기 걸렸어요. 약을 주세요!'};
   if(c.poops>0) return {en:'Oops! I made a poop.', ko:'응가를 치워 주세요!'};
   if(c.food<30) return {en:"I'm hungry! Meow!", ko:'배고파요. 밥 주세요!'};
+  if((c.clean==null?80:c.clean)<30) return {en:'I feel dirty. Bath time, please!', ko:'목욕시켜 주세요!'};
   if(c.joy<40) return {en:"Let's play with a card!", ko:'카드로 같이 놀아요!'};
   return {en:'I love you! Meow!', ko:'사랑해요! 야옹!'};
 }
@@ -1418,12 +1477,21 @@ function catRoom(o){
   if(!c.named){ return nameCat(()=>catRoom(o)); }
   const bed=c.wear.bed&&SHOPBY[c.wear.bed], toy=c.wear.toy&&SHOPBY[c.wear.toy];
   const md=catMood();
+  const W=k=>c.wear[k]&&SHOPBY[c.wear[k]];
+  const wall=W('wall'), tower=W('tower'), rug=W('rug'), deco=W('deco'), wallp=W('wallp');
+  const furn=[
+    wall?`<button class="fu wallit" data-fu="${wall.id}" aria-label="${esc(wall.en)}">${wall.i}</button>`:'',
+    deco?`<button class="fu decoit" data-fu="${deco.id}" aria-label="${esc(deco.en)}">${deco.id==='tank'?'<span class="tankbox">🐠🐟</span>':deco.i}</button>`:'',
+    tower?`<button class="fu towerit" data-fu="${tower.id}" aria-label="${esc(tower.en)}">${towerSVG(tower.color)}</button>`:'',
+    rug?`<div class="rug" style="background:${rug.color==='rainbow'?'linear-gradient(90deg,#ff8a80,#ffd180,#ffff8d,#b9f6ca,#80d8ff,#b388ff)':rug.color}"></div>`:''].join('');
+  const roomBg=`background:linear-gradient(${WALLS[wallp?wallp.wall:'pink']} 0 62%,#e7c79c 62% 100%)`;
   const bar=(icon,v,label)=>`<div class="stat"><span style="font-size:26px">${icon}</span><div class="b"><i class="${v<30?'low':''}" style="width:${Math.round(v)}%"></i></div><span>${label}</span></div>`;
   const poops=Array.from({length:c.poops},(_,i)=>`<span class="poop" data-poop="${i}" style="left:${30+i*14}%">💩</span>`).join('');
   app.innerHTML=`<div class="screen">${topbar()}
     <div class="catroom">
-      <div class="room" id="room">
+      <div class="room" id="room" style="${roomBg}">
         <div class="win"></div>
+        ${furn}
         ${bed?`<div class="bed">${bed.i}</div><div class="bedname">${esc(bed.en)}</div>`:''}
         ${toy?`<div class="toy">${toy.i}</div>`:''}
         <div class="bowl">🥣</div>
@@ -1433,13 +1501,15 @@ function catRoom(o){
       </div>
       <div class="catside">
         <h2>🐱 ${esc(c.name)}</h2>
-        ${bar('🍗',c.food,'밥')}${bar('🛁',Math.max(0,100-c.poops*35),'깨끗')}${bar('💗',c.joy,'기분')}
+        ${bar('🍗',c.food,'밥')}${bar('🛁',Math.max(0,(c.clean==null?80:c.clean)-c.poops*15),'깨끗')}${bar('💗',c.joy,'기분')}
         ${c.sick?'<div class="hint">🤧 감기에 걸렸어요. 감기약을 먹이면 금방 나아요.</div>':''}
         <div class="acts">
           <button class="act ${c.food<30?'hot':''}" id="feed" data-k="food"><span class="i">🥫</span>밥 주기<small>밥 ${c.inv.food}개</small></button>
           <button class="act" id="snack" data-k="fish"><span class="i">🐟</span>간식 주기<small>생선 간식 ${c.inv.fish}개</small></button>
           <button class="act" id="milk" data-k="milk"><span class="i">🥛</span>우유 주기<small>우유 ${c.inv.milk}개</small></button>
           <button class="act ${c.poops?'hot':''}" id="clean"><span class="i">🧻</span>응가 치우기<small>봉투 ${c.inv.bag}장</small></button>
+          <button class="act ${(c.clean||0)<30?'hot':''}" id="bath"><span class="i">🛁</span>목욕시키기<small>비누 ${c.inv.soap||0}개</small></button>
+          <button class="act" id="salon"><span class="i">✂️</span>미용실 가기<small>🪙 ${SALON_PRICE}</small></button>
           <button class="act ${c.sick?'hot':''}" id="med"><span class="i">💊</span>약 먹이기<small>감기약 ${c.inv.med}개</small></button>
           <button class="act ${c.joy<40?'hot':''}" id="play"><span class="i">🃏</span>카드로 놀기<small>카드 ${Object.keys(S.cards).length}장</small></button>
         </div>
@@ -1447,7 +1517,7 @@ function catRoom(o){
       </div>
     </div></div>`;
   bindTop(); bindSay();
-  ['#feed','#snack','#milk'].forEach(s=>{ const b=$(s); b.onclick=()=>feedCat(b.dataset.k); }); $('#clean').onclick=()=>cleanPoop(); $('#med').onclick=giveMed; $('#play').onclick=pickCard; $('#shop').onclick=()=>shop();
+  ['#feed','#snack','#milk'].forEach(s=>{ const b=$(s); b.onclick=()=>feedCat(b.dataset.k); }); $('#clean').onclick=()=>cleanPoop(); $('#bath').onclick=giveBath; $('#salon').onclick=salon; $$('[data-fu]').forEach(b=>b.onclick=()=>tapFurn(b.dataset.fu)); $('#med').onclick=giveMed; $('#play').onclick=pickCard; $('#shop').onclick=()=>shop();
   $$('[data-poop]').forEach(p=>p.onclick=()=>cleanPoop());
   if(o.play) setTimeout(()=>playCard(o.play),300);
   else if(o.celebrate){ setTimeout(()=>{ catAnim('hop'); hearts(6); speak(`${c.name} is so happy! You found new cards!`); },300); }
@@ -1462,26 +1532,60 @@ function nameCat(cb){
   document.body.appendChild(m); speak('Meet your cat! What is its name?');
   $('#ok',m).onclick=()=>{ const v=$('#nm',m).value.trim(); S.cat.name=v||'Mimi'; S.cat.named=true; S.cat.born=dayNum(); save(); m.remove(); cb(); };
 }
-function catAnim(k){ const s=$('#scat'); if(!s) return; s.classList.remove('hop','run'); void s.offsetWidth; s.classList.add(k); setTimeout(()=>s.classList.remove(k), k==='run'?2700:2000); }
+function catAnim(k){ const s=$('#scat'); if(!s) return; s.classList.remove('hop','run','climb'); void s.offsetWidth; s.classList.add(k); setTimeout(()=>s.classList.remove(k), k==='run'?2700:2000); }
 function hearts(n,ch){ const r=$('#room'); if(!r) return; for(let i=0;i<n;i++){ const h=document.createElement('span'); h.className='float'; h.textContent=ch||rnd(['💗','💖','✨','💕']); h.style.left=(35+Math.random()*30)+'%'; h.style.bottom=(30+Math.random()*25)+'%'; h.style.animationDelay=(i*.15)+'s'; r.appendChild(h); setTimeout(()=>h.remove(),2400); } }
 function refreshCat(){ catRoom({quiet:true}); }
 function feedCat(k){
   const c=S.cat; const nm={food:'밥이',fish:'생선 간식이',milk:'우유가'}[k];
   if(c.inv[k]<1){ speak('We need more. Let\'s go to the shop!'); toast(`${nm} 없어요. 상점에서 사요! 🛍️`); return; }
   if(c.food>=90){ speak("I'm full! Thank you!"); toast('배불러요! 나중에 주세요.'); return; }
-  c.inv[k]--; c.food=Math.min(100,c.food+({food:15,fish:8,milk:5})[k]); c.joy=Math.min(100,c.joy+({food:2,fish:5,milk:3})[k]);
+  c.inv[k]--; c.food=Math.min(100,c.food+({food:8,fish:4,milk:3})[k]); c.joy=Math.min(100,c.joy+({food:1,fish:3,milk:1})[k]);
   save(); refreshCat(); hearts(3, SHOPBY[k].i); catAnim('hop'); speak(k==='fish'?'Yummy fish! Thank you!':(k==='milk'?'Yummy milk! Thank you!':'Yum yum! Thank you!'));
   if(k==='food' && c.poops<3){ setTimeout(()=>{ c.poops++; save(); if(view==='cat'){ refreshCat(); speak('Oops! I made a poop.'); } }, 1800); }
 }
 function cleanPoop(){
   const c=S.cat; if(!c.poops){ toast('깨끗해요! ✨'); return; }
   if(c.inv.bag<1){ speak('We need poop bags. Let\'s go to the shop!'); toast('응가 봉투가 없어요. 상점에서 사요!'); return; }
-  c.inv.bag--; c.poops--; c.joy=Math.min(100,c.joy+3); save(); refreshCat(); hearts(2,'✨'); speak('All clean! Thank you!');
+  c.inv.bag--; c.poops--; c.joy=Math.min(100,c.joy+1); save(); refreshCat(); hearts(2,'✨'); speak('All clean! Thank you!');
+}
+function giveBath(){
+  const c=S.cat; if((c.inv.soap||0)<1){ speak('We need soap. Let\'s go to the shop!'); toast('비누가 없어요. 상점에서 사요! 🧼'); return; }
+  if((c.clean||0)>=90){ speak("I'm already clean!"); toast('벌써 깨끗해요! ✨'); return; }
+  c.inv.soap--; c.clean=Math.min(100,(c.clean||0)+20); c.joy=Math.min(100,c.joy+1); save();
+  const r=$('#room'); const tub=document.createElement('div'); tub.className='tub'; tub.textContent='🛁'; r&&r.appendChild(tub);
+  speak('Splish splash! Bath time! Scrub, scrub, scrub!');
+  let i=0; const iv=setInterval(()=>{ hearts(3,rnd(['🫧','🫧','🧼','✨'])); if(++i>=6){ clearInterval(iv); } },350);
+  setTimeout(()=>{ tub.remove(); refreshCat(); catAnim('hop'); hearts(4,'✨'); speak('I am so clean and shiny! Thank you!'); }, 2600);
+}
+function salon(){
+  const c=S.cat; let pick=c.fur||'orange';
+  const m=document.createElement('div'); m.className='modal';
+  const draw=()=>{ const keep=c.fur; c.fur=pick; const prev=catSVG({size:170,mood:'happy'}); c.fur=keep;
+    m.innerHTML=`<div class="sheet" style="align-items:center;text-align:center"><button class="close">✕</button>
+      <h2 style="font-family:var(--display);margin:0">✂️ Pet Salon 미용실</h2>
+      <div style="font-size:18px">털을 다듬고 빗고, 털 색도 바꿀 수 있어요. 한 번에 🪙 ${SALON_PRICE}</div>
+      ${prev}
+      <div class="furs">${Object.entries(FURS).map(([k,v])=>`<button class="fur ${k===pick?'on':''}" data-fur="${k}" style="background:${v.f}" aria-label="${v.en}"><span>${v.ko}</span></button>`).join('')}</div>
+      <button class="big-btn green" id="go" ${S.coins<SALON_PRICE?'disabled':''}>✂️ 미용 시작! 🪙 ${SALON_PRICE}</button>
+      ${S.coins<SALON_PRICE?`<small>코인 ${SALON_PRICE-S.coins}개 더 필요해요</small>`:''}</div>`;
+    m.querySelector('.close').onclick=()=>m.remove();
+    $$('[data-fur]',m).forEach(b=>b.onclick=()=>{ pick=b.dataset.fur; speak(FURS[pick].en); draw(); });
+    $('#go',m).onclick=()=>{ if(S.coins<SALON_PRICE) return; S.coins-=SALON_PRICE; c.fur=pick; c.clean=Math.min(100,(c.clean||0)+15); c.joy=Math.min(100,c.joy+4); save(); m.remove(); refreshCat();
+      let i=0; const iv=setInterval(()=>{ hearts(2,rnd(['✂️','✨','💇','🌟'])); if(++i>=5) clearInterval(iv); },300);
+      speak(`Snip snip! Brush brush! ${c.name} looks beautiful!`); setTimeout(()=>catAnim('hop'),1500); };
+  };
+  draw(); document.body.appendChild(m); speak('Welcome to the pet salon! Pick a color.');
+}
+function tapFurn(id){
+  const x=SHOPBY[id], c=S.cat, day=dayNum(); if(!x) return;
+  c.tapped=c.tapped||{}; const first=c.tapped[id]!==day; c.tapped[id]=day;
+  if(first){ c.joy=Math.min(100,c.joy+1); save(); }
+  speak(`${x.en}! ${x.say||''}`); catAnim(x.slot==='tower'?'climb':'hop'); hearts(2,x.slot==='tower'?'💗':x.i);
 }
 function giveMed(){
   const c=S.cat; if(!c.sick){ toast(`${c.name}는 건강해요! 💪`); speak("I'm not sick. I feel great!"); return; }
   if(c.inv.med<1){ speak('We need cold medicine. Let\'s go to the shop!'); toast('감기약이 없어요. 상점에서 사요!'); return; }
-  c.inv.med--; c.sick=false; c.joy=Math.min(100,c.joy+5); save(); refreshCat(); catAnim('hop'); hearts(4); speak('I feel better! Thank you!');
+  c.inv.med--; c.sick=false; c.joy=Math.min(100,c.joy+3); save(); refreshCat(); catAnim('hop'); hearts(4); speak('I feel better! Thank you!');
 }
 function pickCard(){
   const ids=Object.keys(S.cards).filter(id=>BYID[id]);
@@ -1496,13 +1600,13 @@ function pickCard(){
 function playCard(id){
   const w=BYID[id], c=S.cat, day=dayNum(); if(!w) return;
   const first=c.played[id]!==day; c.played[id]=day;
-  c.joy=Math.min(100,c.joy+(first?6:1)); save();
+  c.joy=Math.min(100,c.joy+(first?3:1)); save();
   const r=$('#room'); if(!r) return;
   const f=document.createElement('div'); f.className='flycard'; f.innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border-radius:20px;padding:12px 18px;box-shadow:0 6px 0 rgba(0,0,0,.1)"><span>${w.em}</span><span style="font-family:var(--display);font-size:30px">${esc(w.word)}</span></div>`;
   r.appendChild(f);
   speak(`${w.word}! ${filled(w)}`);
   catAnim('run'); setTimeout(()=>{ hearts(6); catAnim('hop'); }, 2600);
-  setTimeout(()=>{ f.remove(); refreshCat(); toast(first?`${c.name} 기분 +6 💗`:`${c.name} 기분 +1 💗`); }, 4200);
+  setTimeout(()=>{ f.remove(); refreshCat(); toast(first?`${c.name} 기분 +3 💗`:`${c.name} 기분 +1 💗`); }, 4200);
 }
 function shop(tab){
   view='shop'; tab=tab||'care'; const c=S.cat;
@@ -1512,7 +1616,7 @@ function shop(tab){
     if(x.inv){ btn=`<button class="buy" data-buy="${x.id}" ${S.coins<x.price?'disabled':''}>🪙 ${x.price} 사기</button><small>가지고 있음: ${c.inv[x.inv]}</small>`; }
     else if(c.owned.includes(x.id)){ const on=c.wear[x.slot]===x.id; btn=`<button class="buy ${on?'off':'wear'}" data-wear="${x.id}">${on?'벗기기':'입히기 / 놓기'}</button>`; }
     else btn=`<button class="buy" data-buy="${x.id}" ${S.coins<x.price?'disabled':''}>🪙 ${x.price} 사기</button>${S.coins<x.price?`<small>코인 ${x.price-S.coins}개 더 필요해요</small>`:''}`;
-    return `<div class="item ${c.owned.includes(x.id)?'own':''}"><div class="i">${x.i}</div><b>${esc(x.en)}</b><small>${esc(x.ko)}</small><button class="sm" data-say="${esc(x.en)}">🔊</button>${btn}</div>`;
+    return `<div class="item ${c.owned.includes(x.id)?'own':''}"><div class="i">${x.slot==='tower'?towerSVG(x.color):x.i}</div><b>${esc(x.en)}</b><small>${esc(x.ko)}</small><button class="sm" data-say="${esc(x.en)}">🔊</button>${btn}</div>`;
   };
   app.innerHTML=`<div class="screen">${topbar()}
     <div class="tabs">${SHOPCATS.map(t=>`<button class="tab ${t.id===tab?'on':''}" data-t="${t.id}">${t.i} ${t.en} <small>${t.ko}</small></button>`).join('')}</div>
