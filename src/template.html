@@ -134,7 +134,10 @@ button:disabled{cursor:default}
 .hint{background:#fff3d1;color:#8a5a00;border-radius:999px;padding:8px 16px;font-weight:700;font-size:17px}
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .opts.emo{grid-template-columns:repeat(4,1fr)}
+.kopic{display:inline-block;font-family:var(--body);font-weight:800;font-size:clamp(15px,.32em,22px);line-height:1.2;color:#5b4a8a;background:#f1ecff;border-radius:12px;padding:6px 8px;max-width:9em;word-break:keep-all;text-align:center}
 .opts.one{grid-template-columns:1fr}
+.opts.dm .opt{min-height:58px;padding-top:8px;padding-bottom:8px}
+.panel>.qlabel,.panel>.stage,.panel>.opts,.panel>#fbwrap{flex-shrink:0}
 .opt{position:relative;background:#fff;border:3px solid var(--line);border-radius:22px;min-height:84px;padding:12px 70px 12px 22px;font-family:var(--display);font-weight:600;font-size:clamp(22px,2.5vw,30px);text-align:left;display:flex;align-items:center;box-shadow:0 4px 0 var(--line)}
 .opts.one .opt{font-size:clamp(20px,2.2vw,26px);font-weight:500;min-height:72px}
 .opt:active{transform:translateY(3px)}
@@ -256,6 +259,9 @@ button:disabled{cursor:default}
 @keyframes hop{50%{transform:translateY(-36px)}}
 @keyframes run{0%{left:50%}20%{left:20%}40%{left:80%}60%{left:25%}80%{left:70%}100%{left:50%}}
 .bubble{position:absolute;top:6%;right:5%;max-width:46%;background:#fff;border-radius:22px;padding:12px 16px;font-family:var(--display);font-weight:600;font-size:clamp(18px,2vw,24px);box-shadow:0 4px 0 rgba(0,0,0,.08);display:flex;align-items:center;gap:10px}
+.wishcard{display:flex;align-items:center;gap:10px;text-align:left;border:0;border-radius:16px;background:#fff3c4;box-shadow:0 0 0 3px #ffcf33;padding:8px 12px;font-size:16px;line-height:1.3;width:100%}
+.wishcard .wi{font-size:38px;line-height:1}.wishcard small{font-weight:800;color:#8a5a00}.wishcard.done{background:#ffe9f2;box-shadow:none;font-size:14px}
+.item.wished{box-shadow:0 0 0 4px #ffcf33}.item.wished::before{content:'💭 소원';position:absolute;top:6px;left:8px;font-size:13px;font-weight:800;color:#8a5a00}
 .bubble small{display:block;font-family:var(--body);font-weight:700;font-size:15px;color:#8a5a00}
 .float{position:absolute;font-size:40px;pointer-events:none;animation:up 1.6s ease-out forwards;z-index:4}
 @keyframes up{to{transform:translateY(-160px) scale(1.3);opacity:0}}
@@ -276,7 +282,7 @@ button:disabled{cursor:default}
 
 /* shop */
 .shopgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
-.item{background:#fff;border:3px solid var(--line);border-radius:20px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.item{position:relative;background:#fff;border:3px solid var(--line);border-radius:20px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
 .item .i{font-size:54px;line-height:1.1}
 .item b{font-family:var(--display);font-size:20px}
 .item small{color:var(--ink-soft);font-size:14px}
@@ -349,7 +355,7 @@ const ISL = [
   {id:'book',   name:'Book Words', ko:'책에서 찾은 단어', em:'📖'}
 ];
 const STAGES = [
-  {n:1, icon:'🖼️', en:'Look & Find', ko:'보고 그림 찾기', coins:3, say:'Step one. Listen to the word, and find the picture.'},
+  {n:1, icon:'🖼️', en:'Look & Find', ko:'그림·뜻 찾기', coins:3, say:'Step one. Listen to the word, and find the picture or the meaning.'},
   {n:2, icon:'🔁', en:'Same & Opposite', ko:'같은 뜻·반대 뜻', coins:3, say:'Step two. Find the word that means the same, or the opposite.'},
   {n:3, icon:'✏️', en:'Fill the Blank', ko:'빈칸 채우기', coins:3, say:'Step three. Find the word that fits in the blank.'},
   {n:4, icon:'📖', en:'Story Time', ko:'이야기 퀴즈', coins:5, say:'Step four. Read the story, and answer the questions.'}
@@ -360,6 +366,9 @@ const TIER_EM = ['🥉','🥈','🥇','🌈'];
 const REVIEW_GAP = [2,3,5];
 
 const WORDS=[], BYID={}, BYW={};
+/* Only words whose picture shows the meaning itself. Every other word is asked as "read the word, pick the meaning". */
+const PIC=new Set(['peek','cloudy','sunny','climb','map','fossil','throw','price','tool','experiment','pour','ticket','station','correct','loud','ghost','trophy','strong','smile','cry','gift','party','dance','surprised','quiet','sleepy','angry','silly','grow']);
+function pic(w){ return w.pic?w.em:`<span class="kopic">${esc(w.ko)}</span>`; }
 (function(){
   let isl=null;
   document.getElementById('wordData').textContent.split('\n').forEach(l=>{
@@ -369,7 +378,7 @@ const WORDS=[], BYID={}, BYW={};
     const w={word:f[0],pos:f[1],em:f[2],def:f[3],sent:f[4],syn:sp(f[5]),ant:sp(f[6]),lvl:+f[7]||2,ko:f[8],island:isl,book:isl==='book'};
     const cs=s=>s?s.split(',').map(x=>x.trim()).filter(Boolean):[];
     w.p1=cs(f[9]); w.f3=cs(f[11]); if(f[10]){ const [t,a,dd]=f[10].split(':'); w.q2={t,a,d:cs(dd)}; }
-    w.id=isl+':'+w.word; WORDS.push(w); BYID[w.id]=w; BYW[w.word]=w;
+    w.pic=PIC.has(w.word); w.id=isl+':'+w.word; WORDS.push(w); BYID[w.id]=w; BYW[w.word]=w;
   });
 })();
 const GLOSS={};
@@ -443,13 +452,16 @@ function tone(seq){ try{ ac=ac||new (window.AudioContext||window.webkitAudioCont
 const ding=()=>tone([[660,.12],[880,.12],[1175,.22]]);
 const bonk=()=>tone([[300,.15],[220,.25]]);
 const fanfare=()=>tone([[523,.14],[659,.14],[784,.14],[1047,.4]]);
-const coinSnd=()=>tone([[988,.08],[1319,.18]]);
-function clink(){ try{ ac=ac||new (window.AudioContext||window.webkitAudioContext)(); const t=ac.currentTime;
-  const o=ac.createOscillator(),g=ac.createGain(); o.type='sine'; o.frequency.setValueAtTime(2400+Math.random()*1400,t); o.frequency.exponentialRampToValueAtTime(1800,t+.08);
-  g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.09,t+.005); g.gain.exponentialRampToValueAtTime(.0001,t+.12); o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t+.14);
-  const n=ac.createBufferSource(), b=ac.createBuffer(1,ac.sampleRate*.06,ac.sampleRate), d=b.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*(1-i/d.length);
-  const f=ac.createBiquadFilter(); f.type='highpass'; f.frequency.value=5000; const ng=ac.createGain(); ng.gain.value=.05; n.buffer=b; n.connect(f); f.connect(ng); ng.connect(ac.destination); n.start(t); }catch(e){} }
-const saveSnd=()=>tone([[784,.07],[1047,.07],[1568,.3]]);
+const coinSnd=()=>{ coinHit(0,.08,2300); coinHit(.09,.08,2900); };
+/* metallic coin: inharmonic partials with a fast decay */
+function coinHit(at,vol,f0){ try{ ac=ac||new (window.AudioContext||window.webkitAudioContext)(); const t=ac.currentTime+(at||0); f0=f0||(2000+Math.random()*900); vol=vol||.07;
+  [[1,1,.5],[2.76,.55,.32],[5.4,.3,.18],[8.93,.15,.1]].forEach(([m,a,d])=>{ const o=ac.createOscillator(),g=ac.createGain(); o.type='sine'; o.frequency.value=f0*m;
+    g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(vol*a,t+.003); g.gain.exponentialRampToValueAtTime(.0001,t+d); o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t+d+.02); });
+  const n=ac.createBufferSource(), b=ac.createBuffer(1,Math.floor(ac.sampleRate*.025),ac.sampleRate), dd=b.getChannelData(0); for(let k=0;k<dd.length;k++) dd[k]=(Math.random()*2-1)*(1-k/dd.length);
+  const f=ac.createBiquadFilter(); f.type='highpass'; f.frequency.value=6000; const ng=ac.createGain(); ng.gain.value=vol*.6; n.buffer=b; n.connect(f); f.connect(ng); ng.connect(ac.destination); n.start(t); }catch(e){} }
+function clink(){ coinHit(0,.06); }
+/* coins landing on the pile: a jingle of several coins */
+function saveSnd(){ for(let i=0;i<7;i++) coinHit(i*.045+Math.random()*.03, .05+Math.random()*.03, 1700+Math.random()*1400); }
 function bindSay(root){ $$('[data-say]',root||document).forEach(b=>{ if(b._s) return; b._s=1; b.addEventListener('click',e=>{ e.stopPropagation(); speak(b.dataset.say); }); }); }
 
 /* ================= TODAY PATH ================= */
@@ -541,7 +553,7 @@ function pzHTML(w, pieces, justIdx){
   const c=S.cards[w.id]; const isRev=!S.today.fresh.includes(w.id);
   const tcls=(isRev||S.today.chest)&&c?'t'+c.tier:'new';
   let cov=''; for(let k=0;k<4;k++){ const off=k<pieces; const anim=off&&justIdx===k; cov+=`<div class="cov c${k} ${off&&!anim?'off':''} ${anim?'just':''}">${off?'':'?'}</div>`; }
-  return `<div class="pz ${tcls}" ${pieces>=1?`data-say="${esc(w.word)}"`:''}>${isRev?'<span class="badge">🔁</span>':''}<div class="e">${w.em}</div><div class="w">${pieces>=1?esc(w.word):''}</div>${cov}</div>`;
+  return `<div class="pz ${tcls}" ${pieces>=1?`data-say="${esc(w.word)}"`:''}>${isRev?'<span class="badge">🔁</span>':''}<div class="e">${pic(w)}</div><div class="w">${pieces>=1?esc(w.word):''}</div>${cov}</div>`;
 }
 const POS=[[6,62],[23,40],[42,66],[61,38],[79,64],[93,36]];
 function home(opts){
@@ -591,11 +603,20 @@ function home(opts){
 let run=null, shownAt=0;
 function distinctEmo(list, n, used){ const out=[]; for(const x of list){ if(out.length>=n) break; if(used.has(x.em)) continue; used.add(x.em); out.push(x); } return out; }
 function makeQ(n, w){
+  if(n===1&&!w.pic){
+    let d=w.p1.map(x=>BYW[x]).filter(x=>x&&!close(w,x)&&x.def!==w.def);
+    if(d.length<3) d=d.concat(shuffle(WORDS.filter(x=>x!==w&&x.island!==w.island&&!close(w,x)&&x.def!==w.def&&!d.includes(x))).slice(0,3-d.length));
+    return {n, w, key:w.id, layout:'one',
+      opts:shuffle([w].concat(d.slice(0,3))).map(x=>({label:x.def, ok:x===w, word:x.word, say:x.def})),
+      head:`<div class="row" style="gap:16px"><div class="bigword">${esc(w.word)}</div><button class="speak" data-say="${esc(w.word)}">🔊</button></div>
+            <div class="row"><button class="hint" id="kohint">🇰🇷 한국어 힌트</button></div>`,
+      ask:`What does ${esc(w.word)} mean?`, dm:true, say:`${w.word}. What does ${w.word} mean?`};
+  }
   if(n===1){
     const used=new Set([w.em]); const tw=TW();
     let pool;
-    let d=w.p1.map(x=>BYW[x]).filter(Boolean);
-    if(d.length<3){ pool=shuffle(WORDS.filter(x=>x!==w&&x.island!==w.island&&!x.book&&!close(w,x))); d=d.concat(distinctEmo(pool,3-d.length,new Set([w.em].concat(d.map(x=>x.em))))); }
+    pool=shuffle(WORDS.filter(x=>x.pic&&x!==w&&!close(w,x)));
+    let d=distinctEmo(pool,3,new Set([w.em]));
     return {n, w, key:w.id, layout:'emo',
       opts:shuffle([w].concat(d.slice(0,3))).map(x=>({label:x.em, ok:x===w, word:x.word})),
       head:`<div class="row" style="gap:16px"><div class="bigword">${esc(w.word)}</div><button class="speak" data-say="${esc(w.word)}">🔊</button></div>
@@ -663,7 +684,7 @@ function nextQ(){
     <div class="qlabel"><span class="tag">${s.en}</span><span class="tag ko">${cur.label||s.ko}</span><span class="tag" style="background:transparent">${run.i+1} / ${run.makers.length}</span>
       ${run.n===4?'<span class="spacer"></span><button class="tag" id="peek" style="font-size:18px">📖 이야기 다시 보기</button>':''}</div>
     <div class="stage">${cur.head}${cur.ask?`<div class="prompt"><div class="txt" style="font-size:24px">${cur.ask}</div></div>`:''}</div>
-    <div class="opts ${cur.layout||''}">${cur.opts.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o.label)}${o.say?`<span class="os" data-say="${esc(o.say)}" role="button" aria-label="Listen">🔊</span>`:''}</button>`).join('')}</div>
+    <div class="opts ${cur.layout||''} ${cur.dm?'dm':''}">${cur.opts.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o.label)}${o.say?`<span class="os" data-say="${esc(o.say)}" role="button" aria-label="Listen">🔊</span>`:''}</button>`).join('')}</div>
     <div id="fbwrap"></div></div></div>`;
   bindQtop(); bindSay();
   const kh=$('#kohint'); if(kh) kh.onclick=()=>{ kh.textContent='🇰🇷 '+cur.w.ko; };
@@ -685,12 +706,12 @@ function answer(i){
   let extra='', sayAfter='', defs='';
   const right=cur.opts.find(x=>x.ok);
   const rl = run.n===1 ? w.word : right.label;
-  if(w){ extra=`<div class="em">${w.em}</div>`;
+  if(w){ extra=`<div class="em">${pic(w)}</div>`;
     const rows=[]; const add=(x,tag)=>{ if(!x||rows.some(r=>r.x===x)) return; const df=defOf(x); if(df) rows.push({x,df,tag}); };
     add(w.word,'');
     if(run.n===2) add(right.word, w.q2.t==='s'?'같은 뜻':'반대 뜻');
     if(o.word&&o.word!==w.word&&!(run.n===2&&o.ok)) add(o.word, ok?'':'내가 고른 단어');
-    defs=`<div class="defs">${rows.map(r=>`<div class="drow"><button class="sm" data-say="${esc(r.x+'. '+r.df)}">🔊</button><div>${run.n===1&&BYW[r.x]?BYW[r.x].em+' ':''}<b>${esc(r.x)}</b>${r.tag?` <span class="dtag">${r.tag}</span>`:''}<div class="dd">${esc(r.df)}</div></div></div>`).join('')}</div>`;
+    defs=`<div class="defs">${rows.map(r=>`<div class="drow"><button class="sm" data-say="${esc(r.x+'. '+r.df)}">🔊</button><div>${run.n===1&&BYW[r.x]&&BYW[r.x].pic?BYW[r.x].em+' ':''}<b>${esc(r.x)}</b>${r.tag?` <span class="dtag">${r.tag}</span>`:''}<div class="dd">${esc(r.df)}</div></div></div>`).join('')}</div>`;
     sayAfter=rows.map(r=>`${r.x}: ${r.df}.`).join(' ');
   }
   $('#fbwrap').innerHTML=`<div class="fb ${ok?'good':'bad'}">${extra}
@@ -784,8 +805,8 @@ function openChest(){
 let bookTab='animal';
 function bookCard(w){
   const c=S.cards[w.id];
-  if(!c) return `<button class="card unk" data-unk="1"><div class="e">${w.em}</div><div class="w">???</div></button>`;
-  return `<button class="card t${c.tier}" data-id="${esc(w.id)}"><span class="st">${w.book?'📖':TIER_EM[c.tier]}</span><div class="e">${w.em}</div><div class="w">${esc(w.word)}</div></button>`;
+  if(!c) return `<button class="card unk" data-unk="1"><div class="e">${w.pic?w.em:'❓'}</div><div class="w">???</div></button>`;
+  return `<button class="card t${c.tier}" data-id="${esc(w.id)}"><span class="st">${w.book?'📖':TIER_EM[c.tier]}</span><div class="e">${pic(w)}</div><div class="w">${esc(w.word)}</div></button>`;
 }
 function cardBook(tab){
   view='book'; if(tab) bookTab=tab;
@@ -808,7 +829,7 @@ function cardModal(w){
   const c=S.cards[w.id];
   const m=document.createElement('div'); m.className='modal';
   m.innerHTML=`<div class="sheet"><button class="close" aria-label="Close">✕</button>
-    <div class="detail"><div class="bigemoji">${w.em}</div>
+    <div class="detail"><div class="bigemoji">${pic(w)}</div>
       <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
         <div class="qlabel"><span class="tag">${TIER_EM[c.tier]} ${TIER[c.tier].en} card</span><span class="tag ko">${TIER[c.tier].ko} 카드${c.tier<3?' · 복습에서 맞히면 다음 테두리로!':''}</span></div>
         <div class="wordline">${esc(w.word)} <button class="speak" data-say="${esc(w.word)}">🔊</button></div>
@@ -928,18 +949,45 @@ function tickCat(){
   if(c.checkDay!==day){ c.checkDay=day; if(c.named && c.born!=null && day-c.born>=2 && !c.sick && day-c.sickDay>=4 && Math.random()<.15){ c.sick=true; c.sickDay=day; } }
   save();
 }
+const WISH_GAP=60*60*1000;
+function wishInfo(w){
+  if(!w) return null;
+  if(w.k==='item'){ const x=SHOPBY[w.id]; if(!x) return null; return {i:x.slot==='tower'?'🗼':x.i, en:`I wish I had a ${x.en}!`, ko:`${x.ko} 갖고 싶어요!`, name:x.ko, price:x.price, tab:x.cat}; }
+  if(w.k==='salon') return {i:'✂️', en:'I want to go to the salon!', ko:'미용실 가고 싶어요!', name:'미용실', price:SALON_PRICE};
+  if(w.k==='fish') return {i:'🐟', en:'I want a fish treat!', ko:'생선 간식 먹고 싶어요!', name:'생선 간식', price:SHOPBY.fish.price, tab:'care'};
+  if(w.k==='milk') return {i:'🥛', en:'I want some milk!', ko:'우유 마시고 싶어요!', name:'우유', price:SHOPBY.milk.price, tab:'care'};
+  return null;
+}
+function ensureWish(){
+  const c=S.cat; if(!c.named) return;
+  if(c.wish && c.wish.k==='item' && c.owned.includes(c.wish.id)) c.wish=null;
+  if(c.wish || (c.wishAt && Date.now()-c.wishAt<WISH_GAP && c.wishDay===dayNum())) return;
+  const items=SHOP.filter(x=>!x.inv && !c.owned.includes(x.id));
+  const r=Math.random(); let w;
+  if(items.length && r<.6) w={k:'item', id:rnd(items).id};
+  else if(r<.75) w={k:'salon'}; else if(r<.9) w={k:'fish'}; else w={k:'milk'};
+  c.wish=w; save();
+}
+function wishDone(k,id){
+  const c=S.cat; if(!c.wish || c.wish.k!==k || (k==='item' && c.wish.id!==id)) return false;
+  c.wish=null; c.wishAt=Date.now(); c.wishDay=dayNum(); c.wishes=(c.wishes||0)+1; c.joy=Math.min(100,c.joy+15); save();
+  setTimeout(()=>{ hearts(8,rnd(['💖','🌟','✨','💗'])); catAnim('hop'); speak(`My wish came true! Thank you!`); toast(`${c.name}의 소원을 들어줬어요! 기분 +15 💖`); },900);
+  return true;
+}
 function catMood(){
   const c=S.cat;
   if(c.sick) return {en:'Achoo! I have a cold.', ko:'감기 걸렸어요. 약을 주세요!'};
   if(c.poops>0) return {en:'Oops! I made a poop.', ko:'응가를 치워 주세요!'};
   if(c.food<50) return {en:"I'm hungry! Meow!", ko:'배고파요. 밥 주세요!'};
   if((c.clean==null?80:c.clean)<50) return {en:'I feel dirty. Bath time, please!', ko:'목욕시켜 주세요!'};
+  const wi=wishInfo(c.wish); if(wi) return {en:wi.en, ko:wi.ko};
   if(c.joy<40) return {en:"Let's play with a card!", ko:'카드로 같이 놀아요!'};
   return {en:'I love you! Meow!', ko:'사랑해요! 야옹!'};
 }
 function catRoom(o){
   o=o||{}; view='cat'; tickCat(); const c=S.cat;
   if(!c.named){ return nameCat(()=>catRoom(o)); }
+  ensureWish(); const wi=wishInfo(c.wish);
   const bed=c.wear.bed&&SHOPBY[c.wear.bed], toy=c.wear.toy&&SHOPBY[c.wear.toy];
   const md=catMood();
   const W=k=>c.wear[k]&&SHOPBY[c.wear[k]];
@@ -968,6 +1016,7 @@ function catRoom(o){
         <h2>🐱 ${esc(c.name)}</h2>
         ${bar('🍗',c.food,'밥')}${bar('🛁',Math.max(0,(c.clean==null?80:c.clean)-c.poops*15),'깨끗')}${bar('💗',c.joy,'기분')}
         ${c.sick?'<div class="hint">🤧 감기에 걸렸어요. 감기약을 먹이면 금방 나아요.</div>':''}
+        ${wi?`<button class="wishcard" id="wish"><span class="wi">${wi.i}</span><span><b>💭 ${esc(c.name)}의 소원</b><br>${esc(wi.ko)} <small>🪙 ${wi.price}</small></span></button>`:`<div class="wishcard done"><span class="wi">💖</span><span>소원을 들어줬어요! 조금 있으면 새 소원이 생겨요.</span></div>`}
         <div class="acts">
           <button class="act ${c.food<50?'hot':''}" id="feed" data-k="food"><span class="i">🥫</span>밥 주기<small>밥 ${c.inv.food}개</small></button>
           <button class="act" id="snack" data-k="fish"><span class="i">🐟</span>간식 주기<small>생선 간식 ${c.inv.fish}개</small></button>
@@ -983,6 +1032,7 @@ function catRoom(o){
     </div></div>`;
   bindTop(); bindSay();
   ['#feed','#snack','#milk'].forEach(s=>{ const b=$(s); b.onclick=()=>feedCat(b.dataset.k); }); $('#clean').onclick=()=>cleanPoop(); $('#bath').onclick=giveBath; $('#salon').onclick=salon; $$('[data-fu]').forEach(b=>b.onclick=()=>tapFurn(b.dataset.fu)); $('#med').onclick=giveMed; $('#play').onclick=pickCard; $('#shop').onclick=()=>shop();
+  const wb=$('#wish'); if(wb) wb.onclick=()=>{ const w=c.wish; speak(wi.en); if(w.k==='salon') salon(); else if(w.k==='item') shop(wi.tab); else if(c.inv[w.k]>0) feedCat(w.k); else shop('care'); };
   $$('[data-poop]').forEach(p=>p.onclick=()=>cleanPoop());
   if(o.play) setTimeout(()=>playCard(o.play),300);
   else if(o.celebrate){ setTimeout(()=>{ catAnim('hop'); hearts(6); speak(`${c.name} is so happy! You found new cards!`); },300); }
@@ -1005,7 +1055,7 @@ function feedCat(k){
   if(c.inv[k]<1){ speak('We need more. Let\'s go to the shop!'); toast(`${nm} 없어요. 상점에서 사요! 🛍️`); return; }
   if(c.food>=90){ speak("I'm full! Thank you!"); toast('배불러요! 나중에 주세요.'); return; }
   c.inv[k]--; c.food=Math.min(100,c.food+({food:8,fish:4,milk:3})[k]); c.joy=Math.min(100,c.joy+({food:1,fish:3,milk:1})[k]);
-  save(); refreshCat(); hearts(3, SHOPBY[k].i); catAnim('hop'); speak(k==='fish'?'Yummy fish! Thank you!':(k==='milk'?'Yummy milk! Thank you!':'Yum yum! Thank you!'));
+  save(); refreshCat(); hearts(3, SHOPBY[k].i); catAnim('hop'); if(wishDone(k)) return; speak(k==='fish'?'Yummy fish! Thank you!':(k==='milk'?'Yummy milk! Thank you!':'Yum yum! Thank you!'));
   if(k==='food' && c.poops<3){ setTimeout(()=>{ c.poops++; save(); if(view==='cat'){ refreshCat(); speak('Oops! I made a poop.'); } }, 1800); }
 }
 function cleanPoop(){
@@ -1037,7 +1087,7 @@ function salon(){
     $$('[data-fur]',m).forEach(b=>b.onclick=()=>{ pick=b.dataset.fur; speak(FURS[pick].en); draw(); });
     $('#go',m).onclick=()=>{ if(S.coins<SALON_PRICE) return; S.coins-=SALON_PRICE; c.fur=pick; c.clean=Math.min(100,(c.clean||0)+15); c.joy=Math.min(100,c.joy+4); save(); m.remove(); refreshCat();
       let i=0; const iv=setInterval(()=>{ hearts(2,rnd(['✂️','✨','💇','🌟'])); if(++i>=5) clearInterval(iv); },300);
-      speak(`Snip snip! Brush brush! ${c.name} looks beautiful!`); setTimeout(()=>catAnim('hop'),1500); };
+      speak(`Snip snip! Brush brush! ${c.name} looks beautiful!`); setTimeout(()=>catAnim('hop'),1500); if(wishDone('salon')) setTimeout(refreshCat,1000); };
   };
   draw(); document.body.appendChild(m); speak('Welcome to the pet salon! Pick a color.');
 }
@@ -1067,7 +1117,7 @@ function playCard(id){
   const first=c.played[id]!==day; c.played[id]=day;
   c.joy=Math.min(100,c.joy+(first?3:1)); save();
   const r=$('#room'); if(!r) return;
-  const f=document.createElement('div'); f.className='flycard'; f.innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border-radius:20px;padding:12px 18px;box-shadow:0 6px 0 rgba(0,0,0,.1)"><span>${w.em}</span><span style="font-family:var(--display);font-size:30px">${esc(w.word)}</span></div>`;
+  const f=document.createElement('div'); f.className='flycard'; f.innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border-radius:20px;padding:12px 18px;box-shadow:0 6px 0 rgba(0,0,0,.1)"><span>${pic(w)}</span><span style="font-family:var(--display);font-size:30px">${esc(w.word)}</span></div>`;
   r.appendChild(f);
   speak(`${w.word}! ${filled(w)}`);
   catAnim('run'); setTimeout(()=>{ hearts(6); catAnim('hop'); }, 2600);
@@ -1081,7 +1131,7 @@ function shop(tab){
     if(x.inv){ btn=`<button class="buy" data-buy="${x.id}" ${S.coins<x.price?'disabled':''}>🪙 ${x.price} 사기</button><small>가지고 있음: ${c.inv[x.inv]}</small>`; }
     else if(c.owned.includes(x.id)){ const on=c.wear[x.slot]===x.id; btn=`<button class="buy ${on?'off':'wear'}" data-wear="${x.id}">${on?'벗기기':'입히기 / 놓기'}</button>`; }
     else btn=`<button class="buy" data-buy="${x.id}" ${S.coins<x.price?'disabled':''}>🪙 ${x.price} 사기</button>${S.coins<x.price?`<small>코인 ${x.price-S.coins}개 더 필요해요</small>`:''}`;
-    return `<div class="item ${c.owned.includes(x.id)?'own':''}"><div class="i">${x.slot==='tower'?towerSVG(x.color):x.i}</div><b>${esc(x.en)}</b><small>${esc(x.ko)}</small><button class="sm" data-say="${esc(x.en)}">🔊</button>${btn}</div>`;
+    return `<div class="item ${c.owned.includes(x.id)?'own':''} ${c.wish&&c.wish.k==='item'&&c.wish.id===x.id?'wished':''}"><div class="i">${x.slot==='tower'?towerSVG(x.color):x.i}</div><b>${esc(x.en)}</b><small>${esc(x.ko)}</small><button class="sm" data-say="${esc(x.en)}">🔊</button>${btn}</div>`;
   };
   app.innerHTML=`<div class="screen">${topbar()}
     <div class="tabs">${SHOPCATS.map(t=>`<button class="tab ${t.id===tab?'on':''}" data-t="${t.id}">${t.i} ${t.en} <small>${t.ko}</small></button>`).join('')}</div>
@@ -1094,14 +1144,15 @@ function shop(tab){
   $('#back').onclick=()=>catRoom();
   $$('[data-buy]').forEach(b=>b.onclick=()=>{ const x=SHOPBY[b.dataset.buy]; if(S.coins<x.price) return;
     S.coins-=x.price; if(x.inv) c.inv[x.inv]+=x.n; else { c.owned.push(x.id); c.wear[x.slot]=x.id; }
-    save(); coinSnd(); speak(`You bought ${x.en}!`); toast(`${x.ko} 샀어요! 🛍️`); shop(tab); });
+    save(); coinSnd(); speak(`You bought ${x.en}!`); toast(`${x.ko} 샀어요! 🛍️`);
+    if(!x.inv && wishDone('item',x.id)){ setTimeout(()=>catRoom({quiet:true}),300); return; } shop(tab); });
   $$('[data-wear]').forEach(b=>b.onclick=()=>{ const x=SHOPBY[b.dataset.wear]; if(c.wear[x.slot]===x.id) delete c.wear[x.slot]; else c.wear[x.slot]=x.id; save(); shop(tab); });
 }
 
 /* ================= REPORT ================= */
 const pct=(c,q)=>q?Math.round(c/q*100)+'%':'–';
 const mins=s=>(s>0&&s<60)?'1분 미만':Math.round(s/60)+'분';
-const SKO={s1:'1단계 그림',s2:'2단계 같은·반대',s3:'3단계 빈칸',s4:'4단계 이야기'};
+const SKO={s1:'1단계 그림·뜻',s2:'2단계 같은·반대',s3:'3단계 빈칸',s4:'4단계 이야기'};
 function rdata(){
   const last7=[]; for(let i=6;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); const k=dateStr(d); last7.push(Object.assign({k,lab:(d.getMonth()+1)+'/'+d.getDate()},{q:0,c:0,sec:0},S.days[k]||{})); }
   const today=last7[6], wk=last7.reduce((a,x)=>({q:a.q+x.q,c:a.c+x.c,sec:a.sec+x.sec}),{q:0,c:0,sec:0});
@@ -1153,7 +1204,7 @@ function showReport(){
     $('#rsy').onclick=()=>{ S=fresh(); save(); toast('기록을 지웠어요.'); home(); }; $('#rsn').onclick=()=>{$('#extra').innerHTML='';}; };
 }
 
-if(location.protocol==='file:') window.__t={cur:()=>cur,S:()=>S};
+if(location.protocol==='file:') window.__t={cur:()=>cur,S:()=>S,startStage,catRoom,cardBook,save};
 home();
 setInterval(()=>{ if(view==='cat'){ const old=S.cat.food; tickCat(); } else tickCat(); }, 60000);
 })();
