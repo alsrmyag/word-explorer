@@ -64,7 +64,7 @@ button:disabled{cursor:default}
 .pathhead h2{font-family:var(--display);font-size:clamp(26px,3vw,36px);margin:0;line-height:1.1}
 .left{font-family:var(--display);font-weight:700;font-size:clamp(20px,2.2vw,26px);background:#ffecea;color:#b2321f;border-radius:999px;padding:8px 18px}
 .left.done{background:#e6f8ee;color:#1f7d4b}
-.path{position:relative;height:clamp(230px,30vh,290px);margin-top:4px}
+.path{position:relative;height:clamp(250px,25vw,330px);margin-top:4px;flex:none}
 .path svg.trail{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
 .stone{z-index:1}
 .stone{position:absolute;transform:translate(-50%,-50%);width:clamp(108px,11.5vw,150px);display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
@@ -79,17 +79,19 @@ button:disabled{cursor:default}
 .stone.lock b,.stone.lock small{color:#9aabb5}
 .stone b,.stone small{background:var(--paper);border-radius:8px;padding:0 6px}
 .stone.cur b{margin-top:16px}
-.lmap{background:#eef6fb;border-radius:18px;padding:10px 14px;display:flex;flex-direction:column;gap:8px}
 .lmhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:17px}
-.lmbar{flex:1;min-width:120px;height:12px;border-radius:999px;background:#d6e4ec;overflow:hidden}.lmbar i{display:block;height:100%;background:var(--leaf);border-radius:999px}
-.lmrow{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.lmbar{flex:none;min-width:120px;height:14px;border-radius:999px;background:#d6e4ec;overflow:hidden}.lmbar i{display:block;height:100%;background:var(--leaf);border-radius:999px}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.lc{position:relative;border:0;border-radius:18px;background:#e6edf1;padding:12px 10px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;font-size:15px}
+.lc .ln{font-size:13px;font-weight:700;color:#6b7f8a}.lc .le{font-size:40px;line-height:1.1}.lc b{font-family:var(--display);font-size:17px;line-height:1.15}.lc small{font-size:13px;color:var(--ink-soft)}
+.lc.done{background:#c9f0da}.lc.now{background:#fff;box-shadow:0 0 0 4px var(--coral)}.lc.lock .le,.lc.lock b{opacity:.5}
 .ld{position:relative;aspect-ratio:1;border-radius:14px;border:0;background:#dfe8ee;display:grid;place-items:center;font-size:clamp(18px,2.2vw,26px);max-height:64px}
 .ld .ln{position:absolute;top:2px;left:6px;font-size:12px;font-weight:700;color:#6b7f8a}
 .ld.done{background:#bfe9d1;color:#1f7d4b;font-weight:700}
 .ld.now{background:#fff;box-shadow:0 0 0 3px var(--coral);animation:glow 1.4s infinite}
 .ld.lock .le{opacity:.45;filter:grayscale(.6)}
 .stone small{white-space:nowrap}
-@media (orientation:portrait) and (min-width:700px){ .path{height:340px} .stone{width:132px} .stone .rock{font-size:46px} .stone b{font-size:16px} }
+@media (orientation:portrait) and (min-width:700px){ .path{height:clamp(300px,42vw,370px)} .stone{width:clamp(100px,14vw,132px)} .stone .rock{font-size:46px} .stone b{font-size:16px} }
 .stone.done .rock{background:#bfe9d1;box-shadow:0 8px 0 #7cc79f}
 .stone.done .rock::after{content:"✓";position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);background:var(--leaf);color:#fff;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:700}
 .stone.done .rw{background:#e6f8ee;color:#1f7d4b;box-shadow:none}
@@ -314,7 +316,7 @@ textarea.copy{width:100%;min-height:160px;font:14px/1.5 var(--body);border:2px s
   .catroom{grid-template-columns:1fr}
   .opts.emo{grid-template-columns:1fr 1fr}
   .logo small{display:none}
-  .navb span{display:none}
+  .navb span:not(.i){display:none} .navb{padding:8px 12px}
 }
 @media (max-width:640px){
   .opts{grid-template-columns:1fr}
@@ -1054,6 +1056,7 @@ function topbar(){
     <div class="spacer"></div>
     <button class="navb ${view==='home'?'on':''}" data-nav="home"><span class="i">🏝️</span><span>Today</span></button>
     <button class="navb ${view==='cat'||view==='shop'?'on':''}" data-nav="cat"><span class="i">🐱</span><span>${esc(S.cat.name)}</span></button>
+    <button class="navb ${view==='map'?'on':''}" data-nav="map"><span class="i">🗺️</span><span>Map</span></button>
     <button class="navb ${view==='book'?'on':''}" data-nav="book"><span class="i">🗂️</span><span>Cards</span></button>
     <div class="pill coin" id="coinpill">🪙 <span>${S.coins}</span></div>
   </div>`;
@@ -1062,9 +1065,24 @@ function bindTop(){ bindSay($(".top"));
   const el=$('#logo'); let t=null;
   if(el){ const st=()=>{clearTimeout(t);t=setTimeout(()=>{t=null;showReport();},1500);}, sp=()=>{clearTimeout(t);t=null;};
     el.addEventListener('pointerdown',st); ['pointerup','pointerleave','pointercancel'].forEach(e=>el.addEventListener(e,sp)); el.addEventListener('contextmenu',e=>e.preventDefault()); }
-  $$('[data-nav]').forEach(b=>b.onclick=()=>{ const n=b.dataset.nav; if(n==='home')home(); else if(n==='cat')catRoom(); else cardBook(); });
+  $$('[data-nav]').forEach(b=>b.onclick=()=>{ const n=b.dataset.nav; if(n==='home')home(); else if(n==='cat')catRoom(); else if(n==='map')lessonMap(); else cardBook(); });
 }
 const app=document.getElementById('app');
+function lessonMap(){
+  view='map'; ensureToday(); const T=S.today;
+  const LEM={w:'🐾',h:'💗',f:'🏘️'}, LKO={w:'동물·자연',h:'마음',f:'집·마을'};
+  const nDone=LESSONS.filter(l=>S.done.includes(l.id)).length;
+  const curId=LESSONS.find(l=>!S.done.includes(l.id));
+  app.innerHTML=`<div class="screen">${topbar()}<div class="panel">
+    <div class="lmhead"><h2 style="font-family:var(--display);margin:0">🗺️ 전체 탐험 지도</h2><span class="tag ko">레슨 ${LESSONS.length}개 중 ${nDone}개 끝!</span>
+      <button class="sm" data-say="${esc(`You finished ${nDone} out of ${LESSONS.length} lessons!`)}">🔊</button></div>
+    <div class="lmbar"><i style="width:${Math.round(nDone/LESSONS.length*100)}%"></i></div>
+    <div class="lgrid">${LESSONS.map((l,i)=>{ const d=S.done.includes(l.id), c=!d&&curId&&curId.id===l.id;
+      return `<button class="lc ${d?'done':c?'now':'lock'}" data-ls="${l.id}"><span class="ln">Lesson ${i+1}</span><span class="le">${d?'✅':(LEM[l.id[0]]||'⭐')}</span><b>${esc(l.title)}</b><small>${LKO[l.id[0]]||''} · ${d?'끝!':c?'지금 하는 레슨':'아직'}</small></button>`; }).join('')}</div>
+  </div></div>`;
+  bindTop(); bindSay();
+  $$('[data-ls]').forEach(b=>b.onclick=()=>{ const l=LBYID[b.dataset.ls]; speak(`Lesson ${LESSONS.indexOf(l)+1}. ${l.title}`); });
+}
 
 /* ================= HOME / PATH ================= */
 function pzHTML(w, pieces, justIdx){
@@ -1091,9 +1109,6 @@ function home(opts){
   const sub = T.chest
     ? `<div class="cardsnote">모은 카드는 도감에 들어갔어요. 고양이와 카드로 놀아 보세요! <span class="spacer"></span><button class="big-btn ghost" id="bonus" style="font-size:20px;padding:12px 18px">⛵ 새 단어 더 탐험하기</button></div>`
     : `<div class="cardsnote"><b>오늘의 카드 ${words.length}장</b> · 단계를 하나 끝낼 때마다 모든 카드에 퍼즐 조각이 하나씩 붙어요. 4조각을 다 모으면 보물상자가 열려요!</div>`;
-  const LEM={w:'🐾',h:'💗',f:'🏘️'}; const nDone=LESSONS.filter(l=>S.done.includes(l.id)).length;
-  const lmap=`<div class="lmap"><div class="lmhead"><b>🗺️ 전체 탐험 지도</b><span>레슨 ${LESSONS.length}개 중 <b>${nDone}개</b> 끝!</span><div class="lmbar"><i style="width:${Math.round(nDone/LESSONS.length*100)}%"></i></div></div>
-    <div class="lmrow">${LESSONS.map((l,i)=>{ const d=S.done.includes(l.id), c=!d&&T.lesson===l.id; return `<button class="ld ${d?'done':c?'now':'lock'}" data-ls="${l.id}"><span class="ln">${i+1}</span><span class="le">${d?'✓':(LEM[l.id[0]]||'⭐')}</span></button>`; }).join('')}</div></div>`;
   app.innerHTML=`<div class="screen">${topbar()}
     <div class="pathcard">
       <div class="pathhead"><span class="tag ko">오늘의 탐험 길</span>${head}</div>
@@ -1102,12 +1117,10 @@ function home(opts){
         ${stones}${chest}
         <div class="pathcat" id="pcat" style="left:${POS[fromIdx][0]}%;top:${POS[fromIdx][1]-6}%">${catSVG({size:84,mood:'happy'})}</div>
       </div>
-      ${lmap}
       ${sub}
       <div class="todaycards">${words.map(w=>pzHTML(w, T.chest?4:st, opts.justPiece)).join('')}</div>
     </div></div>`;
   bindTop(); bindSay();
-  $$('[data-ls]').forEach(b=>b.onclick=()=>{ const l=LBYID[b.dataset.ls], i=LESSONS.indexOf(l)+1, d=S.done.includes(l.id); toast(`레슨 ${i}. ${l.title} · ${d?'끝냈어요 ✓':(T.lesson===l.id?'오늘 하는 레슨':'아직이에요')}`); speak(`Lesson ${i}. ${l.title}`); });
   $$('.stone[data-stage]').forEach(b=>b.onclick=()=>{ const n=+b.dataset.stage;
     if(T.chest){ toast('오늘 탐험은 끝났어요! 내일 또 만나요.'); return; }
     if(n<=st){ speak('You already finished this step!'); toast('이미 끝낸 단계예요 ✓'); return; }
