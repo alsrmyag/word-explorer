@@ -22,6 +22,8 @@ snout|n|🐽|the long front part of an animal's face that sticks out, with its n
 pirouette|n|🩰|a ballet move where you spin all the way around on one foot|Joselina turns a ___ and asks, "Papa, are you set?"|||3|피루엣 (발레에서 한 발로 빙글 도는 동작)|chore,fossil,flood||ticket,recipe,price
 shines|v|🔦|points a light at something|Joselina ___ a light on Papa's bed.|||2|(빛을) 비추다|measure,borrow,decorate||sort,lend,pay
 set|adj|🏁|ready to start|"Papa, are you ___?" asks Joselina.|ready||2|준비된|rotten,shallow,cheap|s:ready:heavy,sour,empty|expensive,sour,empty
+scarf|n|🧣|a long piece of cloth you wear around your neck to keep warm|Joselina gets a ___, long and wide and papa-sized.|||2|목도리|||ticket,recipe,trophy
+wraps|v|🎁|winds something around and around to cover it|She ___ her papa in a big scarf to keep him warm.|||3|감싸다, 둘둘 두르다|spill,invite,measure||sort,lend,pay
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful
