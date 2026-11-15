@@ -123,6 +123,8 @@ button:disabled{cursor:default}
 .prog{flex:1;height:18px;background:rgba(255,255,255,.2);border-radius:999px;overflow:hidden}
 .prog i{display:block;height:100%;background:var(--sun);border-radius:999px;transition:width .3s}
 .qlabel{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.wslabel{font-family:var(--display);font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#118bb0;font-size:16px}
+.abc{color:#7a8ba0;margin-right:10px;font-weight:700}
 .stage{flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;min-height:0}
 .prompt{display:flex;align-items:center;gap:14px}
 .prompt .txt{font-family:var(--display);font-weight:500;font-size:clamp(24px,2.8vw,34px);line-height:1.3;flex:1;min-width:0}
@@ -430,7 +432,7 @@ const WORDS=[], BYID={}, BYW={};
 /* Only words whose picture shows the meaning itself. Every other word is asked as "read the word, pick the meaning". */
 /* bank words that also came up in Elena's books: put them in the next path first */
 /* first the bank words seen in books, then oz's SR Vocabulary List (Set 1-3) in list order */
-const PRIO=['alone','wide','frown','roar','arrive','decide','explain','follow','search','improve','invent','explore','notice','prepare','refuse','remind','share','solve','surprise','travel','visit','waste','gather','compare','deliver','invite','route','escape','review','discover','smooth','narrow','write','assist','trembling','clean','silent','increase','slippery','repair','select','polite','squeezed','protect','ancient','exhausted','sort','reply','appear','delicate','fortunate','admire','brave','curious','avoid','delicious','disappear','loose','divide','contain','observe','celebrate','certain','patient','enormous','message','imagine','balance','fair','measure','hurry','belong','guide','danger','pay','entire','exchange','beg','assignment','legend','location','flicker','amend','gush','opponent','abandoned','recite','ancestor','glance','eager','delight','tender','fragile'];
+const PRIO=['alone','wide','frown','roar','arrive','decide','explain','follow','search','improve','invent','explore','notice','prepare','refuse','remind','share','solve','surprise','travel','visit','waste','gather','compare','deliver','invite','route','escape','review','discover','smooth','narrow','write','assist','trembling','clean','silent','increase','slippery','repair','select','polite','squeezed','protect','ancient','exhausted','sort','reply','appear','delicate','fortunate','admire','brave','curious','avoid','delicious','disappear','loose','divide','contain','observe','celebrate','certain','patient','enormous','message','imagine','balance','fair','measure','hurry','belong','guide','danger','pay','entire','exchange','beg','assignment','legend','location','flicker','amend','gush','opponent','abandoned','recite','ancestor','glance','eager','delight','tender','fragile','brief','fold','carry','erase','pleasant','equal','unfair','slim','thin','worsen','clear','cowardly','fearless','bold','courageous','keen','unexpected','respond','wonder','worry','anger','joy','pain','respectful','courteous','roll'];
 const PIC=new Set(['peek','cloudy','sunny','climb','map','fossil','throw','price','tool','experiment','pour','ticket','station','correct','loud','ghost','trophy','strong','smile','cry','gift','party','dance','surprised','quiet','sleepy','angry','silly','grow','seal','scarf','write']);
 function pic(w){ return w.pic?w.em:`<span class="kopic">${esc(w.ko)}</span>`; }
 (function(){
@@ -905,9 +907,10 @@ function makeQ(n, w){
     if(d.length<3) d=d.concat(shuffle(WORDS.filter(x=>x!==w&&x.island!==w.island&&!close(w,x)&&x.def!==w.def&&!d.includes(x))).slice(0,3-d.length));
     return {n, w, key:w.id, layout:'one',
       opts:shuffle([w].concat(d.slice(0,3))).map(x=>({label:x.def, ok:x===w, word:x.word, say:x.def})),
-      head:`<div class="row" style="gap:16px"><div class="bigword">${esc(w.word)}</div><button class="speak" data-say="${esc(w.word)}">🔊</button></div>
+      ws:'Context Clues',
+      head:`<div class="prompt"><div class="txt sent">${sentHTML(w)}</div><button class="speak" data-say="${esc(w.sent.replace('___',w.word))}">🔊</button></div>
             <div class="row"><button class="hint" id="kohint">🇰🇷 한국어 힌트</button></div>`,
-      ask:`What does ${esc(w.word)} mean?`, dm:true, say:`${w.word}. What does ${w.word} mean?`};
+      ask:`What does <b>${esc(w.word)}</b> mean?`, dm:true, say:`${w.sent.replace('___',w.word)} What does ${w.word} mean?`};
   }
   if(n===1){
     const used=new Set([w.em]); const tw=TW();
@@ -924,15 +927,16 @@ function makeQ(n, w){
   if(n===2){
     const type = w.q2.t==='s'?'syn':'ant';
     const answer=w.q2.a; const d=w.q2.d.slice(0,3);
-    const p = type==='syn' ? `Which word means the <em>SAME</em> as <em>${esc(w.word)}</em>?` : `Which word is the <em>OPPOSITE</em> of <em>${esc(w.word)}</em>?`;
-    const s = type==='syn' ? `Which word means the same as ${w.word}?` : `Which word is the opposite of ${w.word}?`;
+    const wp=[answer].concat(d).some(x=>x.includes(' '))?'phrase':'word';
+    const p = type==='syn' ? `Which ${wp} means almost the <em>SAME</em> as <em>${esc(w.word)}</em>?` : `Which ${wp} means the <em>OPPOSITE</em> of <em>${esc(w.word)}</em>?`;
+    const s = type==='syn' ? `Which ${wp} means almost the same as ${w.word}?` : `Which ${wp} means the opposite of ${w.word}?`;
     return {n, w, key:w.id, sub:type, opts:shuffle([answer].concat(d)).map(x=>({label:x, ok:x===answer, say:x, word:x})),
-      label: type==='syn'?'같은 뜻':'반대 뜻',
+      label: type==='syn'?'같은 뜻':'반대 뜻', ws: type==='syn'?'Synonym':'Antonym',
       head:`<div class="prompt"><div class="txt">${p}</div><button class="speak" data-say="${esc(s)}">🔊</button></div>`, say:s};
   }
   if(n===3){
     const d=w.f3.map(x=>BYW[x]).filter(Boolean).slice(0,3);
-    return {n, w, key:w.id, opts:shuffle([w].concat(d)).map(x=>({label:x.word, ok:x===w, say:x.word, word:x.word})),
+    return {n, w, key:w.id, ws:'Fill in the Blank', opts:shuffle([w].concat(d)).map(x=>({label:x.word, ok:x===w, say:x.word, word:x.word})),
       head:`<div class="prompt"><div class="txt sent">${esc(w.sent).replace('___','<span class="blank" id="bl">?</span>')}</div><button class="speak" data-say="${esc(w.sent)}">🔊</button></div>`, say:w.sent};
   }
 }
@@ -979,10 +983,10 @@ function nextQ(){
   cur=run.makers[run.i](); cur.answered=false; shownAt=Date.now();
   const s=STG(run.n);
   app.innerHTML=`<div class="screen">${qtop()}<div class="panel">
-    <div class="qlabel"><span class="tag">${s.en}</span><span class="tag ko">${cur.label||s.ko}</span><span class="tag" style="background:transparent">${run.i+1} / ${run.makers.length}</span>
+    <div class="qlabel">${cur.ws?`<span class="wslabel">${cur.ws}</span>`:''}<span class="tag">${s.en}</span><span class="tag ko">${cur.label||s.ko}</span><span class="tag" style="background:transparent">${run.i+1} / ${run.makers.length}</span>
       ${run.n===4&&!S.today.prio?'<span class="spacer"></span><button class="tag" id="peek" style="font-size:18px">📖 이야기 다시 보기</button>':''}</div>
     <div class="stage">${cur.head}${cur.ask?`<div class="prompt"><div class="txt" style="font-size:24px">${cur.ask}</div></div>`:''}</div>
-    <div class="opts ${cur.layout||''} ${cur.dm?'dm':''}">${cur.opts.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o.label)}${o.say?`<span class="os" data-say="${esc(o.say)}" role="button" aria-label="Listen">🔊</span>`:''}</button>`).join('')}</div>
+    <div class="opts ${cur.layout||''} ${cur.dm?'dm':''}">${cur.opts.map((o,i)=>`<button class="opt" data-i="${i}">${cur.layout==='emo'?'':`<b class="abc">${'ABCD'[i]}.</b>`}${esc(o.label)}${o.say?`<span class="os" data-say="${esc(o.say)}" role="button" aria-label="Listen">🔊</span>`:''}</button>`).join('')}</div>
     <div id="fbwrap"></div></div></div>`;
   bindQtop(); bindSay();
   const kh=$('#kohint'); if(kh) kh.onclick=()=>{ kh.textContent='🇰🇷 '+cur.w.ko; };

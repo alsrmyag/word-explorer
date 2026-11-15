@@ -336,3 +336,29 @@ glance|v|📘|to look quickly|I ___ at the clock to check the time.|peek|stare|3
 eager|adj|📘|very excited and ready to do something|The kids were ___ to open their presents.|keen|unwilling|3|열심인, 몹시 하고 싶어 하는|chore,ghost,crawl||dusty,shallow,rotten
 delight|n|📘|a feeling of great pleasure or joy|She jumped with ___ when she saw the puppy.|joy|sadness|3|큰 기쁨|spill,recess,shallow|o:sadness:sour,crawl,puddle|price,soil,chore
 tender|adj|📘|gentle and soft|Mom gave the baby a ___ kiss.|gentle|rough|3|다정한, 부드러운|crawl,fossil,gift|o:rough:seed,sprinkle,trophy|crowded,dusty,expensive
+brief|adj|📘|lasting only a short time|Ben took a ___ look at the lunch menu.|short|long|3|짧은, 잠깐의|sour,crowded,expensive|s:short:heavy,sour,dusty|rotten,crowded,expensive
+fold|v|📘|to bend paper or cloth so one part lies on another|Please ___ your shirt and put it in the drawer.|bend|unfold|3|접다|crawl,bake,spill|o:unfold:crawl,bake,hop|crawl,bake,hop
+carry|v|📘|to hold something and take it with you|Can you help me ___ these heavy bags?|bring|drop|3|들고 가다, 나르다|crawl,bake,sprinkle|o:drop:hop,bake,scrub|crawl,hop,bake
+erase|v|📘|to rub out writing or a drawing|Use your eraser to ___ the wrong answer.|rub out|write|3|지우다|bake,spill,hop|o:write:bake,hop,crawl|bake,hop,crawl
+pleasant|adj|📘|nice and enjoyable|We had a ___ walk in the park.|nice|unpleasant|3|기분 좋은, 즐거운|rotten,shallow,dusty|o:unpleasant:dusty,shallow,crowded|rotten,shallow,sour
+equal|adj|📘|the same in size, number, or amount|Two plus two is ___ to four.|same|unequal|3|같은, 동등한|dusty,crowded,rotten|s:same:dusty,sour,shallow|dusty,crowded,shallow
+unfair|adj|📘|not treating everyone the same way|It is ___ when one kid gets all the cookies.|unjust|fair|3|불공평한|shallow,sour,dusty|o:fair:rude,silly,cloudy|shallow,dusty,crowded
+slim|adj|📘|thin in a nice way|The ___ cat slipped through the gap in the fence.|thin||3|날씬한|crowded,expensive,dusty|s:thin:loud,sour,dusty|expensive,dusty,crowded
+thin|adj|📘|not thick; not wide from side to side|I need a ___ pencil to draw the small lines.|slim|thick|3|얇은, 가는|rotten,sour,crowded|o:thick:sour,loud,dusty|crowded,rotten,sour
+worsen|v|📘|to become worse|If you don't rest, your cold may ___.|get worse|improve|3|더 나빠지다|bake,hop,sprinkle|o:improve:bake,hop,crawl|bake,hop,crawl
+clear|adj|📘|easy to see or understand|The teacher's answer was very ___, so I understood it.|plain|confusing|3|분명한, 알기 쉬운|dusty,rotten,crowded|o:confusing:dusty,sour,crowded|rotten,sour,shallow
+cowardly|adj|📘|easily scared; not brave|The ___ lion ran away from the little mouse.|scared|brave|3|겁 많은|expensive,shallow,dusty|o:brave:sleepy,dusty,sour|rotten,dusty,shallow
+fearless|adj|📘|not afraid of anything|The ___ firefighter ran into the smoke to help.|brave|scared|3|두려움 없는|shallow,crowded,rotten|o:scared:sleepy,dusty,sour|dusty,rotten,shallow
+bold|adj|📘|brave and ready to try new things|It was ___ of her to sing in front of the whole school.|daring|shy|3|대담한, 용감한|sour,expensive,rotten|o:shy:dusty,sour,shallow|dusty,rotten,shallow
+courageous|adj|📘|very brave|The ___ girl helped the lost puppy cross the busy road.|brave|cowardly|3|용기 있는|dusty,shallow,expensive|o:cowardly:fearless,bold,eager|dusty,shallow,rotten
+keen|adj|📘|very eager and interested|My brother is ___ to learn how to swim.|eager|unwilling|3|열심인, 몹시 하고 싶은|crowded,rotten,sour|s:eager:afraid,bored,sleepy|dusty,shallow,crowded
+unexpected|adj|📘|surprising; not thought to happen|A tiny gift in his bag was ___. He did not know it was there.|surprising|expected|3|뜻밖의, 예상 못 한|shallow,dusty,expensive|s:surprising:quiet,sleepy,dusty|crowded,rotten,shallow
+respond|v|📘|to answer or reply|When the teacher asks a question, raise your hand to ___.|reply|ignore|3|대답하다, 답하다|hop,crawl,spill|s:reply:whisper,wander,wonder|bake,hop,crawl
+wonder|v|📘|to want to know about something|I ___ why the sky is blue.|think about||3|궁금해하다|bake,scrub,spill||bake,hop,crawl
+worry|v|📘|to feel afraid that something bad may happen|Don't ___. We will find your lost toy.|fret|relax|3|걱정하다|scrub,sprinkle,bake|o:relax:crawl,bake,hop|bake,hop,crawl
+anger|n|📘|a strong feeling when you are very upset or mad|His face turned red with ___.|rage|calm|3|화, 분노|soil,price,recess|o:calm:pain,worry,soil|soil,price,chore
+joy|n|📘|great happiness|The baby laughed with ___ at the bubbles.|delight|sadness|3|기쁨|soil,chore,seed|s:delight:pain,worry,anger|soil,price,chore
+pain|n|📘|the feeling when a part of your body hurts|I felt a sharp ___ in my knee when I fell.|ache|comfort|3|아픔, 통증|soil,price,schedule|s:ache:joy,soil,price|soil,chore,recess
+respectful|adj|📘|showing that you think others are important|Be ___ and listen when others are talking.|polite|rude|3|존중하는, 예의 바른|dusty,shallow,rotten|o:rude:kind,polite,courteous|dusty,shallow,rotten
+courteous|adj|📘|polite and kind to others|The ___ boy held the door open for the old lady.|polite|rude|3|공손한, 예의 바른|crowded,expensive,sour|o:rude:kind,respectful,honest|dusty,shallow,rotten
+roll|v|📘|to move by turning over and over|The ball will ___ down the hill.|spin||3|굴러가다|bake,scrub,sprinkle||bake,scrub,sprinkle
