@@ -15,6 +15,7 @@ naps|v|💤|sleeps for a short time during the day|The seal ___ on the ice after
 belly|n|🫃|the soft front part of your body where your food goes; your tummy|A seal naps. His ___ is full of fish.|tummy||2|배 (몸의 배)|price,schedule,ticket||price,schedule,recess
 yells|v|🗣️|shouts in a very loud voice|"I have had it!" ___ Fox.|shout/shouts|whispers|2|소리치다|sort,measure,lend|s:shout:taste,sort,hop|pay,sort,lend
 fight|v|🥊|to try very hard to stop or beat something that is causing trouble|"I will just have to ___ winter!" says Fox.|||3|맞서 싸우다|select,connect,decorate||borrow,sort,pay
+fights back|v|🔁|fights against someone who started fighting you first|Fox tries to fight winter. But winter ___ with more snow.|||3|반격하다, 되받아치다|decorate,measure,select||sort,lend,pay
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful
