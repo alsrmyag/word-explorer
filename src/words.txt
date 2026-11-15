@@ -10,6 +10,9 @@ habitat|n|🏞️|the place where an animal or plant lives in nature|A polar bea
 caps|v|🧊|covers the top of something|Ice ___ the ocean at the North Pole.|tops/covers||3|(위를) 덮다|sell,borrow,invite|s:tops:pay,lend,select|sell,borrow,invite
 Antarctica|n|🧊|the icy land around the South Pole, the coldest place on Earth|The South Pole is in ___. It is cold here too.|||3|남극 대륙|recess,ticket,trophy||chips,recipe,gift
 tops|v|🧊|covers the top of something|Ice ___ the land at the South Pole.|caps/covers||3|(위를) 덮다|pay,lend,select|s:caps:sell,borrow,invite|pay,lend,select
+seal|n|🦭|a sea animal with smooth fur and flippers that eats fish and lives in cold places|A ___ naps. His belly is full of fish.|||2|물개 (물범)|||ticket,recipe,trophy
+naps|v|💤|sleeps for a short time during the day|The seal ___ on the ice after a big meal.|||2|낮잠 자다|sell,lend,invite||pay,borrow,select
+belly|n|🫃|the soft front part of your body where your food goes; your tummy|A seal naps. His ___ is full of fish.|tummy||2|배 (몸의 배)|price,schedule,ticket||price,schedule,recess
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful
