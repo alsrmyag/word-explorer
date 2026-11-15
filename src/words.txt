@@ -2,6 +2,7 @@
 chips|n|🍟|thin, crunchy slices of potato you eat as a snack|We ate a bag of salty ___ at the picnic.|crisps||2|감자칩|ready,quick,light||drill,splits,tool
 drill|n|🔩|a tool that spins fast to make holes; also practice you do again and again|Dad used a ___ to make a hole in the wall.|||3|드릴 / 반복 연습|noise,connect,correct||chips,splits,schedule
 splits|n|🤸|a move where your legs stretch out straight in opposite directions|The gymnast slid down into the ___ on the mat.|||3|다리 찢기|fossil,flood,strange||drill,chips,promise
+poles|n|🧊|the two places at the very top and very bottom of the Earth, the North Pole and the South Pole, where it is very cold|Winter is long at the ___. The days are dark.|||3|극지방 (북극과 남극)|station,recess,recipe||chips,recipe,gift
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful
