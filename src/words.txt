@@ -277,3 +277,62 @@ lose|v|😞|to not win|It's okay to ___ a game sometimes.||win|2|지다|chore,bu
 fall|v|🍂⬇️|to drop down to the ground|Be careful, or you might ___ off the wall.|drop/tumble|rise|2|떨어지다, 넘어지다|crisp,blend,heavy||practice,trust,hide
 easy|adj|🧩👌|not hard to do|The first puzzle was ___, so I finished fast.|simple|hard/difficult|2|쉬운|notice,roar,trail|o:hard:careless,excited,calm|patient,crisp,shallow
 strong|adj|💪|having a lot of power|The ___ man lifted the heavy box.|powerful|weak|2|힘센|creature,wait,sudden|o:weak:polite,surprised,safe|patient,sleepy,ripe
+@sr
+decide|v|📘|to choose what to do|I can't ___ which ice cream to pick.|choose|hesitate|3|결정하다|schedule,sour,scrub|s:choose:shadow,crawl,chore|recipe,trophy,puddle
+prepare|v|📘|to get ready for something|We need to ___ for the school trip tomorrow.|get ready|neglect|3|준비하다|cave,rotten,recipe|o:neglect:hop,price,shallow|ticket,sour,fossil
+refuse|v|📘|to say no to something|The cat will ___ to take a bath.|reject|accept|3|거절하다|fossil,gift,crowded|o:accept:ticket,seed,rotten|recipe,dusty,trophy
+remind|v|📘|to help someone remember something|Please ___ me to bring my lunch.|prompt|make forget|3|생각나게 하다, 일깨우다|ticket,recess,dusty||puddle,sour,fossil
+solve|v|📘|to find the answer to a problem|Can you ___ this puzzle?|answer|complicate|3|풀다, 해결하다|dusty,hop,soil|s:answer:rotten,recipe,gift|sour,trophy,shallow
+surprise|n|📘|something unexpected that makes you feel excited|The party was a big ___ for Mom.|shock|expectation|3|깜짝 놀랄 일|ghost,rotten,ticket||soil,chore,schedule
+travel|v|📘|to go from one place to another|Birds ___ south when it gets cold.|journey|stay|3|여행하다, 이동하다|crowded,ticket,recess|o:stay:ghost,scrub,chore|recipe,dusty,price
+visit|v|📘|to go see a person or place|We ___ Grandma every Sunday.|see|avoid|3|방문하다|expensive,spill,price|o:avoid:cave,scrub,puddle|sour,trophy,shallow
+waste|v|📘|to use more than you need or use carelessly|Don't ___ water when you brush your teeth.|misuse|save|3|낭비하다|crowded,bake,schedule|o:save:recipe,gift,expensive|ticket,shallow,fossil
+compare|v|📘|to look at how things are the same or different|Let's ___ the two pictures to find the differences.|match|contrast|3|비교하다|shallow,crawl,soil||sour,puddle,trophy
+deliver|v|📘|to take something to a person or place|The mail carrier will ___ the letter today.|bring|take away|3|배달하다|seed,rotten,ticket|s:bring:schedule,crowded,spill|sour,shallow,recipe
+route|n|📘|a way to get from one place to another|This is the shortest ___ to school.|path||3|길, 경로|dusty,hop,puddle|s:path:sprinkle,trophy,cave|soil,chore,flood
+escape|v|📘|to get away from a place or danger|The bird tried to ___ from the cage.|get away|stay|3|탈출하다, 빠져나가다|expensive,ticket,recess|o:stay:shallow,bake,schedule|sour,recipe,price
+write|v|✍️|to make words or letters with a pen or pencil|Please ___ your name on the paper.|record|erase|3|쓰다|bake,chore,ghost|o:erase:spill,schedule,crowded|sour,shallow,fossil
+assist|v|📘|to help someone|The nurse will ___ the doctor.|help|hinder|3|돕다|hop,chore,ghost|s:help:crowded,spill,recess|recipe,sour,puddle
+trembling|adj|📘|shaking a little because of fear, cold, or excitement|The ___ puppy hid under the bed during the storm.|shaking|steady|3|떨리는|recess,shallow,bake|s:shaking:chore,shadow,hop|expensive,crowded,empty
+clean|adj|📘|not dirty|My hands are ___ after I wash them.|neat|dirty|3|깨끗한|recess,rotten,recipe|o:dirty:spill,price,sour|crowded,shallow,expensive
+increase|v|📘|to become or make something greater|The number of kids in our class will ___ next year.|grow|decrease|3|늘어나다, 늘리다|cave,rotten,ticket|o:decrease:dusty,bake,schedule|recipe,sour,trophy
+slippery|adj|📘|easy to slide on|Be careful! The wet floor is ___.|slick|rough|3|미끄러운|soil,cave,crawl|o:rough:gift,scrub,fossil|crowded,expensive,rotten
+squeezed|v|📘|pushed through a small space|The cat ___ through the small hole in the fence.|pressed|released|3|비집고 들어갔다, 밀어 넣었다|shadow,sprinkle,chore||trophy,recipe,fossil
+ancient|adj|📘|very old|We saw ___ pots from long, long ago at the museum.|old|modern|3|아주 오래된, 고대의|schedule,shallow,spill|o:modern:puddle,cave,hop|crowded,sour,empty
+exhausted|adj|📘|very tired|After the long hike, we were ___.|worn out|energetic|3|몹시 지친|price,shadow,hop|s:worn out:ghost,bake,soil|expensive,shallow,dusty
+reply|v|📘|to answer someone|Please ___ to my letter soon.|respond|ask|3|대답하다, 답장하다|ghost,sprinkle,trophy|o:ask:hop,price,shallow|recipe,sour,fossil
+appear|v|📘|to come into sight or become visible|Stars ___ in the sky at night.|show up|disappear|3|나타나다|crowded,bake,chore|o:disappear:puddle,ghost,scrub|recipe,sour,price
+delicate|adj|📘|easy to damage or break|Be gentle with the ___ butterfly wings.|fragile|strong|3|섬세한, 깨지기 쉬운|crawl,fossil,gift|s:fragile:shadow,bake,chore|crowded,rotten,expensive
+fortunate|adj|📘|lucky|We were ___ to find a good seat.|lucky|unlucky|3|운이 좋은|recess,crowded,spill|o:unlucky:expensive,recipe,schedule|dusty,shallow,rotten
+admire|v|📘|to think someone or something is very good|I ___ my teacher because she is so kind.|respect|dislike|3|존경하다, 감탄하다|hop,price,shadow|o:dislike:sprinkle,soil,ghost|recipe,trophy,puddle
+avoid|v|📘|to stay away from someone or something|Try to ___ the puddles on the way home.|keep away|approach|3|피하다|dusty,hop,chore||sour,recipe,trophy
+disappear|v|📘|to go away so you cannot see it anymore|The sun will ___ behind the clouds.|vanish|appear|3|사라지다|shallow,crawl,puddle|o:appear:cave,sprinkle,fossil|recipe,sour,price
+loose|adj|📘|not tight|My tooth is ___ and wiggly.|free|tight|3|헐거운, 느슨한|dusty,spill,chore|o:tight:recess,rotten,recipe|crowded,expensive,shallow
+divide|v|📘|to separate something into parts|Let's ___ the pizza into eight pieces.|split|join|3|나누다|gift,expensive,spill|o:join:ticket,schedule,crowded|sour,trophy,shallow
+contain|v|📘|to have something inside|These boxes ___ old toys.|hold|empty|3|담고 있다|dusty,hop,soil|s:hold:bake,price,shadow|sour,shallow,recipe
+observe|v|📘|to watch something carefully|We ___ the ants with a magnifying glass.|watch|ignore|3|관찰하다|puddle,cave,sprinkle|s:watch:recipe,gift,rotten|sour,price,shallow
+certain|adj|📘|sure about something|I am ___ that I locked the door.|sure|unsure|3|확실한|ghost,crawl,fossil|s:sure:trophy,gift,sprinkle|crowded,dusty,rotten
+message|n|📘|information that you give or send to someone|Dad left a ___ on the fridge for me.|note||3|메시지, 전하는 말|recipe,gift,dusty|s:note:spill,recess,crowded|soil,flood,chore
+imagine|v|📘|to make a picture or idea in your mind|Close your eyes and ___ a castle in the sky.|picture||3|상상하다|rotten,ticket,schedule|s:picture:crawl,puddle,ghost|sour,price,shallow
+balance|n|📘|the ability to stay steady without falling|You need good ___ to ride a bike.|steadiness|imbalance|3|균형|expensive,spill,recess||price,soil,ticket
+hurry|v|📘|to move or do something quickly|We must ___ or we will miss the bus.|rush|wait|3|서두르다|gift,crowded,bake|o:wait:spill,schedule,dusty|recipe,sour,trophy
+belong|v|📘|to be a part of a group or be someone's property|These red shoes ___ to my sister.|fit in||3|~의 것이다, ~에 속하다|expensive,spill,price||sour,trophy,shallow
+guide|v|📘|to show someone the way|The ranger will ___ us through the forest.|lead|mislead|3|안내하다|scrub,fossil,seed|s:lead:schedule,dusty,bake|sour,recipe,price
+danger|n|📘|the possibility of being hurt or harmed|The sign says ___! Do not swim here.|risk|safety|3|위험|crawl,soil,ghost|o:safety:sour,scrub,price|recipe,trophy,chore
+entire|adj|📘|whole; with nothing missing|I ate the ___ apple by myself.|whole|partial|3|전체의|trophy,recess,expensive|s:whole:puddle,cave,crawl|crowded,dusty,shallow
+exchange|v|📘|to give something and get something else in return|Let's ___ stickers with each other.|trade|keep|3|교환하다|cave,sprinkle,recipe|s:trade:hop,soil,shadow|sour,shallow,price
+beg|v|📘|to ask for something in a very eager way|The puppy likes to ___ for treats at dinner.|plead|offer|3|조르다, 간청하다|ticket,recess,dusty||recipe,sour,trophy
+assignment|n|📘|a task or piece of work given to do|My reading ___ is due on Friday.|task||3|과제, 숙제|ticket,seed,crowded|s:task:shallow,hop,recess|soil,flood,puddle
+legend|n|📘|an old story that may not be true|There is a ___ about a dragon in the mountain.|tale|fact|3|전설|cave,rotten,ticket|o:fact:shadow,scrub,fossil|price,soil,chore
+location|n|📘|a place where something is|The map shows the ___ of the treasure.|place||3|위치, 장소|price,sour,scrub|s:place:shallow,hop,soil|recipe,chore,flood
+flicker|v|📘|to shine or burn with an unsteady light|The candle began to ___ in the wind.|flutter|glow steadily|3|깜빡이다, 깜박거리다|seed,expensive,spill||recipe,price,trophy
+amend|v|📘|to change something to make it better|I need to ___ my story to fix the mistakes.|revise|keep|3|고치다, 수정하다|fossil,seed,rotten||sour,shallow,puddle
+gush|v|📘|to flow out quickly and in large amounts|Water began to ___ from the broken pipe.|pour out|trickle|3|콸콸 쏟아져 나오다|shallow,hop,schedule|s:pour out:crowded,fossil,cave|recipe,trophy,price
+opponent|n|📘|a person on the other side in a game or contest|My ___ in the chess game was very good.|rival|teammate|3|상대편, 적수|crowded,bake,schedule|o:teammate:gift,dusty,spill|recipe,soil,puddle
+abandoned|adj|📘|left behind with no one to care for it|We found an ___ kitten in the box and took it home.|deserted|occupied|3|버려진|rotten,ticket,price||expensive,sour,crowded
+recite|v|📘|to say something aloud from memory|Can you ___ the poem without looking?|repeat|forget|3|암송하다, 외워서 말하다|crowded,bake,soil|o:forget:gift,rotten,recipe|sour,price,shallow
+ancestor|n|📘|a person in your family who lived long ago|My great-great-grandpa is my ___.|forebear|descendant|3|조상|seed,crowded,bake||recipe,chore,puddle
+glance|v|📘|to look quickly|I ___ at the clock to check the time.|peek|stare|3|힐끗 보다|shadow,scrub,puddle|s:peek:shallow,hop,price|recipe,sour,trophy
+eager|adj|📘|very excited and ready to do something|The kids were ___ to open their presents.|keen|unwilling|3|열심인, 몹시 하고 싶어 하는|chore,ghost,crawl||dusty,shallow,rotten
+delight|n|📘|a feeling of great pleasure or joy|She jumped with ___ when she saw the puppy.|joy|sadness|3|큰 기쁨|spill,recess,shallow|o:sadness:sour,crawl,puddle|price,soil,chore
+tender|adj|📘|gentle and soft|Mom gave the baby a ___ kiss.|gentle|rough|3|다정한, 부드러운|crawl,fossil,gift|o:rough:seed,sprinkle,trophy|crowded,dusty,expensive

@@ -402,7 +402,8 @@ const ISL = [
   {id:'animal', name:'Wild Island', ko:'동물·자연', em:'🦁'},
   {id:'food',   name:'Town Island', ko:'집·마을', em:'🏘️'},
   {id:'feel',   name:'Heart Island', ko:'마음·친구', em:'💗'},
-  {id:'book',   name:'Book Words', ko:'책에서 찾은 단어', em:'📖'}
+  {id:'book',   name:'Book Words', ko:'책에서 찾은 단어', em:'📖'},
+  {id:'sr',     name:'SR Words', ko:'SR 단어 목록', em:'📝'}
 ];
 const STAGES = [
   {n:1, icon:'🖼️', en:'Look & Find', ko:'그림·뜻 찾기', coins:3, say:'Step one. Listen to the word, and find the picture or the meaning.'},
@@ -410,6 +411,16 @@ const STAGES = [
   {n:3, icon:'✏️', en:'Fill the Blank', ko:'빈칸 채우기', coins:3, say:'Step three. Find the word that fits in the blank.'},
   {n:4, icon:'📖', en:'Story Time', ko:'이야기 퀴즈', coins:5, say:'Step four. Read the story, and answer the questions.'}
 ];
+/* priority days (book + SR words) have no story: step 4 shows the Korean meaning, pick the English word */
+const STAGE4P={n:4, icon:'🧠', en:'Word Check', ko:'한국어 뜻 → 영어 단어', coins:5, say:'Step four. Read the Korean meaning, and find the English word.'};
+function STG(n){ return n===4&&S.today&&S.today.prio ? STAGE4P : STAGES[n-1]; }
+function makeKoQ(w){
+  let d=w.p1.map(x=>BYW[x]).filter(x=>x&&x!==w&&x.ko!==w.ko&&!close(w,x));
+  if(d.length<3) d=d.concat(shuffle(WORDS.filter(x=>x!==w&&x.island!==w.island&&!close(w,x)&&x.ko!==w.ko&&!d.includes(x))).slice(0,3-d.length));
+  return {n:4, w, key:'k'+w.id, layout:'one',
+    opts:shuffle([w].concat(d.slice(0,3))).map(x=>({label:x.word, ok:x===w, word:x.word, say:x.word})),
+    head:`<div class="prompt"><div class="txt" style="font-size:34px">${esc(w.ko)}</div></div>`, say:''};
+}
 const CHEST_COINS = 6, MILESTONE = 10, MILESTONE_COINS = 5;
 const TIER = [{en:'Bronze',ko:'동'},{en:'Silver',ko:'은'},{en:'Gold',ko:'금'},{en:'Rainbow',ko:'무지개'}];
 const TIER_EM = ['🥉','🥈','🥇','🌈'];
@@ -418,8 +429,9 @@ const REVIEW_GAP = [2,3,5];
 const WORDS=[], BYID={}, BYW={};
 /* Only words whose picture shows the meaning itself. Every other word is asked as "read the word, pick the meaning". */
 /* bank words that also came up in Elena's books: put them in the next path first */
-const PRIO=['alone','wide','frown','roar'];
-const PIC=new Set(['peek','cloudy','sunny','climb','map','fossil','throw','price','tool','experiment','pour','ticket','station','correct','loud','ghost','trophy','strong','smile','cry','gift','party','dance','surprised','quiet','sleepy','angry','silly','grow','seal','scarf']);
+/* first the bank words seen in books, then oz's SR Vocabulary List (Set 1-3) in list order */
+const PRIO=['alone','wide','frown','roar','arrive','decide','explain','follow','search','improve','invent','explore','notice','prepare','refuse','remind','share','solve','surprise','travel','visit','waste','gather','compare','deliver','invite','route','escape','review','discover','smooth','narrow','write','assist','trembling','clean','silent','increase','slippery','repair','select','polite','squeezed','protect','ancient','exhausted','sort','reply','appear','delicate','fortunate','admire','brave','curious','avoid','delicious','disappear','loose','divide','contain','observe','celebrate','certain','patient','enormous','message','imagine','balance','fair','measure','hurry','belong','guide','danger','pay','entire','exchange','beg','assignment','legend','location','flicker','amend','gush','opponent','abandoned','recite','ancestor','glance','eager','delight','tender','fragile'];
+const PIC=new Set(['peek','cloudy','sunny','climb','map','fossil','throw','price','tool','experiment','pour','ticket','station','correct','loud','ghost','trophy','strong','smile','cry','gift','party','dance','surprised','quiet','sleepy','angry','silly','grow','seal','scarf','write']);
 function pic(w){ return w.pic?w.em:`<span class="kopic">${esc(w.ko)}</span>`; }
 (function(){
   let isl=null;
@@ -527,11 +539,24 @@ function reviewPick(n, exclude){
   return Object.entries(S.cards).filter(([id,c])=>BYID[id]&&!exclude.includes(id)&&c.tier<3&&(day-(c.rev||0))>=REVIEW_GAP[c.tier])
     .sort((a,b)=>(a[1].rev||0)-(b[1].rev||0)).slice(0,n).map(x=>x[0]);
 }
+function prioWords(exclude){
+  const ids=WORDS.filter(w=>w.book&&!owned(w.id)).map(w=>w.id);
+  PRIO.forEach(x=>{ const w=BYW[x]; if(w&&!w.book&&!owned(w.id)&&!ids.includes(w.id)) ids.push(w.id); });
+  return ids.filter(id=>!(exclude||[]).includes(id));
+}
+/* Days alternate while priority words (book words, SR list) are waiting:
+   one day a priority path of 12 of them, the next day the normal lesson path. */
 function newPath(){
   const L=LESSONS.find(l=>!S.done.includes(l.id));
+  const prio=prioWords();
+  if(prio.length && (S.lastKind!=='prio' || !L)){
+    const words=prio.slice(0,12); S.lastKind='prio';
+    let rev=reviewPick(Math.max(0,Math.min(3,15-words.length)), words);
+    const all=words.concat(rev);
+    return {date:dateStr(), lesson:null, prio:true, words:all, fresh:all.filter(id=>!owned(id)), stage:0, chest:false, earned:0, justStage:0};
+  }
+  S.lastKind='lesson';
   let words=L?L.words.slice():[];
-  const book=WORDS.filter(w=>w.book&&!owned(w.id)).map(w=>w.id).concat(PRIO.map(x=>BYW[x]).filter(w=>w&&!w.book&&!owned(w.id)&&!words.includes(w.id)).map(w=>w.id));
-  words=words.concat(book);
   let rev=reviewPick(L?Math.max(0,Math.min(3,15-words.length)):12, words);
   if(!L && !rev.length) rev=shuffle(Object.keys(S.cards)).slice(0,12);
   const all=words.concat(rev);
@@ -620,9 +645,29 @@ function weekInfo(d){ const sun=weekSun(d); const days=[1,2,3,4,5,6].map(i=>addD
 function remaining(){ const d=new Date(), t=tasksOf(d); if(!t.length) return []; const r=dayRec(ymd(d)); return t.map((x,i)=>i).filter(i=>!r.c.includes(i)&&!r.x.includes(i)); }
 function speakKo(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang='ko-KR'; const v=speechSynthesis.getVoices().find(v=>/^ko/i.test(v.lang)); if(v)u.voice=v; u.rate=.95; u.pitch=1.15; speechSynthesis.speak(u); }catch(e){} }
 const HEART='<svg viewBox="0 0 24 24"><rect class="bx" x="2.5" y="2.5" width="19" height="19" rx="5"/><path class="ck" d="M6.5 12.5l3.8 3.8L17.8 8"/></svg>';
+/* Sunday: every task of the past Mon-Sat that is not checked yet, in order */
+function sunList(d){ const L=[];
+  for(let n=6;n>=1;n--){ const dd=addD(d,-n), kk=ymd(dd), rr=(S.plan.d||{})[kk];
+    tasksOf(dd).forEach((x,i)=>{ if(!(rr&&(rr.c.includes(i)||rr.x.includes(i)))) L.push({k:kk,i,x,dd}); }); }
+  return L; }
+function sunCheck(k,i,mode){
+  const res=setTask(k,i,mode), dd=parseD(k); if(mode==='c') tick();
+  planView();
+  if(res.nowDone){ fanfare(); hearts(8); catAnim('hop');
+    if(!checkGift(dd)) speakKo(`${WD_KO[dd.getDay()]}요일 다 했어! 스티커 받았어! `+catSay().ko);
+    else speakKo('지난주 할 일 다 했어! 선물상자가 왔어!'); return; }
+  hearts(3,'💗'); catAnim('hop'); speakKo((mode==='c'?'잘했어! ':'괜찮아! ')+catSay().ko);
+}
 function catSay(){
   const d=new Date(), t=tasksOf(d), rem=remaining();
-  if(!t.length) return {ko:'오늘은 쉬는 날이야! 푹 쉬자 🌙'};
+  if(!t.length){
+    if(d.getDay()===0){ const L=sunList(d);
+      if(L.length){ if(planAsk>=L.length) planAsk=0; const e=L[planAsk];
+        return {ko:(planAsk===0?`일요일이야! 지난주에 체크 안 한 게 ${L.length}개 있어. 같이 보자!\n`:'')+`${WD_KO[e.dd.getDay()]}요일 ${e.x.t} 했어?`, i:e.i, k:e.k, diary:e.x.diary}; }
+      if(weekInfo(addD(d,-1)).ok) return {ko:'지난주 할 일 다 했어! 최고야! 오늘은 푹 쉬자 🌙'};
+    }
+    return {ko:'오늘은 쉬는 날이야! 푹 쉬자 🌙'};
+  }
   if(!rem.length) return {ko:'오늘 할 일 다 했어! 최고야! 💖'};
   const r=dayRec(ymd(d)); let pre='';
   if(!r.c.length&&!r.x.length){ let y=addD(d,-1); if(!tasksOf(y).length) y=addD(y,-1); if(dayStatus(y)==='missed') pre='어제 못 했지? 괜찮아, 오늘은 같이 하자!\n'; }
@@ -637,7 +682,7 @@ function planView(){
     return `<div class="trow ${on?'on':''} ${no?'no':''}" style="--hc:${x.c}"><button class="heart" data-h="${i}" aria-label="${esc(x.t)}">${HEART}</button>
       <span class="tt">${esc(x.t)}</span>${x.diary?`<button class="none" data-no="${i}">${no?'↩︎ 다시 하기':'오늘은 없어요'}</button>`:''}</div>`; }).join('');
   const sun=addD(weekSun(d),7*wkOff);
-  const strip=[0,1,2,3,4,5,6].map(n=>{ const dd=addD(sun,n), kk=ymd(dd), st=dayStatus(dd), tt=tasksOf(dd), rr=(S.plan.d||{})[kk], can=kk<=ymd();
+  const strip=[0,1,2,3,4,5,6].map(n=>{ const dd=addD(sun,n), kk=ymd(dd), st=dayStatus(dd), tt=tasksOf(dd), rr=(S.plan.d||{})[kk], can=true;
     const body = !tt.length ? '<span class="moon">🌙</span><small class="rs">쉬는 날</small>'
       : `<div class="ctl">${tt.map((x,i)=>{ const on=rr&&rr.c.includes(i), no=rr&&rr.x.includes(i);
           return `<div class="ct ${on?'on':''} ${no?'no':''} ${can&&!no?'tap':''}" style="--hc:${x.c}" ${can&&!no?`data-mk="${kk}|${i}" role="button"`:''}><span class="mh big">${HEART}</span><span>${esc(x.t)}</span></div>`; }).join('')}</div>`;
@@ -647,8 +692,8 @@ function planView(){
     : `<div class="giftline">🎁 월~토 다 하면 큰 선물상자! <b>${wk.nDone}/6</b></div>`;
   const body = planTab==='cal' ? calHTML() : `
       <h2 class="ptitle">${d.getMonth()+1}월 ${d.getDate()}일 (${WD_KO[d.getDay()]}) 오늘 할 일</h2>
-      ${t.length?`<div class="tlist">${rows}</div><div class="pnote">✔ 다 하면 눌러서 체크해요 · 지난 날은 아래 칸이나 달력에서 눌러서 체크해요</div>`:`<div class="rest">🌙<b>쉬는 날</b><span>오늘은 푹 쉬어요!</span></div><button class="giftline" data-pt="cal">📅 지난 날 체크는 달력에서 해요</button>`}
-      <div class="calhead"><button class="sm" data-wk="-1">◀</button><h3 style="margin:0;font-family:var(--display)">${wkOff===0?'이번 주':wkOff===-1?'지난주':`${sun.getMonth()+1}월 ${sun.getDate()}일 주`}</h3><button class="sm" data-wk="1" ${wkOff>=0?'disabled style="opacity:.3"':''}>▶</button></div>
+      ${t.length?`<div class="tlist">${rows}</div><div class="pnote">✔ 다 하면 눌러서 체크해요 · 지난 날·미리 한 날은 아래 칸이나 달력에서 눌러서 체크해요</div>`:`<div class="rest">🌙<b>쉬는 날</b><span>오늘은 푹 쉬어요!</span></div><button class="giftline" data-pt="cal">📅 달력에서도 지난 날·다음 날을 체크할 수 있어요</button>`}
+      <div class="calhead"><button class="sm" data-wk="-1">◀</button><h3 style="margin:0;font-family:var(--display)">${wkOff===0?'이번 주':wkOff===-1?'지난주':wkOff===1?'다음 주':`${sun.getMonth()+1}월 ${sun.getDate()}일 주`}</h3><button class="sm" data-wk="1">▶</button></div>
       <div class="wkstrip">${strip}</div>${giftLine}`;
   app.innerHTML=`<div class="screen">${topbar()}
     <div class="planwrap">
@@ -656,7 +701,7 @@ function planView(){
         <div class="pbubble"><button class="sm" id="sayko">🔊</button><div>${esc(say.ko).replace(/\n/g,"<br>")}</div></div>
         <div id="scat">${catSVG({size:Math.min(230,Math.max(150,innerWidth*.17)),mood:remaining().length?'normal':'happy'})}</div>
         ${say.i!=null?`<div class="askbtns"><button class="big-btn green" id="did">했어! ✓</button>
-          ${say.diary?`<button class="big-btn" id="nodiary">오늘은 없어요</button>`:''}<button class="big-btn blue" id="notyet">아직이야</button></div>`:''}
+          ${say.diary?`<button class="big-btn" id="nodiary">${say.k?'없었어요':'오늘은 없어요'}</button>`:''}<button class="big-btn blue" id="notyet">${say.k?'못 했어':'아직이야'}</button></div>`:''}
       </div>
       <div class="panel">
         <div class="tabs ptabs"><button class="tab ${planTab==='today'?'on':''}" data-pt="today">❤️ 오늘</button><button class="tab ${planTab==='cal'?'on':''}" data-pt="cal">📅 달력</button></div>
@@ -669,13 +714,13 @@ function planView(){
   $$('[data-h]').forEach(b=>b.onclick=()=>toggleTask(+b.dataset.h));
   $$('.trow .tt').forEach(el=>el.onclick=()=>{ const b=el.parentNode.querySelector('[data-h]'); if(b) b.click(); });
   $$('[data-no]').forEach(b=>b.onclick=()=>noDiary(+b.dataset.no));
-  if($('#did')) $('#did').onclick=()=>toggleTask(say.i,true);
-  if($('#nodiary')) $('#nodiary').onclick=()=>noDiary(say.i);
+  if($('#did')) $('#did').onclick=()=>say.k?sunCheck(say.k,say.i,'c'):toggleTask(say.i,true);
+  if($('#nodiary')) $('#nodiary').onclick=()=>say.k?sunCheck(say.k,say.i,'x'):noDiary(say.i);
   if($('#notyet')) $('#notyet').onclick=()=>{ planAsk++; planView(); setTimeout(()=>speakKo(catSay().ko),150); };
   if($('#opengift')) $('#opengift').onclick=()=>giftBox(wk.key);
   $$('[data-cal]').forEach(b=>b.onclick=()=>{ calOff+=+b.dataset.cal; planView(); });
   $$('[data-day]').forEach(b=>b.onclick=()=>daySheet(b.dataset.day));
-  $$('[data-wk]').forEach(b=>b.onclick=()=>{ const n=wkOff+(+b.dataset.wk); if(n>0) return; wkOff=n; planView(); });
+  $$('[data-wk]').forEach(b=>b.onclick=()=>{ const n=wkOff+(+b.dataset.wk); if(n>8||n<-30) return; wkOff=n; planView(); });
   $$('[data-mk]').forEach(b=>b.onclick=e=>{ e.stopPropagation(); const [kk,i]=b.dataset.mk.split('|'); markMini(kk,+i); });
 }
 function setTask(k,i,mode){ // mode: 'c' toggle done, 'x' toggle no-diary
@@ -708,20 +753,19 @@ function afterCheck(msg, nowDone){
   checkGift(new Date());
 }
 function markMini(k,i){
-  if(k>ymd()) return;
   if(k===ymd()){ const r=dayRec(k); if(r.c.includes(i)){ setTask(k,i,'c'); planAsk=0; planView(); } else toggleTask(i); return; }
   const res=setTask(k,i,'c'); if(res.added) tick(); planView();
   if(res.nowDone){ fanfare(); const d=parseD(k); speakKo(`${d.getMonth()+1}월 ${d.getDate()}일 할 일 다 했어! 스티커 받았어!`); checkGift(d); }
 }
 function daySheet(k){
-  const d=parseD(k), t=tasksOf(d); if(!t.length||k>=ymd()) return;
+  const d=parseD(k), t=tasksOf(d); if(!t.length) return;
   const m=document.createElement('div'); m.className='modal';
   const draw=()=>{ const r=dayRec(k), done=dayComplete(d);
     m.innerHTML=`<div class="sheet" style="width:min(620px,100%)"><button class="close">✕</button>
       <h2 class="ptitle">${d.getMonth()+1}월 ${d.getDate()}일 (${WD_KO[d.getDay()]}) ${done?STICKERS[d.getDate()%STICKERS.length]:''}</h2>
-      <div style="font-size:17px">이날 한 것도 지금 체크할 수 있어요.</div>
+      <div style="font-size:17px">이날 할 일을 눌러서 체크해요. 지난 날도, 미리 한 날도 돼요.</div>
       <div class="tlist">${t.map((x,i)=>{ const on=r.c.includes(i), no=r.x.includes(i);
-        return `<div class="trow ${on?'on':''} ${no?'no':''}" style="--hc:${x.c}"><button class="heart" data-sh="${i}" aria-label="${esc(x.t)}">${HEART}</button><span class="tt">${esc(x.t)}</span>${x.diary?`<button class="none" data-sno="${i}">${no?'↩︎ 다시 하기':'이날은 없었어요'}</button>`:''}</div>`; }).join('')}</div>
+        return `<div class="trow ${on?'on':''} ${no?'no':''}" style="--hc:${x.c}"><button class="heart" data-sh="${i}" aria-label="${esc(x.t)}">${HEART}</button><span class="tt">${esc(x.t)}</span>${x.diary?`<button class="none" data-sno="${i}">${no?'↩︎ 다시 하기':'이날은 없어요'}</button>`:''}</div>`; }).join('')}</div>
       <button class="big-btn green" id="ok">${done?'다 했어요! 닫기':'닫기'}</button></div>`;
     const fin=()=>{ m.remove(); planView(); };
     m.querySelector('.close').onclick=fin; $('#ok',m).onclick=fin;
@@ -760,7 +804,7 @@ function calHTML(){
     else { inner=`<div class="ctl">${t.map((x,i)=>{ const on=r&&r.c.includes(i), no=r&&r.x.includes(i);
         return `<div class="ct ${on?'on':''} ${no?'no':''}" style="--hc:${x.c}"><span class="mh">${HEART}</span>${esc(x.t)}</div>`; }).join('')}</div>`;
       if(st==='done') inner+=`<span class="stk">${STICKERS[day%STICKERS.length]}</span>`; }
-    cells.push(`<div class="cd ${st} ${k===ymd()?'now':''}" ${k<ymd()&&st!=='rest'?`data-day="${k}"`:''}><b>${day}</b>${inner}${wk?'<span class="gft">🎁</span>':''}</div>`); }
+    cells.push(`<div class="cd ${st} ${k===ymd()?'now':''}" ${st!=='rest'?`data-day="${k}"`:''}><b>${day}</b>${inner}${wk?'<span class="gft">🎁</span>':''}</div>`); }
   const doneN=Object.keys(S.plan.d||{}).filter(k=>k.startsWith(`${y}-${String(mo+1).padStart(2,'0')}`)&&dayComplete(parseD(k))).length;
   return `<div class="calhead"><button class="sm" data-cal="-1">◀</button><h2 class="ptitle">${y}년 ${mo+1}월</h2><button class="sm" data-cal="1">▶</button><span class="tag ko">스티커 ${doneN}개</span></div>
     <div class="cal">${WD_KO.map((w,i)=>`<div class="ch ${i===0?'sun':''}">${w}</div>`).join('')}${cells.join('')}</div>`;
@@ -794,7 +838,7 @@ function home(opts){
   opts=opts||{}; view='home'; ensureToday(); tickCat();
   const T=S.today, st=T.stage, L=T.lesson?LBYID[T.lesson]:null;
   const left=stagesLeft(); const leftTxt=left>0?`오늘 남은 단계: ${left}개`:'보물상자를 열어요! 🎁';
-  const stones=STAGES.map((s,i)=>{ const cls=st>=s.n?'done':(st===s.n-1?'cur':'lock');
+  const stones=STAGES.map((s0,i)=>{ const s=STG(s0.n); const cls=st>=s.n?'done':(st===s.n-1?'cur':'lock');
     return `<button class="stone ${cls}" data-stage="${s.n}" style="left:${POS[i+1][0]}%;top:${POS[i+1][1]}%"><div class="rock"><span class="ic">${s.icon}</span><span class="rw">+${s.coins}🪙</span>${cls==='cur'?'<span class="go">GO!</span>':''}</div><b>${s.n}. ${s.en}</b><small>${s.ko}</small></button>`; }).join('');
   const ready=st>=4&&!T.chest;
   const chest=`<button class="stone chest ${ready?'ready cur':''} ${T.chest?'done':''} ${!ready&&!T.chest?'lock':''}" id="chest" style="left:${POS[5][0]}%;top:${POS[5][1]}%"><div class="rock"><span class="ic">${T.chest?'✨':'🎁'}</span><span class="rw">+${CHEST_COINS}🪙</span>${ready?'<span class="go">OPEN!</span>':''}</div><b>${T.chest?'Opened!':'Treasure'}</b><small>${T.chest?'카드 획득!':'카드 '+T.words.length+'장'}</small></button>`;
@@ -802,7 +846,7 @@ function home(opts){
   const trail=`<svg class="trail" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M${POS.map(p=>p.join(' ')).join(' L')}" fill="none" stroke="rgba(17,139,176,.35)" stroke-width="1.2" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" style="stroke-width:6px"/></svg>`;
   const head = T.chest
     ? `<h2>오늘 탐험 완료! 🎉</h2><span class="left done">내일 또 만나요</span>`
-    : `<h2>${L?esc(L.title):'Review Day'}</h2><span class="left">${leftTxt}</span><button class="sm" data-say="${esc(left>0?`You have ${left} step${left>1?'s':''} left today. Finish all four steps to open the treasure chest!`:'Open the treasure chest!')}">🔊</button>`;
+    : `<h2>${L?esc(L.title):T.prio?'📖 Book & SR Words':'Review Day'}</h2><span class="left">${leftTxt}</span><button class="sm" data-say="${esc(left>0?`You have ${left} step${left>1?'s':''} left today. Finish all four steps to open the treasure chest!`:'Open the treasure chest!')}">🔊</button>`;
   const words=TW();
   const sub = T.chest
     ? `<div class="cardsnote">모은 카드는 도감에 들어갔어요. 고양이와 카드로 놀아 보세요! <span class="spacer"></span><button class="big-btn ghost" id="bonus" style="font-size:20px;padding:12px 18px">⛵ 새 단어 더 탐험하기</button></div>`
@@ -880,6 +924,7 @@ function makeStoryQ(L, i){
 }
 function stageItems(n){
   const tw=TW();
+  if(n===4&&S.today.prio) return tw.map(w=>()=>makeKoQ(w));
   if(n===4){ const L=S.today.lesson&&LBYID[S.today.lesson]; return L?L.qs.map((_,i)=>()=>makeStoryQ(L,i)):[]; }
   let list=tw; if(n===2) list=tw.filter(w=>w.q2);
   return list.map(w=>()=>makeQ(n,w));
@@ -888,10 +933,10 @@ function startStage(n){
   const items=stageItems(n);
   if(!items.length){ completeStage(n); return; }
   run={n, makers:shuffle(items), i:0, wrong:[], correct:0, round:1};
-  if(n===4) showStory(true); else stageIntro(n);
+  if(n===4&&!S.today.prio) showStory(true); else stageIntro(n);
 }
 function stageIntro(n){
-  const s=STAGES[n-1];
+  const s=STG(n);
   app.innerHTML=`<div class="screen">${qtop()}<div class="panel"><div class="score">
      <div style="font-size:90px;line-height:1">${s.icon}</div>
      <h2>Step ${n}. ${s.en}</h2><div class="ko" style="font-size:22px">${s.ko}</div>
@@ -902,7 +947,7 @@ function stageIntro(n){
   setTimeout(()=>speak(s.say),200);
 }
 function qtop(){
-  const s=STAGES[run.n-1]; const tot=run.makers.length; const pct=Math.round(run.i/tot*100);
+  const s=STG(run.n); const tot=run.makers.length; const pct=Math.round(run.i/tot*100);
   return `<div class="qtop"><button class="iconbtn" id="quit" aria-label="Home">✕</button>
     <span class="tag" style="background:#fff">${s.icon} Step ${run.n}${run.round>1?' · 다시하기':''}</span>
     <div class="prog"><i style="width:${pct}%"></i></div>
@@ -913,10 +958,10 @@ let cur=null;
 function nextQ(){
   if(run.i>=run.makers.length) return roundEnd();
   cur=run.makers[run.i](); cur.answered=false; shownAt=Date.now();
-  const s=STAGES[run.n-1];
+  const s=STG(run.n);
   app.innerHTML=`<div class="screen">${qtop()}<div class="panel">
     <div class="qlabel"><span class="tag">${s.en}</span><span class="tag ko">${cur.label||s.ko}</span><span class="tag" style="background:transparent">${run.i+1} / ${run.makers.length}</span>
-      ${run.n===4?'<span class="spacer"></span><button class="tag" id="peek" style="font-size:18px">📖 이야기 다시 보기</button>':''}</div>
+      ${run.n===4&&!S.today.prio?'<span class="spacer"></span><button class="tag" id="peek" style="font-size:18px">📖 이야기 다시 보기</button>':''}</div>
     <div class="stage">${cur.head}${cur.ask?`<div class="prompt"><div class="txt" style="font-size:24px">${cur.ask}</div></div>`:''}</div>
     <div class="opts ${cur.layout||''} ${cur.dm?'dm':''}">${cur.opts.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o.label)}${o.say?`<span class="os" data-say="${esc(o.say)}" role="button" aria-label="Listen">🔊</span>`:''}</button>`).join('')}</div>
     <div id="fbwrap"></div></div></div>`;
@@ -959,7 +1004,7 @@ function answer(i){
   $('#fbwrap').scrollIntoView({block:'nearest'});
 }
 function roundEnd(){
-  const tot=run.makers.length, c=run.correct, s=STAGES[run.n-1];
+  const tot=run.makers.length, c=run.correct, s=STG(run.n);
   const allRight=run.wrong.length===0;
   const msg = allRight ? (run.round===1?'Perfect! 한 번에 다 맞혔어요!':'All correct! 다 맞혔어요!') : (c/tot>=.7?'Great job! 거의 다 왔어요!':'Good try! 다시 해 봐요!');
   const wrongWords=run.wrong.map(m=>{ const q=m(); return q.w?q.w.word:'Q'; });
@@ -979,7 +1024,7 @@ function roundEnd(){
          $('#later').onclick=()=>{ run=null; home(); }; }
 }
 function completeStage(n){
-  const s=STAGES[n-1]; const from=S.today.stage;
+  const s=STG(n); const from=S.today.stage;
   S.today.stage=Math.max(S.today.stage,n); S.today.earned+=s.coins; save();
   const go=()=>{ run=null; home({jumpFrom:from, justPiece:n-1}); };
   addCoins(s.coins, go);

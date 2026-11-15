@@ -80,3 +80,31 @@ wet|covered with water
 wind|air that moves
 wrong|not right; not correct
 yummy|very tasty
+neglect|to not take care of something
+accept|to take something that is offered
+answer|to reply or find what is right
+stay|to not leave a place
+bring|to carry something to a place
+erase|to rub out writing
+help|to make it easier for someone to do something
+shaking|moving quickly up and down or side to side
+decrease|to become smaller or fewer
+worn out|very, very tired
+ask|to say a question
+unlucky|having bad things happen by chance
+dislike|to not like
+tight|fitting very closely
+hold|to have inside or in your hands
+watch|to look at something for a while
+sure|certain; with no doubt
+note|a short written message
+picture|an image or drawing; to imagine
+safety|being safe from harm
+whole|all of something
+trade|to give one thing for another
+task|a job to do
+fact|something that is true
+place|an area or spot
+pour out|to flow out quickly
+teammate|someone on your team
+sadness|the feeling of being sad
