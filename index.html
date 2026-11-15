@@ -264,6 +264,11 @@ button:disabled{cursor:default}
 .wishcard{display:flex;align-items:center;gap:10px;text-align:left;border:0;border-radius:16px;background:#fff3c4;box-shadow:0 0 0 3px #ffcf33;padding:8px 12px;font-size:16px;line-height:1.3;width:100%}
 .wishcard .wi{font-size:38px;line-height:1}.wishcard small{font-weight:800;color:#8a5a00}.wishcard.done{background:#ffe9f2;box-shadow:none;font-size:14px}
 .item.wished{box-shadow:0 0 0 4px #ffcf33}.item.wished::before{content:'💭 소원';position:absolute;top:6px;left:8px;font-size:13px;font-weight:800;color:#8a5a00}
+.trow .heart svg .bx,.ct .mh svg .bx{fill:#fff;stroke:var(--hc);stroke-width:2.2}
+.trow .heart svg .ck,.ct .mh svg .ck{fill:none;stroke:var(--hc);stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform-origin:12px 12px;transform:scale(.3);transition:transform .18s cubic-bezier(.3,1.6,.5,1),opacity .1s}
+.trow.on .heart svg .ck,.ct.on .mh svg .ck{opacity:1;transform:scale(1.15)}
+.trow.on .heart svg .bx,.ct.on .mh svg .bx{fill:#fff}
+.trow .tt{cursor:pointer}
 .planwrap{display:grid;grid-template-columns:minmax(250px,340px) minmax(0,1fr);gap:14px;flex:1;min-height:0}
 .plancat{position:relative;align-items:center;justify-content:center;text-align:center}
 .pbubble{display:flex;align-items:center;gap:8px;background:#fff;border-radius:22px;padding:12px 16px;font-family:var(--display);font-weight:600;font-size:clamp(20px,2vw,26px);box-shadow:0 4px 0 rgba(0,0,0,.08);position:relative;text-align:left}
@@ -280,12 +285,15 @@ button:disabled{cursor:default}
 .trow .none{border:0;border-radius:999px;background:#eee;padding:8px 14px;font-size:16px;font-weight:700}
 .pnote{color:var(--ink-soft);font-size:15px}
 .rest{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:60px;padding:20px;background:#efeafd;border-radius:20px}.rest b{font-size:28px;font-family:var(--display)}.rest span{font-size:18px}
-.wkstrip{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.wkstrip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
 .item.lock>.i,.item.lock>b{opacity:.45}.lockgift{font-weight:800;color:#8a5a00}
 .ptabs .tab{background:#e6edf1;color:var(--ink)}.ptabs .tab.on{background:var(--ink);color:#fff}
-.wd{background:#f2f2f2;border-radius:14px;padding:6px;display:flex;flex-direction:column;align-items:center;min-height:78px}
-.wd small{font-weight:800;color:#c0405a}.wd b{font-size:18px}.wd span{font-size:26px;line-height:1.1}
-.wd.done{background:#fff3c4}.wd.today{background:#fff;box-shadow:0 0 0 3px var(--coral)}.wd.missed span,.wd.before span{color:#aaa}
+.wd{background:#fff;border:2px solid #f0dde2;border-radius:14px;padding:6px;display:flex;flex-direction:column;gap:4px;min-height:110px;min-width:0}
+.wd .wh{display:flex;align-items:center;gap:4px}.wd .wst{margin-left:auto;font-size:22px;line-height:1}
+.wd.wrest{background:#efeafd;border-color:#e2dafb;align-items:center}.wd.wrest .wh small{color:#6b5bd6}.wd .moon{font-size:24px}.wd .rs{font-size:13px}
+.wd .ct{font-size:clamp(11px,1.15vw,14px)}.wd .ct .mh.big{width:20px;height:20px;flex:none;margin-top:0}.wd .ct{align-items:center;padding:3px 0}.wd .ct.tap{cursor:pointer}
+.wd small{font-weight:800;color:#c0405a}.wd b{font-size:16px}
+.wd.done{background:#fff8dc}.wd.now{box-shadow:0 0 0 3px var(--coral)}
 .giftline{background:#fff3c4;border:0;border-radius:16px;padding:10px 14px;font-size:18px;font-weight:700;text-align:center}
 .giftline.got{background:#ffd23f;font-size:22px}.giftline.lost{background:#eef2f5;color:var(--ink-soft)}
 .bigbox{border:0;background:none;font-size:160px;line-height:1;animation:wob 1s ease-in-out infinite}
@@ -397,6 +405,8 @@ belly|n|🫃|the soft front part of your body where your food goes; your tummy|A
 yells|v|🗣️|shouts in a very loud voice|"I have had it!" ___ Fox.|shout/shouts|whispers|2|소리치다|sort,measure,lend|s:shout:taste,sort,hop|pay,sort,lend
 fight|v|🥊|to try very hard to stop or beat something that is causing trouble|"I will just have to ___ winter!" says Fox.|||3|맞서 싸우다|select,connect,decorate||borrow,sort,pay
 fights back|v|🔁|fights against someone who started fighting you first|Fox tries to fight winter. But winter ___ with more snow.|||3|반격하다, 되받아치다|decorate,measure,select||sort,lend,pay
+still|adj|🧘|not moving at all|"I like to sit ___ and listen," says Rabbit.|||3|가만히 있는, 움직이지 않는|expensive,crowded,sour||loud,expensive,crowded
+nods|v|🙂|moves the head up and down to say yes|Fox asks a question. Rabbit ___ to say yes.|||2|고개를 끄덕이다|spill,measure,decorate||pay,lend,sort
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful
@@ -971,6 +981,8 @@ const REVIEW_GAP = [2,3,5];
 
 const WORDS=[], BYID={}, BYW={};
 /* Only words whose picture shows the meaning itself. Every other word is asked as "read the word, pick the meaning". */
+/* bank words that also came up in Elena's books: put them in the next path first */
+const PRIO=['alone'];
 const PIC=new Set(['peek','cloudy','sunny','climb','map','fossil','throw','price','tool','experiment','pour','ticket','station','correct','loud','ghost','trophy','strong','smile','cry','gift','party','dance','surprised','quiet','sleepy','angry','silly','grow','seal']);
 function pic(w){ return w.pic?w.em:`<span class="kopic">${esc(w.ko)}</span>`; }
 (function(){
@@ -1056,6 +1068,10 @@ function tone(seq){ try{ ac=ac||new (window.AudioContext||window.webkitAudioCont
 const ding=()=>tone([[660,.12],[880,.12],[1175,.22]]);
 const bonk=()=>tone([[300,.15],[220,.25]]);
 const fanfare=()=>tone([[523,.14],[659,.14],[784,.14],[1047,.4]]);
+function tick(){ try{ ac=ac||new (window.AudioContext||window.webkitAudioContext)(); const t=ac.currentTime;
+  const o=ac.createOscillator(),g=ac.createGain(); o.type='square'; o.frequency.setValueAtTime(1900,t); o.frequency.exponentialRampToValueAtTime(900,t+.04);
+  g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.12,t+.002); g.gain.exponentialRampToValueAtTime(.0001,t+.05); o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t+.06);
+  const o2=ac.createOscillator(),g2=ac.createGain(); o2.type='sine'; o2.frequency.value=1320; g2.gain.setValueAtTime(.0001,t+.05); g2.gain.exponentialRampToValueAtTime(.1,t+.06); g2.gain.exponentialRampToValueAtTime(.0001,t+.2); o2.connect(g2); g2.connect(ac.destination); o2.start(t+.05); o2.stop(t+.22); }catch(e){} }
 const coinSnd=()=>{ coinHit(0,.08,2300); coinHit(.09,.08,2900); };
 /* metallic coin: inharmonic partials with a fast decay */
 function coinHit(at,vol,f0){ try{ ac=ac||new (window.AudioContext||window.webkitAudioContext)(); const t=ac.currentTime+(at||0); f0=f0||(2000+Math.random()*900); vol=vol||.07;
@@ -1078,7 +1094,7 @@ function reviewPick(n, exclude){
 function newPath(){
   const L=LESSONS.find(l=>!S.done.includes(l.id));
   let words=L?L.words.slice():[];
-  const book=WORDS.filter(w=>w.book&&!owned(w.id)).map(w=>w.id);
+  const book=WORDS.filter(w=>w.book&&!owned(w.id)).map(w=>w.id).concat(PRIO.map(x=>BYW[x]).filter(w=>w&&!w.book&&!owned(w.id)&&!words.includes(w.id)).map(w=>w.id));
   words=words.concat(book);
   let rev=reviewPick(L?Math.max(0,Math.min(3,15-words.length)):12, words);
   if(!L && !rev.length) rev=shuffle(Object.keys(S.cards)).slice(0,12);
@@ -1149,7 +1165,7 @@ const PLAN={
 const WD_KO=['일','월','화','수','목','금','토'];
 const STICKERS=['🌟','🦄','🍓','🐣','🌈','🍭','🐰','🌸','🎈','🐬','🦋','🍩','🐼','🌻'];
 const GIFTS=['gown','gboot','unicorn','scape','pboot','starclip','rsweat','ribbon'];
-let planTab='today', planAsk=0, calOff=0;
+let planTab='today', planAsk=0, calOff=0, wkOff=0;
 function ymd(d){ return dateStr(d); }
 function parseD(k){ const [y,m,d]=k.split('-').map(Number); return new Date(y,m-1,d); }
 function addD(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
@@ -1167,7 +1183,7 @@ function weekInfo(d){ const sun=weekSun(d); const days=[1,2,3,4,5,6].map(i=>addD
   return {key:ymd(sun), days, st, ok:st.every(x=>x==='done'), lost:st.includes('missed'), nDone:st.filter(x=>x==='done').length}; }
 function remaining(){ const d=new Date(), t=tasksOf(d); if(!t.length) return []; const r=dayRec(ymd(d)); return t.map((x,i)=>i).filter(i=>!r.c.includes(i)&&!r.x.includes(i)); }
 function speakKo(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang='ko-KR'; const v=speechSynthesis.getVoices().find(v=>/^ko/i.test(v.lang)); if(v)u.voice=v; u.rate=.95; u.pitch=1.15; speechSynthesis.speak(u); }catch(e){} }
-const HEART='<svg viewBox="0 0 24 24"><path d="M12 21s-7.4-4.5-9.9-9.2C.4 8.5 2.3 4 6.4 4c2.3 0 3.7 1.3 5.6 3.4C13.9 5.3 15.3 4 17.6 4c4.1 0 6 4.5 4.3 7.8C19.4 16.5 12 21 12 21z"/></svg>';
+const HEART='<svg viewBox="0 0 24 24"><rect class="bx" x="2.5" y="2.5" width="19" height="19" rx="5"/><path class="ck" d="M6.5 12.5l3.8 3.8L17.8 8"/></svg>';
 function catSay(){
   const d=new Date(), t=tasksOf(d), rem=remaining();
   if(!t.length) return {ko:'오늘은 쉬는 날이야! 푹 쉬자 🌙'};
@@ -1179,19 +1195,24 @@ function catSay(){
   return {ko:pre+`${x.t} 했어?`, i, diary:x.diary};
 }
 function planView(){
-  view='plan'; planInit(); const d=new Date(), k=ymd(d), t=tasksOf(d), r=t.length?dayRec(k):null, wk=weekInfo(d), say=catSay();
+  view='plan'; planInit(); const d=new Date(), k=ymd(d), t=tasksOf(d), r=t.length?dayRec(k):null, wk=weekInfo(addD(d,7*wkOff)), say=catSay();
   const gift=S.plan.gifts[wk.key];
   const rows=t.map((x,i)=>{ const on=r.c.includes(i), no=r.x.includes(i);
     return `<div class="trow ${on?'on':''} ${no?'no':''}" style="--hc:${x.c}"><button class="heart" data-h="${i}" aria-label="${esc(x.t)}">${HEART}</button>
       <span class="tt">${esc(x.t)}</span>${x.diary?`<button class="none" data-no="${i}">${no?'↩︎ 다시 하기':'오늘은 없어요'}</button>`:''}</div>`; }).join('');
-  const strip=wk.days.map((dd,i)=>{ const st=wk.st[i]; const lab={done:STICKERS[dd.getDate()%STICKERS.length],missed:'·',today:'❤️',future:'',before:'·'}[st];
-    return `<div class="wd ${st}" ${st==='missed'||st==='done'?`data-day="${ymd(dd)}"`:''}><small>${WD_KO[dd.getDay()]}</small><b>${dd.getDate()}</b><span>${lab}</span></div>`; }).join('');
+  const sun=addD(weekSun(d),7*wkOff);
+  const strip=[0,1,2,3,4,5,6].map(n=>{ const dd=addD(sun,n), kk=ymd(dd), st=dayStatus(dd), tt=tasksOf(dd), rr=(S.plan.d||{})[kk], can=kk<=ymd();
+    const body = !tt.length ? '<span class="moon">🌙</span><small class="rs">쉬는 날</small>'
+      : `<div class="ctl">${tt.map((x,i)=>{ const on=rr&&rr.c.includes(i), no=rr&&rr.x.includes(i);
+          return `<div class="ct ${on?'on':''} ${no?'no':''} ${can&&!no?'tap':''}" style="--hc:${x.c}" ${can&&!no?`data-mk="${kk}|${i}" role="button"`:''}><span class="mh big">${HEART}</span><span>${esc(x.t)}</span></div>`; }).join('')}</div>`;
+    return `<div class="wd ${st==='rest'?'wrest':st} ${kk===ymd()?'now':''}"><div class="wh"><small>${WD_KO[dd.getDay()]}</small><b>${dd.getDate()}</b>${st==='done'?`<span class="wst">${STICKERS[dd.getDate()%STICKERS.length]}</span>`:''}</div>${body}</div>`; }).join('');
   const giftLine= gift ? `<button class="giftline got" id="opengift">🎁 이번 주 선물 ${gift.opened?'받았어요!':'열어 보기!'}</button>`
     : wk.lost ? `<div class="giftline lost">아직 못 한 날이 있어요. 했던 날이면 그 칸을 눌러 체크해요! (${wk.nDone}/6)</div>`
     : `<div class="giftline">🎁 월~토 다 하면 큰 선물상자! <b>${wk.nDone}/6</b></div>`;
   const body = planTab==='cal' ? calHTML() : `
       <h2 class="ptitle">${d.getMonth()+1}월 ${d.getDate()}일 (${WD_KO[d.getDay()]}) 오늘 할 일</h2>
-      ${t.length?`<div class="tlist">${rows}</div><div class="pnote">♡ 다 하면 하트를 눌러 색칠해요 · 지난 날은 아래 칸이나 달력에서 눌러서 체크해요</div>`:`<div class="rest">🌙<b>쉬는 날</b><span>오늘은 푹 쉬어요!</span></div><button class="giftline" data-pt="cal">📅 지난 날 못 누른 하트는 달력에서 체크해요</button>`}
+      ${t.length?`<div class="tlist">${rows}</div><div class="pnote">✔ 다 하면 눌러서 체크해요 · 지난 날은 아래 칸이나 달력에서 눌러서 체크해요</div>`:`<div class="rest">🌙<b>쉬는 날</b><span>오늘은 푹 쉬어요!</span></div><button class="giftline" data-pt="cal">📅 지난 날 체크는 달력에서 해요</button>`}
+      <div class="calhead"><button class="sm" data-wk="-1">◀</button><h3 style="margin:0;font-family:var(--display)">${wkOff===0?'이번 주':wkOff===-1?'지난주':`${sun.getMonth()+1}월 ${sun.getDate()}일 주`}</h3><button class="sm" data-wk="1" ${wkOff>=0?'disabled style="opacity:.3"':''}>▶</button></div>
       <div class="wkstrip">${strip}</div>${giftLine}`;
   app.innerHTML=`<div class="screen">${topbar()}
     <div class="planwrap">
@@ -1208,8 +1229,9 @@ function planView(){
     </div></div>`;
   bindTop(); bindSay();
   $('#sayko').onclick=()=>speakKo(say.ko.replace(/[💖🌙]/g,''));
-  $$('[data-pt]').forEach(b=>b.onclick=()=>{ planTab=b.dataset.pt; calOff=0; planView(); });
+  $$('[data-pt]').forEach(b=>b.onclick=()=>{ planTab=b.dataset.pt; calOff=0; wkOff=0; planView(); });
   $$('[data-h]').forEach(b=>b.onclick=()=>toggleTask(+b.dataset.h));
+  $$('.trow .tt').forEach(el=>el.onclick=()=>{ const b=el.parentNode.querySelector('[data-h]'); if(b) b.click(); });
   $$('[data-no]').forEach(b=>b.onclick=()=>noDiary(+b.dataset.no));
   if($('#did')) $('#did').onclick=()=>toggleTask(say.i,true);
   if($('#nodiary')) $('#nodiary').onclick=()=>noDiary(say.i);
@@ -1217,6 +1239,8 @@ function planView(){
   if($('#opengift')) $('#opengift').onclick=()=>giftBox(wk.key);
   $$('[data-cal]').forEach(b=>b.onclick=()=>{ calOff+=+b.dataset.cal; planView(); });
   $$('[data-day]').forEach(b=>b.onclick=()=>daySheet(b.dataset.day));
+  $$('[data-wk]').forEach(b=>b.onclick=()=>{ const n=wkOff+(+b.dataset.wk); if(n>0) return; wkOff=n; planView(); });
+  $$('[data-mk]').forEach(b=>b.onclick=e=>{ e.stopPropagation(); const [kk,i]=b.dataset.mk.split('|'); markMini(kk,+i); });
 }
 function setTask(k,i,mode){ // mode: 'c' toggle done, 'x' toggle no-diary
   const r=dayRec(k), A=r[mode], j=A.indexOf(i), was=dayComplete(parseD(k));
@@ -1235,7 +1259,7 @@ function toggleTask(i,fromCat){
   if(fromCat && r.c.includes(i)) return;
   const res=setTask(k,i,'c'); planAsk=0;
   if(!res.added){ planView(); return; }
-  tone([[660,.08],[990,.16]]);
+  tick();
   afterCheck(`${tasksOf(new Date())[i].t} 했구나! 잘했어!`, res.nowDone);
 }
 function noDiary(i){
@@ -1246,6 +1270,12 @@ function afterCheck(msg, nowDone){
   if(!nowDone){ if(msg){ hearts(3,'💗'); catAnim('hop'); speakKo(msg+' '+catSay().ko); } return; }
   fanfare(); hearts(8); catAnim('hop'); speakKo('오늘 할 일 다 했어! 최고야!');
   checkGift(new Date());
+}
+function markMini(k,i){
+  if(k>ymd()) return;
+  if(k===ymd()){ const r=dayRec(k); if(r.c.includes(i)){ setTask(k,i,'c'); planAsk=0; planView(); } else toggleTask(i); return; }
+  const res=setTask(k,i,'c'); if(res.added) tick(); planView();
+  if(res.nowDone){ fanfare(); const d=parseD(k); speakKo(`${d.getMonth()+1}월 ${d.getDate()}일 할 일 다 했어! 스티커 받았어!`); checkGift(d); }
 }
 function daySheet(k){
   const d=parseD(k), t=tasksOf(d); if(!t.length||k>=ymd()) return;
@@ -1259,7 +1289,7 @@ function daySheet(k){
       <button class="big-btn green" id="ok">${done?'다 했어요! 닫기':'닫기'}</button></div>`;
     const fin=()=>{ m.remove(); planView(); };
     m.querySelector('.close').onclick=fin; $('#ok',m).onclick=fin;
-    const act=(i,mode)=>{ const res=setTask(k,i,mode); if(res.added&&mode==='c') tone([[660,.08],[990,.16]]); draw();
+    const act=(i,mode)=>{ const res=setTask(k,i,mode); if(res.added&&mode==='c') tick(); draw();
       if(res.nowDone){ fanfare(); speakKo(`${d.getMonth()+1}월 ${d.getDate()}일 할 일 다 했어! 스티커 받았어!`); if(checkGift(d)) setTimeout(()=>m.remove(),1400); } };
     $$('[data-sh]',m).forEach(b=>b.onclick=()=>act(+b.dataset.sh,'c'));
     $$('[data-sno]',m).forEach(b=>b.onclick=()=>act(+b.dataset.sno,'x'));
