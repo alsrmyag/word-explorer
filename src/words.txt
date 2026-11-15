@@ -18,6 +18,7 @@ fight|v|🥊|to try very hard to stop or beat something that is causing trouble|
 fights back|v|🔁|fights against someone who started fighting you first|Fox tries to fight winter. But winter ___ with more snow.|||3|반격하다, 되받아치다|decorate,measure,select||sort,lend,pay
 still|adj|🧘|not moving at all|"I like to sit ___ and listen," says Rabbit.|||3|가만히 있는, 움직이지 않는|expensive,crowded,sour||loud,expensive,crowded
 nods|v|🙂|moves the head up and down to say yes|Fox asks a question. Rabbit ___ to say yes.|||2|고개를 끄덕이다|spill,measure,decorate||pay,lend,sort
+snout|n|🐽|the long front part of an animal's face that sticks out, with its nose and mouth, like a pig's or a crocodile's|The pig pushed its ___ into the mud to look for food.|||3|주둥이 (동물의 튀어나온 코와 입 부분)|price,chore,recess||ticket,recipe,schedule
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful
