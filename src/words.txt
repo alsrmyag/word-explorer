@@ -5,6 +5,9 @@ splits|n|🤸|a move where your legs stretch out straight in opposite directions
 poles|n|🧊|the two places at the very top and very bottom of the Earth, the North Pole and the South Pole, where it is very cold|Winter is long at the ___. The days are dark.|||3|극지방 (북극과 남극)|station,recess,recipe||chips,recipe,gift
 north|n|⬆️|the direction toward the top of a map, where the North Pole is|The Earth has two poles. One pole is in the ___.||south|2|북쪽|ticket,recess,trophy|o:south:dark,early,heavy|chips,recipe,gift
 south|n|⬇️|the direction toward the bottom of a map, where the South Pole is|One pole is in the north. The other is in the ___.||north|2|남쪽|recipe,station,gift|o:north:quiet,empty,late|ticket,recess,trophy
+Arctic|n|🧊|the very cold area around the North Pole|The North Pole is in the ___. It is a cold place.|||3|북극 지방|recess,trophy,recipe||chips,recipe,gift
+habitat|n|🏞️|the place where an animal or plant lives in nature|A polar bear's ___ is the cold, icy Arctic.|home||3|서식지 (동물이 사는 곳)|ticket,gift,recipe||ticket,recipe,trophy
+caps|v|🧊|covers the top of something|Ice ___ the ocean at the North Pole.|covers||3|(위를) 덮다|sell,borrow,invite||sell,borrow,invite
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful
