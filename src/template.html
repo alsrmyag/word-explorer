@@ -546,7 +546,15 @@ function prioWords(exclude){
 }
 /* Days alternate while priority words (book words, SR list) are waiting:
    one day a priority path of 12 of them, the next day the normal lesson path. */
+/* words Elena missed on her SR worksheet (11-15): put in the very next path once, even if already collected */
+const AGAIN=['trembling','brave'];
 function newPath(){
+  const P=newPath0(); S.againDone=S.againDone||[];
+  const add=AGAIN.filter(x=>BYW[x]&&!S.againDone.includes(x)).map(x=>BYW[x].id).filter(id=>!P.words.includes(id));
+  if(add.length){ P.words=add.concat(P.words); P.fresh=P.words.filter(id=>!owned(id)); AGAIN.forEach(x=>{ if(!S.againDone.includes(x)) S.againDone.push(x); }); }
+  return P;
+}
+function newPath0(){
   const L=LESSONS.find(l=>!S.done.includes(l.id));
   const prio=prioWords();
   if(prio.length && (S.lastKind!=='prio' || !L)){
@@ -994,7 +1002,7 @@ function answer(i){
     sayAfter=rows.map(r=>`${r.x}: ${r.df}.`).join(' ');
   }
   $('#fbwrap').innerHTML=`<div class="fb ${ok?'good':'bad'}">${extra}
-    <div class="msg">${ok?`<div class="big">${rnd(['Great!','Awesome!','You got it!','Super!','Yes!'])}</div>`:`<div class="big">Nice try!</div><div>The answer is <b>${esc(rl)}</b>.${w?` <span class="ko">${esc(w.ko)}</span>`:''} 이따가 다시 풀어요.</div>`}
+    <div class="msg">${ok?`<div class="big">${rnd(['Great!','Awesome!','You got it!','Super!','Yes!'])}</div>`:`<div class="big">Nice try!</div><div>The answer is <b>${esc(rl)}</b>.${w?` <span class="ko">${run.n===2?esc(w.word)+' = ':''}${esc(w.ko)}</span>`:''} 이따가 다시 풀어요.</div>`}
     ${w?`<div style="margin-top:4px;color:var(--ink-soft)">${sentHTML(w)}</div>${defs}`:''}</div>
     <button class="next" id="nx">Next →</button></div>`;
   bindSay($('#fbwrap'));

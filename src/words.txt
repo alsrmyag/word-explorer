@@ -202,7 +202,7 @@ complain|v|😤|to say you are not happy about something|Don't ___ about the rai
 proud|adj|😊🏅|feeling good about something you did well|I felt ___ when I read the whole book by myself.||ashamed|2|자랑스러운|tidy,schedule,spill||shy,sticky,steep
 shy|adj|👉👈|a little scared to talk to new people|The ___ boy hid behind his mom.|timid|bold|2|수줍은|design,sweet,clue||kind,sticky,steep
 kind|adj|🤲💗|nice and caring to others|It was ___ of you to help me pick up my books.|nice|mean|2|친절한|wide,sell,busy|o:mean:sunny,enormous,calm|proud,shy,nervous
-brave|adj|🦸|ready to do something even if it is scary|The ___ girl climbed the tall ladder to save the cat.|bold/fearless|scared/afraid|2|용감한|deep,expensive,crew|o:scared:cloudy,patient,noisy|sticky,shallow,sour
+brave|adj|🦸|ready to do something even if it is scary|The ___ girl climbed the tall ladder to save the cat.|bold/fearless/courageous|cowardly/scared/afraid|2|용감한|deep,expensive,crew|o:cowardly:courageous,bold,fearless|sticky,shallow,sour
 whisper|v|🤫👂|to speak very softly and quietly|Let's ___ so we don't wake the baby.|murmur|shout/yell|2|속삭이다|dirty,sell,empty|o:shout:include,win,crawl|complain,share,forgive
 share|v|🍕👫|to give part of what you have to someone else|Let's ___ the pizza so everyone gets a slice.||keep|2|나누다|melt,fresh,creature|o:keep:select,smile,sell|forgive,complain,whisper
 polite|adj|🙇|using good manners|It is ___ to say "please" and "thank you."|courteous|rude|3|예의 바른|melt,nearby,ride|o:rude:tiny,quick,sticky|mean,silly,crowded
@@ -293,7 +293,7 @@ route|n|📘|a way to get from one place to another|This is the shortest ___ to 
 escape|v|📘|to get away from a place or danger|The bird tried to ___ from the cage.|get away|stay|3|탈출하다, 빠져나가다|expensive,ticket,recess|o:stay:shallow,bake,schedule|sour,recipe,price
 write|v|✍️|to make words or letters with a pen or pencil|Please ___ your name on the paper.|record|erase|3|쓰다|bake,chore,ghost|o:erase:spill,schedule,crowded|sour,shallow,fossil
 assist|v|📘|to help someone|The nurse will ___ the doctor.|help|hinder|3|돕다|hop,chore,ghost|s:help:crowded,spill,recess|recipe,sour,puddle
-trembling|adj|📘|shaking a little because of fear, cold, or excitement|The ___ puppy hid under the bed during the storm.|shaking|steady|3|떨리는|recess,shallow,bake|s:shaking:chore,shadow,hop|expensive,crowded,empty
+trembling|adj|📘|shaking a little because of fear, cold, or excitement|The ___ puppy hid under the bed during the storm.|shaking|steady|3|떨리는|recess,shallow,bake|s:shaking:clapping,growing,pointing|expensive,crowded,empty
 clean|adj|📘|not dirty|My hands are ___ after I wash them.|neat|dirty|3|깨끗한|recess,rotten,recipe|o:dirty:spill,price,sour|crowded,shallow,expensive
 increase|v|📘|to become or make something greater|The number of kids in our class will ___ next year.|grow|decrease|3|늘어나다, 늘리다|cave,rotten,ticket|o:decrease:dusty,bake,schedule|recipe,sour,trophy
 slippery|adj|📘|easy to slide on|Be careful! The wet floor is ___.|slick|rough|3|미끄러운|soil,cave,crawl|o:rough:gift,scrub,fossil|crowded,expensive,rotten
