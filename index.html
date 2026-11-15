@@ -326,7 +326,18 @@ button:disabled{cursor:default}
 .stat .b{height:16px;border-radius:999px;background:var(--soft);overflow:hidden}
 .stat .b i{display:block;height:100%;border-radius:999px;background:var(--leaf)}
 .stat .b i.low{background:var(--coral)}
-.acts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.acts .act{padding:8px 4px;font-size:15px}.acts .act .i{font-size:28px}
+.snackgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;width:100%}
+.snk{background:#fff;border:3px solid var(--line);border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:var(--display);font-size:16px}
+.snk span{font-size:42px;line-height:1.1}.snk small{font-family:var(--body);color:var(--ink-soft);font-weight:700}.snk.want{border-color:#ffcf33;background:#fff3c4}.snk:disabled{opacity:.4}
+.room.night{filter:brightness(.55) saturate(.8);transition:filter .8s}
+.walkscene{position:relative;width:min(900px,96vw);height:min(460px,70vh);border-radius:28px;overflow:hidden}
+.walkscene .wth{position:absolute;bottom:38%;font-size:64px}
+.walkscene .walker{position:absolute;bottom:4%;left:-25%;animation:walkacross 4.2s linear forwards}
+.walkscene .wtitle{position:absolute;top:14px;left:0;right:0;text-align:center;font-family:var(--display);font-size:28px;color:#1d3557}
+.walkscene .rainfx{position:absolute;top:40px;left:0;right:0;text-align:center;font-size:56px;letter-spacing:40px}
+@keyframes walkacross{0%{left:-25%}100%{left:100%}}
 .act{background:#fff;border:3px solid var(--line);border-radius:18px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:var(--display);font-weight:600;font-size:18px;box-shadow:0 4px 0 var(--line)}
 .act .i{font-size:34px;line-height:1.1}
 .act small{font-family:var(--body);font-size:13px;color:var(--ink-soft);font-weight:700}
@@ -1864,11 +1875,28 @@ function cardModal(w){
 /* ================= CAT ================= */
 const SHOP=[
   {id:'food', cat:'care', i:'🥫', en:'Cat Food', ko:'고양이 밥', price:2, inv:'food', n:1},
-  {id:'fish', cat:'care', i:'🐟', en:'Fish Treat', ko:'생선 간식', price:3, inv:'fish', n:1},
-  {id:'milk', cat:'care', i:'🥛', en:'Cat Milk', ko:'고양이 우유', price:1, inv:'milk', n:1},
+  {id:'fish', cat:'snack', i:'🐟', en:'Fish Treat', ko:'생선 간식', price:3, inv:'fish', n:1},
+  {id:'milk', cat:'snack', i:'🥛', en:'Cat Milk', ko:'고양이 우유', price:1, inv:'milk', n:1},
   {id:'bag',  cat:'care', i:'🧻', en:'Poop Bags x3', ko:'응가 봉투 3장', price:2, inv:'bag', n:3},
   {id:'med',  cat:'care', i:'💊', en:'Cold Medicine', ko:'감기약', price:4, inv:'med', n:1},
   {id:'soap', cat:'care', i:'🧼', en:'Soap', ko:'목욕 비누', price:2, inv:'soap', n:1},
+  {id:'brush', cat:'care', i:'🪥', en:'Toothbrush', ko:'칫솔', price:8, tool:1},
+  {id:'paste', cat:'care', i:'🧴', en:'Toothpaste x3', ko:'치약 (3번)', price:2, inv:'paste', n:3},
+  {id:'clipper', cat:'care', i:'💅', en:'Nail Clippers', ko:'발톱깎이', price:6, tool:1},
+  {id:'wipe', cat:'care', i:'🧽', en:'Paw Wipes x3', ko:'발 물티슈 3장', price:2, inv:'wipe', n:3},
+  {id:'wmilk', cat:'care', i:'🍼', en:'Warm Milk', ko:'따뜻한 우유 (잠 올 때)', price:1, inv:'wmilk', n:1},
+  {id:'musicbox', cat:'care', i:'🎵', en:'Music Box', ko:'자장가 오르골', price:15, tool:1},
+  {id:'cookie', cat:'snack', i:'🍪', en:'Cookie', ko:'쿠키', price:2, inv:'cookie', n:1},
+  {id:'cake', cat:'snack', i:'🍰', en:'Cake', ko:'케이크', price:4, inv:'cake', n:1},
+  {id:'donut', cat:'snack', i:'🍩', en:'Donut', ko:'도넛', price:3, inv:'donut', n:1},
+  {id:'icecream', cat:'snack', i:'🍦', en:'Ice Cream', ko:'아이스크림', price:3, inv:'icecream', n:1},
+  {id:'cheese', cat:'snack', i:'🧀', en:'Cheese', ko:'치즈', price:2, inv:'cheese', n:1},
+  {id:'shrimp', cat:'snack', i:'🍤', en:'Shrimp', ko:'새우', price:3, inv:'shrimp', n:1},
+  {id:'harness', cat:'fun', i:'🦮', en:'Harness', ko:'산책 하네스', price:12, tool:1},
+  {id:'walkbag', cat:'fun', i:'🎒', en:'Walk Bag', ko:'산책 가방 (간식·물)', price:2, inv:'walkbag', n:1},
+  {id:'balloon', cat:'fun', i:'🎈', en:'Balloons', ko:'풍선 한 묶음', price:3, inv:'balloon', n:1},
+  {id:'present', cat:'fun', i:'🎁', en:'Present', ko:'생일 선물', price:5, inv:'present', n:1},
+  {id:'phat', cat:'fun', slot:'head', i:'🎉', en:'Party Hat', ko:'파티 모자', price:6},
   {id:'tee',   cat:'clothes', slot:'body', i:'👕', en:'Blue T-shirt', ko:'파란 티셔츠', price:15, color:'#4aa3ff', style:'shirt'},
   {id:'dress', cat:'clothes', slot:'body', i:'👗', en:'Pink Dress', ko:'분홍 원피스', price:20, color:'#ff7eb6', style:'dress'},
   {id:'rain',  cat:'clothes', slot:'body', i:'🧥', en:'Raincoat', ko:'노란 우비', price:20, color:'#ffd23f', style:'coat'},
@@ -1886,6 +1914,7 @@ const SHOP=[
   {id:'glass', cat:'acc', slot:'face', i:'🕶️', en:'Sunglasses', ko:'선글라스', price:10},
   {id:'scarf', cat:'acc', slot:'neck', i:'🧣', en:'Scarf', ko:'목도리', price:9},
   {id:'bell',  cat:'acc', slot:'neck', i:'🔔', en:'Bell', ko:'방울', price:7},
+  {id:'cushion', cat:'home', slot:'bed', i:'🛏️', en:'Cushion', ko:'푹신 쿠션', price:8},
   {id:'b1', cat:'home', slot:'bed', i:'🧺', en:'Basket Bed', ko:'바구니 침대', price:15},
   {id:'b2', cat:'home', slot:'bed', i:'☁️', en:'Cloud Bed', ko:'구름 침대', price:25},
   {id:'b3', cat:'home', slot:'bed', i:'🏰', en:'Castle Bed', ko:'성 침대', price:40},
@@ -1920,7 +1949,7 @@ const FURS={orange:{f:'#f6a95c',d:'#d9803a',b:'#fff1df',ko:'주황',en:'Orange'}
 const WALLS={pink:'#ffe6ef',mint:'#dff7ec',sky:'#ddefff',lemon:'#fff6c9',lilac:'#ece3ff'};
 const SALON_PRICE=6;
 function towerSVG(col){ return `<svg viewBox="0 0 120 230" class="tw" aria-label="cat tower"><rect x="20" y="40" width="14" height="180" fill="#d8b98c"/><rect x="82" y="110" width="14" height="110" fill="#d8b98c"/>${[60,90,130,170,200].map(y=>`<path d="M20 ${y} h14 M82 ${y+10} h14" stroke="#a4835a" stroke-width="3"/>`).join('')}<rect x="4" y="210" width="112" height="16" rx="6" fill="${col}"/><rect x="60" y="104" width="56" height="12" rx="6" fill="${col}"/><rect x="2" y="30" width="50" height="14" rx="7" fill="${col}"/><ellipse cx="27" cy="26" rx="22" ry="9" fill="${col}" opacity=".7"/><circle cx="96" cy="140" r="8" fill="#ff6a8a"/><path d="M96 116 v16" stroke="#555" stroke-width="2"/></svg>`; }
-const SHOPCATS=[{id:'care',en:'Food & Care',ko:'먹이·돌봄',i:'🍽️'},{id:'special',en:'Gifts',ko:'선물',i:'🎁'},{id:'clothes',en:'Clothes',ko:'옷',i:'👕'},{id:'shoes',en:'Shoes',ko:'신발',i:'👟'},{id:'acc',en:'Accessories',ko:'액세서리',i:'🎀'},{id:'home',en:'Bed & Toys',ko:'침대·장난감',i:'🛏️'},{id:'room',en:'Furniture',ko:'가구·벽지',i:'🪞'}];
+const SHOPCATS=[{id:'care',en:'Food & Care',ko:'먹이·돌봄',i:'🍽️'},{id:'snack',en:'Snacks',ko:'간식',i:'🍰'},{id:'fun',en:'Walk & Party',ko:'산책·파티',i:'🎈'},{id:'special',en:'Gifts',ko:'선물',i:'🎁'},{id:'clothes',en:'Clothes',ko:'옷',i:'👕'},{id:'shoes',en:'Shoes',ko:'신발',i:'👟'},{id:'acc',en:'Accessories',ko:'액세서리',i:'🎀'},{id:'home',en:'Bed & Toys',ko:'침대·장난감',i:'🛏️'},{id:'room',en:'Furniture',ko:'가구·벽지',i:'🪞'}];
 let catSeq=0;
 function catSVG(o){
   o=o||{}; const c=S.cat; const size=o.size||200; const id='cc'+(catSeq++);
@@ -1928,7 +1957,7 @@ function catSVG(o){
   const FC=FURS[c.fur]||FURS.orange; const fur=FC.f, dark=FC.d, belly=FC.b;
   const mood=o.mood||(c.sick?'sick':'normal');
   const eyes = mood==='happy' ? `<path d="M70 94 Q80 82 90 94 M110 94 Q120 82 130 94" stroke="#3a2a20" stroke-width="5" fill="none" stroke-linecap="round"/>`
-    : mood==='sick' ? `<path d="M71 92 L89 92 M111 92 L129 92" stroke="#3a2a20" stroke-width="5" stroke-linecap="round"/>`
+    : (mood==='sick'||mood==='sleepy') ? `<path d="M71 92 L89 92 M111 92 L129 92" stroke="#3a2a20" stroke-width="5" stroke-linecap="round"/>`
     : `<g class="eyes"><ellipse cx="80" cy="92" rx="8" ry="11" fill="#3a2a20"/><ellipse cx="120" cy="92" rx="8" ry="11" fill="#3a2a20"/><circle cx="83" cy="88" r="3" fill="#fff"/><circle cx="123" cy="88" r="3" fill="#fff"/></g>`;
   let cloth='', cape='';
   if(body){
@@ -1943,7 +1972,7 @@ function catSVG(o){
   const paws = feet ? `<ellipse cx="78" cy="216" rx="21" ry="12" fill="${feet.color}"/><ellipse cx="122" cy="216" rx="21" ry="12" fill="${feet.color}"/><path d="M60 222 L96 222 M104 222 L140 222" stroke="rgba(0,0,0,.25)" stroke-width="3"/>`
     : `<ellipse cx="78" cy="214" rx="17" ry="11" fill="${fur}"/><ellipse cx="122" cy="214" rx="17" ry="11" fill="${fur}"/>`;
   const acc=[]; const head=c.wear.head&&SHOPBY[c.wear.head], face=c.wear.face&&SHOPBY[c.wear.face], neck=c.wear.neck&&SHOPBY[c.wear.neck];
-  if(head) acc.push(`<span class="acc" style="top:${head.id==='bow'||head.id==='flower'?'12%':'7%'};left:${head.id==='bow'||head.id==='flower'?'66%':'50%'};font-size:${size*.3}px">${head.i}</span>`);
+  if(head) acc.push(`<span class="acc" style="top:${head.id==='bow'||head.id==='flower'?'12%':'7%'};left:${head.id==='bow'||head.id==='flower'?'66%':'50%'};font-size:${size*.3}px">${head.id==='phat'?PHAT:head.i}</span>`);
   if(face) acc.push(`<span class="acc" style="top:40%;font-size:${size*.3}px">${face.i}</span>`);
   if(neck) acc.push(`<span class="acc" style="top:${neck.id==='bell'?'62%':'58%'};font-size:${size*(neck.id==='bell'?.14:.26)}px">${neck.i}</span>`);
   if(c.sick&&mood==='sick') acc.push(`<span class="acc" style="top:52%;left:66%;font-size:${size*.16}px">🌡️</span>`);
@@ -1968,9 +1997,10 @@ function catSVG(o){
 }
 function tickCat(){
   const c=S.cat, now=Date.now(), h=Math.max(0,(now-(c.tick||now))/36e5);
-  c.food=Math.max(0,c.food-6*h); c.joy=Math.max(0,c.joy-4*h); c.clean=Math.max(0,(c.clean==null?80:c.clean)-4*h); c.tick=now;
+  c.food=Math.max(0,c.food-6*h); c.joy=Math.max(0,c.joy-4*h); c.clean=Math.max(0,(c.clean==null?80:c.clean)-4*h); careInit(); c.energy=Math.max(0,c.energy-5*h); c.tick=now;
   const day=dayNum();
-  if(c.checkDay!==day){ c.checkDay=day; if(c.named && c.born!=null && day-c.born>=2 && !c.sick && day-c.sickDay>=4 && Math.random()<.15){ c.sick=true; c.sickDay=day; } }
+  if(c.checkDay!==day){ c.checkDay=day; if(c.named && c.born!=null && day-c.born>=2 && !c.sick && day-c.sickDay>=4 && Math.random()<.15){ c.sick=true; c.sickDay=day; }
+    if(c.named && c.born!=null && day-c.born>=2 && !c.vet && !c.sick && day-(c.vetDay==null?-99:c.vetDay)>=5 && Math.random()<.12) c.vet=true; }
   save();
 }
 const WISH_GAP=60*60*1000;
@@ -1978,15 +2008,15 @@ function wishInfo(w){
   if(!w) return null;
   if(w.k==='item'){ const x=SHOPBY[w.id]; if(!x) return null; return {i:x.slot==='tower'?'🗼':x.i, en:`I wish I had a ${x.en}!`, ko:`${x.ko} 갖고 싶어요!`, name:x.ko, price:x.price, tab:x.cat}; }
   if(w.k==='salon') return {i:'✂️', en:'I want to go to the salon!', ko:'미용실 가고 싶어요!', name:'미용실', price:SALON_PRICE};
-  if(w.k==='fish') return {i:'🐟', en:'I want a fish treat!', ko:'생선 간식 먹고 싶어요!', name:'생선 간식', price:SHOPBY.fish.price, tab:'care'};
-  if(w.k==='milk') return {i:'🥛', en:'I want some milk!', ko:'우유 마시고 싶어요!', name:'우유', price:SHOPBY.milk.price, tab:'care'};
+  if(w.k==='fish') return {i:'🐟', en:'I want a fish treat!', ko:'생선 간식 먹고 싶어요!', name:'생선 간식', price:SHOPBY.fish.price, tab:'snack'};
+  if(w.k==='milk') return {i:'🥛', en:'I want some milk!', ko:'우유 마시고 싶어요!', name:'우유', price:SHOPBY.milk.price, tab:'snack'};
   return null;
 }
 function ensureWish(){
   const c=S.cat; if(!c.named) return;
   if(c.wish && c.wish.k==='item' && c.owned.includes(c.wish.id)) c.wish=null;
   if(c.wish || (c.wishAt && Date.now()-c.wishAt<WISH_GAP && c.wishDay===dayNum())) return;
-  const items=SHOP.filter(x=>!x.inv && x.cat!=='special' && !c.owned.includes(x.id));
+  const items=SHOP.filter(x=>!x.inv && x.cat!=='special' && !c.owned.includes(x.id) && x.id!=='phat');
   const r=Math.random(); let w;
   if(items.length && r<.6) w={k:'item', id:rnd(items).id};
   else if(r<.75) w={k:'salon'}; else if(r<.9) w={k:'fish'}; else w={k:'milk'};
@@ -2003,6 +2033,7 @@ function catMood(){
   if(c.sick) return {en:'Achoo! I have a cold.', ko:'감기 걸렸어요. 약을 주세요!'};
   if(c.poops>0) return {en:'Oops! I made a poop.', ko:'응가를 치워 주세요!'};
   if(c.food<50) return {en:"I'm hungry! Meow!", ko:'배고파요. 밥 주세요!'};
+  { const n=careNeed(); if(n) return n; }
   if((c.clean==null?80:c.clean)<50) return {en:'I feel dirty. Bath time, please!', ko:'목욕시켜 주세요!'};
   const wi=wishInfo(c.wish); if(wi) return {en:wi.en, ko:wi.ko};
   if(c.joy<40) return {en:"Let's play with a card!", ko:'카드로 같이 놀아요!'};
@@ -2034,19 +2065,25 @@ function catRoom(o){
         <div class="bowl">🥣</div>
         ${poops}
         <div class="bubble"><button class="sm" data-say="${esc(md.en)}">🔊</button><div>${esc(md.en)}<small>${esc(md.ko)}</small></div></div>
-        <div class="stagecat" id="scat">${catSVG({size:Math.min(290,Math.max(190,innerWidth*.24)), mood:c.sick?'sick':(c.joy>70?'happy':'normal')})}</div>
+        <div class="stagecat" id="scat">${catSVG({size:Math.min(290,Math.max(190,innerWidth*.24)), mood:c.sick?'sick':(c.energy<40?'sleepy':(c.joy>70?'happy':'normal'))})}</div>
       </div>
       <div class="catside">
         <h2>🐱 ${esc(c.name)}</h2>
-        ${bar('🍗',c.food,'밥')}${bar('🛁',Math.max(0,(c.clean==null?80:c.clean)-c.poops*15),'깨끗')}${bar('💗',c.joy,'기분')}
+        ${bar('🍗',c.food,'밥')}${bar('🛁',Math.max(0,(c.clean==null?80:c.clean)-c.poops*15),'깨끗')}${bar('💗',c.joy,'기분')}${bar('😴',c.energy,'잠')}
         ${c.sick?'<div class="hint">🤧 감기에 걸렸어요. 감기약을 먹이면 금방 나아요.</div>':''}
         ${wi?`<button class="wishcard" id="wish"><span class="wi">${wi.i}</span><span><b>💭 ${esc(c.name)}의 소원</b><br>${esc(wi.ko)} <small>🪙 ${wi.price}</small></span></button>`:`<div class="wishcard done"><span class="wi">💖</span><span>소원을 들어줬어요! 조금 있으면 새 소원이 생겨요.</span></div>`}
         <div class="acts">
           <button class="act ${c.food<50?'hot':''}" id="feed" data-k="food"><span class="i">🥫</span>밥 주기<small>밥 ${c.inv.food}개</small></button>
-          <button class="act" id="snack" data-k="fish"><span class="i">🐟</span>간식 주기<small>생선 간식 ${c.inv.fish}개</small></button>
-          <button class="act" id="milk" data-k="milk"><span class="i">🥛</span>우유 주기<small>우유 ${c.inv.milk}개</small></button>
+          <button class="act ${needOf('snack')?'hot':''}" id="snack"><span class="i">${needOf('snack')?SHOPBY[crave().id].i:'🍪'}</span>간식 주기<small>${needOf('snack')?'오늘 먹고 싶은 간식!':'간식 고르기'}</small></button>
           <button class="act ${c.poops?'hot':''}" id="clean"><span class="i">🧻</span>응가 치우기<small>봉투 ${c.inv.bag}장</small></button>
           <button class="act ${(c.clean||0)<50?'hot':''}" id="bath"><span class="i">🛁</span>목욕시키기<small>비누 ${c.inv.soap||0}개</small></button>
+          <button class="act ${needOf('teeth')?'hot':''}" id="teeth"><span class="i">🪥</span>양치하기<small>${has('brush')?`치약 ${c.inv.paste||0}번`:'칫솔 필요'}</small></button>
+          <button class="act ${needOf('nails')?'hot':''}" id="nails"><span class="i">💅</span>발톱 깎기<small>${has('clipper')?'발톱깎이 ✓':'발톱깎이 필요'}</small></button>
+          <button class="act ${needOf('sleep')?'hot':''}" id="sleep"><span class="i">😴</span>재우기<small>${c.blanketDirty?'이불 빨래 필요':`우유 ${c.inv.wmilk||0}${has('musicbox')?' · 🎵':''}`}</small></button>
+          <button class="act ${needOf('walk')?'hot':''}" id="walk"><span class="i">🦮</span>산책 가기<small>${has('harness')?`${rainy()?'☔ 비':'☀️'} · 가방 ${c.inv.walkbag||0}`:'하네스 필요'}</small></button>
+          ${c.paws?`<button class="act hot" id="paws"><span class="i">🐾</span>발 닦기<small>물티슈 ${c.inv.wipe||0}장</small></button>`:''}
+          ${bdayInfo()?`<button class="act ${needOf('party')?'hot':''}" id="party"><span class="i">🎂</span>생일 파티<small>${bdayInfo().today?'오늘 생일!':bdayInfo().soon+'일 뒤 생일'}</small></button>`:''}
+          <button class="act ${needOf('vet')?'hot':''}" id="vet"><span class="i">🏥</span>동물병원<small>검진 🪙 ${VET_PRICE}</small></button>
           <button class="act" id="salon"><span class="i">✂️</span>미용실 가기<small>🪙 ${SALON_PRICE}</small></button>
           <button class="act ${c.sick?'hot':''}" id="med"><span class="i">💊</span>약 먹이기<small>감기약 ${c.inv.med}개</small></button>
           <button class="act ${c.joy<40?'hot':''}" id="play"><span class="i">🃏</span>카드로 놀기<small>카드 ${Object.keys(S.cards).length}장</small></button>
@@ -2055,8 +2092,8 @@ function catRoom(o){
       </div>
     </div></div>`;
   bindTop(); bindSay();
-  ['#feed','#snack','#milk'].forEach(s=>{ const b=$(s); b.onclick=()=>feedCat(b.dataset.k); }); $('#clean').onclick=()=>cleanPoop(); $('#bath').onclick=giveBath; $('#salon').onclick=salon; $$('[data-fu]').forEach(b=>b.onclick=()=>tapFurn(b.dataset.fu)); $('#med').onclick=giveMed; $('#play').onclick=pickCard; $('#shop').onclick=()=>shop();
-  const wb=$('#wish'); if(wb) wb.onclick=()=>{ const w=c.wish; speak(wi.en); if(w.k==='salon') salon(); else if(w.k==='item') shop(wi.tab); else if(c.inv[w.k]>0) feedCat(w.k); else shop('care'); };
+  $('#feed').onclick=()=>feedCat('food'); $('#snack').onclick=snackPicker; $('#teeth').onclick=brushTeeth; $('#nails').onclick=trimNails; $('#sleep').onclick=sleepCat; $('#walk').onclick=goWalk; $('#vet').onclick=vetVisit; if($('#paws')) $('#paws').onclick=pawWipe; if($('#party')) $('#party').onclick=birthdayParty; $('#clean').onclick=()=>cleanPoop(); $('#bath').onclick=giveBath; $('#salon').onclick=salon; $$('[data-fu]').forEach(b=>b.onclick=()=>tapFurn(b.dataset.fu)); $('#med').onclick=giveMed; $('#play').onclick=pickCard; $('#shop').onclick=()=>shop();
+  const wb=$('#wish'); if(wb) wb.onclick=()=>{ const w=c.wish; speak(wi.en); if(w.k==='salon') salon(); else if(w.k==='item') shop(wi.tab); else if(c.inv[w.k]>0) giveSnack(w.k); else shop('snack'); };
   $$('[data-poop]').forEach(p=>p.onclick=()=>cleanPoop());
   if(o.play) setTimeout(()=>playCard(o.play),300);
   else if(o.celebrate){ setTimeout(()=>{ catAnim('hop'); hearts(6); speak(`${c.name} is so happy! You found new cards!`); },300); }
@@ -2089,8 +2126,8 @@ function cleanPoop(){
 }
 function giveBath(){
   const c=S.cat; if((c.inv.soap||0)<1){ speak('We need soap. Let\'s go to the shop!'); toast('비누가 없어요. 상점에서 사요! 🧼'); return; }
-  if((c.clean||0)>=90){ speak("I'm already clean!"); toast('벌써 깨끗해요! ✨'); return; }
-  c.inv.soap--; c.clean=Math.min(100,(c.clean||0)+20); c.joy=Math.min(100,c.joy+1); save();
+  if((c.clean||0)>=90&&!c.paws){ speak("I'm already clean!"); toast('벌써 깨끗해요! ✨'); return; }
+  c.inv.soap--; c.paws=false; c.clean=Math.min(100,(c.clean||0)+20); c.joy=Math.min(100,c.joy+1); save();
   const r=$('#room'); const tub=document.createElement('div'); tub.className='tub'; tub.textContent='🛁'; r&&r.appendChild(tub);
   speak('Splish splash! Bath time! Scrub, scrub, scrub!');
   let i=0; const iv=setInterval(()=>{ hearts(3,rnd(['🫧','🫧','🧼','✨'])); if(++i>=6){ clearInterval(iv); } },350);
@@ -2126,6 +2163,184 @@ function giveMed(){
   if(c.inv.med<1){ speak('We need cold medicine. Let\'s go to the shop!'); toast('감기약이 없어요. 상점에서 사요!'); return; }
   c.inv.med--; c.sick=false; c.joy=Math.min(100,c.joy+3); save(); refreshCat(); catAnim('hop'); hearts(4); speak('I feel better! Thank you!');
 }
+
+/* ================= MORE CARE (11-15, oz: 만들어) =================
+   snacks + today's craving, teeth, nails, vet check-up, sleep (bed + warm milk or music box, blanket laundry),
+   monthly birthday party, walks (harness, walk bag, place tickets, rain gear, muddy paws) */
+const SNACKS=['fish','milk','cookie','cake','donut','icecream','cheese','shrimp'];
+const SONGS=[
+  {id:'twinkle', en:'Twinkle Twinkle', ko:'반짝반짝 작은 별', n:[[523,.32],[523,.32],[784,.32],[784,.32],[880,.32],[880,.32],[784,.6]]},
+  {id:'rockabye', en:'Rock-a-bye Baby', ko:'자장 자장 아기', n:[[659,.45],[784,.18],[659,.6],[587,.35],[523,.35],[587,.6],[659,.6]]},
+  {id:'hush', en:'Hush Little Baby', ko:'쉿, 우리 아기', n:[[523,.3],[659,.3],[659,.3],[659,.3],[698,.3],[659,.3],[587,.6]]},
+  {id:'sunshine', en:'You Are My Sunshine', ko:'너는 나의 햇살', n:[[392,.25],[523,.25],[587,.25],[659,.5],[659,.5],[622,.25],[659,.25],[523,.6]]},
+  {id:'brahms', en:'Brahms Lullaby', ko:'브람스 자장가', n:[[659,.25],[659,.25],[784,.6],[659,.25],[659,.25],[784,.6],[659,.25],[784,.25],[1047,.4],[988,.5]]}];
+const SONG_PRICE=3, VET_PRICE=6, LAUNDRY_PRICE=3;
+const PLACES=[{id:'park',i:'🏞️',en:'Park',ko:'공원',price:0,bg:'linear-gradient(#bfe8ff 0 55%,#8fd36b 55%)',th:['🌳','🌼','🐦']},
+  {id:'beach',i:'🏖️',en:'Beach',ko:'바닷가',price:4,bg:'linear-gradient(#bfe8ff 0 45%,#4fb6e8 45% 62%,#f6dfa4 62%)',th:['🐚','🦀','⛱️']},
+  {id:'flower',i:'🌷',en:'Flower Field',ko:'꽃밭',price:4,bg:'linear-gradient(#ffe6f2 0 52%,#9be07a 52%)',th:['🌷','🌻','🦋']},
+  {id:'snow',i:'🏔️',en:'Snow Hill',ko:'눈 언덕',price:5,bg:'linear-gradient(#dfeefc 0 50%,#ffffff 50%)',th:['⛄','❄️','🌲']}];
+const has=id=>S.cat.owned.includes(id);
+const PHAT='<svg viewBox="0 0 40 44" width="1em" height="1.1em" style="vertical-align:bottom"><path d="M20 2 L36 40 L4 40 Z" fill="#ff5fa2"/><path d="M12 22 L28 22 M8 32 L32 32" stroke="#ffd23f" stroke-width="4"/><circle cx="20" cy="3" r="4" fill="#ffd23f"/></svg>';
+function rainy(){ const d=dayNum(); return ((d*9301+49297)%233280)/233280<.3; }
+function careInit(){ const c=S.cat; c.inv=c.inv||{}; SHOP.forEach(x=>{ if(x.inv&&c.inv[x.inv]==null) c.inv[x.inv]=0; });
+  if(c.energy==null) c.energy=80; if(c.teethAt==null) c.teethAt=Date.now(); if(c.nailDay==null) c.nailDay=dayNum(); c.songs=c.songs||[]; }
+function crave(){ const c=S.cat, d=dayNum(); if(!c.crave||c.crave.day!==d){ c.crave={day:d,id:rnd(SNACKS.filter(x=>x!=='milk')),done:false}; save(); } return c.crave; }
+const needTeeth=()=>Date.now()-S.cat.teethAt>20*36e5;
+const needNails=()=>dayNum()-S.cat.nailDay>=4;
+function bdayInfo(){ const c=S.cat; if(c.born==null) return null;
+  const dom=new Date(c.born*864e5).getUTCDate(), now=new Date(), today=dayNum();
+  for(let k=0;k<=3;k++){ const d=addD(now,k), last=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
+    if(d.getDate()===Math.min(dom,last) && today+k>c.born){ const bd=new Date(c.born*864e5); const age=(d.getFullYear()-bd.getUTCFullYear())*12+d.getMonth()-bd.getUTCMonth();
+      return {today:k===0, soon:k, age:Math.max(1,age), done:c.partyDay===today}; } }
+  return null; }
+function careNeed(){ const c=S.cat; careInit();
+  if(c.vet) return {k:'vet', en:'I feel a little funny. Can we see the doctor?', ko:'몸이 좀 이상해요. 동물병원에서 검진 받고 싶어요.'};
+  if(c.paws) return {k:'paws', en:'My paws are muddy!', ko:'발이 더러워요. 닦아 주세요!'};
+  if(c.energy<40) return {k:'sleep', en:"I'm sleepy... Yawn!", ko:'졸려요… 재워 주세요.'};
+  if(needTeeth()) return {k:'teeth', en:'Time to brush my teeth!', ko:'이 닦아 주세요!'};
+  if(needNails()) return {k:'nails', en:'My nails are too long!', ko:'발톱이 길어요. 깎아 주세요!'};
+  const b=bdayInfo(); if(b&&b.today&&!b.done) return {k:'party', en:"It's my birthday today! Let's have a party!", ko:'오늘은 내 생일이에요! 파티 열어 주세요!'};
+  const cr=crave(), x=SHOPBY[cr.id]; if(!cr.done) return {k:'snack', en:`I want ${x.en.toLowerCase()} today!`, ko:`오늘은 ${x.ko} 먹고 싶어!`};
+  if(has('harness')&&c.walkDay!==dayNum()) return {k:'walk', en:"Let's go for a walk!", ko:'산책 가고 싶어요!'};
+  return null; }
+function needOf(k){ const n=careNeed(); return n&&n.k===k; }
+function mkModal(html){ const m=document.createElement('div'); m.className='modal'; m.innerHTML=`<div class="sheet" style="align-items:center;text-align:center"><button class="close">✕</button>${html}</div>`; document.body.appendChild(m); m.querySelector('.close').onclick=()=>m.remove(); return m; }
+function needShop(msg,en,tab){ speak(en); toast(msg); setTimeout(()=>shop(tab),700); }
+function snackPicker(){
+  const c=S.cat, cr=crave();
+  const m=mkModal(`<h2 style="font-family:var(--display);margin:0">🍪 Snack Time 간식 주기</h2>
+    ${cr.done?'<div>오늘 먹고 싶던 간식은 벌써 먹었어요 💖</div>':`<div style="font-size:20px">오늘은 <b>${SHOPBY[cr.id].i} ${esc(SHOPBY[cr.id].ko)}</b> 먹고 싶대요!</div>`}
+    <div class="snackgrid">${SNACKS.map(k=>{ const x=SHOPBY[k]; return `<button class="snk ${k===cr.id&&!cr.done?'want':''}" data-snk="${k}"><span>${x.i}</span><b>${esc(x.ko)}</b><small>${c.inv[k]||0}개</small></button>`; }).join('')}</div>
+    <button class="big-btn yellow" id="gos">🛍️ 간식 사러 가기</button>`);
+  $('#gos',m).onclick=()=>{ m.remove(); shop('snack'); };
+  $$('[data-snk]',m).forEach(b=>b.onclick=()=>{ m.remove(); giveSnack(b.dataset.snk); });
+}
+function giveSnack(k){
+  const c=S.cat, x=SHOPBY[k], cr=crave();
+  if((c.inv[k]||0)<1) return needShop(`${x.ko}이(가) 없어요. 상점에서 사요! 🛍️`,`We need ${x.en.toLowerCase()}. Let's go to the shop!`,'snack');
+  c.inv[k]--; c.food=Math.min(100,c.food+3); c.joy=Math.min(100,c.joy+3);
+  const want=cr.id===k&&!cr.done; if(want){ cr.done=true; c.joy=Math.min(100,c.joy+12); }
+  save(); refreshCat(); hearts(want?8:3,x.i); catAnim('hop');
+  if(wishDone(k)) return;
+  if(want){ speak(`Yummy ${x.en.toLowerCase()}! That's just what I wanted! Thank you!`); toast(`먹고 싶던 ${x.ko}! 기분 +15 💖`); }
+  else speak(`Yummy ${x.en.toLowerCase()}! Thank you!`);
+}
+function brushTeeth(){
+  const c=S.cat;
+  if(!has('brush')) return needShop('칫솔이 없어요. 상점에서 사요! 🪥','We need a toothbrush. Let\'s go to the shop!','care');
+  if(!needTeeth()){ speak('My teeth are already clean!'); toast('벌써 닦았어요! 반짝반짝 ✨'); return; }
+  if((c.inv.paste||0)<1) return needShop('치약이 없어요. 상점에서 사요!','We need toothpaste. Let\'s go to the shop!','care');
+  c.inv.paste--; c.teethAt=Date.now(); c.joy=Math.min(100,c.joy+2); save(); refreshCat();
+  speak('Brush, brush, brush! Up and down! My teeth are shiny!');
+  let i=0; const iv=setInterval(()=>{ hearts(2,rnd(['🪥','🫧','🫧','✨'])); if(++i>=5) clearInterval(iv); },300); setTimeout(()=>catAnim('hop'),1600);
+}
+function trimNails(){
+  const c=S.cat;
+  if(!has('clipper')) return needShop('발톱깎이가 없어요. 상점에서 사요! 💅','We need nail clippers. Let\'s go to the shop!','care');
+  if(!needNails()){ speak('My nails are short now!'); toast('아직 발톱이 안 길어요!'); return; }
+  c.nailDay=dayNum(); c.joy=Math.min(100,c.joy+2); save(); refreshCat();
+  speak('Snip, snip! Gently, gently. Thank you!'); let i=0; const iv=setInterval(()=>{ hearts(2,rnd(['✂️','💅','✨'])); if(++i>=4) clearInterval(iv); },300);
+}
+function vetVisit(){
+  const c=S.cat;
+  if(!c.vet){ speak("I feel great! We'll go when I feel funny."); toast(`${c.name}는 지금 건강해요! 몸이 이상하다고 하면 가요 💪`); return; }
+  if(S.coins<VET_PRICE){ toast(`검진비 🪙${VET_PRICE}개가 필요해요. 단어 탐험으로 모아요!`); speak('We need more coins for the doctor.'); return; }
+  S.coins-=VET_PRICE; coinSnd(); save();
+  const steps=[['🩺','Listen to the heart. Thump, thump!','심장 소리 듣기'],['👂','Look in the ears.','귀 보기'],['🦷','Look at the teeth. Say ahh!','이 보기'],['⚖️','Check the weight.','몸무게 재기']];
+  const m=mkModal(`<h2 style="font-family:var(--display);margin:0">🏥 Animal Hospital 동물병원</h2><div style="font-size:70px">👩‍⚕️</div>
+    ${catSVG({size:170,mood:'normal'})}<div id="vs" style="font-size:24px;min-height:70px"></div>`);
+  let i=0; const next=()=>{ const v=$('#vs',m); if(!v) return;
+    if(i<steps.length){ const [e,en,ko]=steps[i++]; v.innerHTML=`<div style="font-size:44px">${e}</div>${ko}`; speak(en); setTimeout(next,1900); return; }
+    c.vet=false; c.vetDay=dayNum(); c.joy=Math.min(100,c.joy+10); save(); fanfare();
+    v.innerHTML=`<div style="font-size:44px">💯</div><b>아주 건강해요!</b> 검진 잘 받았어요. 칭찬 스티커 🌟<br><button class="big-btn green" id="vok">고마워요!</button>`;
+    speak(`Good news! ${c.name} is very healthy!`); $('#vok',m).onclick=()=>{ m.remove(); refreshCat(); }; };
+  speak('Welcome to the animal hospital! Let\'s check you up.'); setTimeout(next,1500);
+}
+function pawWipe(){
+  const c=S.cat; if(!c.paws){ toast('발이 깨끗해요! ✨'); return; }
+  if((c.inv.wipe||0)<1){ toast('발 물티슈가 없어요. 상점에서 사거나 목욕시켜요!'); speak('We need paw wipes, or a bath!'); setTimeout(()=>shop('care'),700); return; }
+  c.inv.wipe--; c.paws=false; c.clean=Math.min(100,(c.clean||0)+5); save(); refreshCat(); hearts(3,'🐾'); speak('Wipe, wipe! My paws are clean!');
+}
+function sleepCat(){
+  const c=S.cat; careInit();
+  if(c.energy>=70){ speak("I'm not sleepy yet! Let's play!"); toast('아직 안 졸려요!'); return; }
+  if(!c.wear.bed) return needShop('잘 곳이 없어요. 침대나 쿠션을 사서 놓아 줘요! 🛏️','I need a bed or a cushion!','home');
+  if(c.blanketDirty){
+    const m=mkModal(`<h2 style="font-family:var(--display);margin:0">🧺 이불이 더러워요!</h2><div style="font-size:70px">🛏️💦</div>
+      <div style="font-size:20px">여러 번 자서 이불이 더러워졌어요. 빨래하고 재워요.</div>
+      <button class="big-btn green" id="wash" ${S.coins<LAUNDRY_PRICE?'disabled':''}>🫧 빨래하기 🪙 ${LAUNDRY_PRICE}</button>`);
+    speak('My blanket is dirty. Can we wash it?');
+    $('#wash',m).onclick=()=>{ if(S.coins<LAUNDRY_PRICE) return; S.coins-=LAUNDRY_PRICE; c.blanketDirty=false; save(); coinSnd(); m.remove(); speak('Swish swish! The blanket is clean and fluffy!'); toast('이불이 깨끗해졌어요! 🫧'); setTimeout(sleepCat,1200); };
+    return;
+  }
+  const mb=has('musicbox'), wm=c.inv.wmilk||0;
+  if(!mb && wm<1) return needShop('잠이 오게 따뜻한 우유나 오르골이 필요해요! 🍼🎵','I need warm milk or a music box to fall asleep.','care');
+  const m=mkModal(`<h2 style="font-family:var(--display);margin:0">😴 Sleep Time 재우기</h2><div>어떻게 재울까요?</div>
+    <div class="snackgrid">
+      <button class="snk" id="sw" ${wm<1?'disabled':''}><span>🍼</span><b>따뜻한 우유</b><small>${wm}개</small></button>
+      ${mb?(c.wantSong?`<button class="snk want" id="newsong"><span>🎵</span><b>새 노래 듣고 싶대요!</b><small>노래 사기 🪙${SONG_PRICE}</small></button>`
+        :c.songs.map(id=>{ const g=SONGS.find(x=>x.id===id); return `<button class="snk" data-song="${id}"><span>🎵</span><b>${esc(g.en)}</b><small>${esc(g.ko)}</small></button>`; }).join(''))
+        :`<button class="snk" id="buymb"><span>🎵</span><b>오르골이 없어요</b><small>상점에서 사요</small></button>`}
+    </div>`);
+  const nap=(how)=>{ m.remove(); c.energy=100; c.joy=Math.min(100,c.joy+3); c.sleeps=(c.sleeps||0)+1; if(c.sleeps%3===0) c.blanketDirty=true; save();
+    const r=$('#room'); if(r){ r.classList.add('night'); }
+    speak(how==='milk'?'Warm milk... so cozy. Good night!':'What a pretty song... Good night!');
+    let i=0; const iv=setInterval(()=>{ hearts(2,rnd(['💤','🌙','⭐'])); if(++i>=7) clearInterval(iv); },400);
+    setTimeout(()=>{ refreshCat(); catAnim('hop'); speak('I had a good sleep! I feel great!'); toast(`${c.name}가 푹 잤어요! 😺`); },3600); };
+  const sw=$('#sw',m); if(sw) sw.onclick=()=>{ if((c.inv.wmilk||0)<1) return; c.inv.wmilk--; nap('milk'); };
+  const bm=$('#buymb',m); if(bm) bm.onclick=()=>{ m.remove(); shop('care'); };
+  $$('[data-song]',m).forEach(b=>b.onclick=()=>{ const g=SONGS.find(x=>x.id===b.dataset.song); tone(g.n);
+    if(Math.random()<.35 && SONGS.some(x=>!c.songs.includes(x.id))) c.wantSong=true; nap('song'); });
+  const ns=$('#newsong',m); if(ns) ns.onclick=()=>{ m.remove(); songShop(); };
+}
+function songShop(){
+  const c=S.cat; const left=SONGS.filter(x=>!c.songs.includes(x.id));
+  const m=mkModal(`<h2 style="font-family:var(--display);margin:0">🎵 새 노래 사기</h2><div>오르골에 넣을 새 노래를 골라요. 한 곡에 🪙 ${SONG_PRICE}</div>
+    <div class="snackgrid">${left.map(g=>`<button class="snk" data-buysong="${g.id}" ${S.coins<SONG_PRICE?'disabled':''}><span>🎶</span><b>${esc(g.en)}</b><small>${esc(g.ko)}</small></button>`).join('')}</div>`);
+  $$('[data-buysong]',m).forEach(b=>b.onclick=()=>{ if(S.coins<SONG_PRICE) return; const g=SONGS.find(x=>x.id===b.dataset.buysong);
+    S.coins-=SONG_PRICE; c.songs.push(g.id); c.wantSong=false; save(); coinSnd(); m.remove(); tone(g.n); speak(`A new song! ${g.en}! I love it!`); toast(`새 노래 ${g.ko}! 🎶`); refreshCat(); });
+}
+function birthdayParty(){
+  const c=S.cat, b=bdayInfo();
+  if(!b){ toast('생일이 아직 멀었어요!'); return; }
+  if(b.done){ toast('오늘 생일 파티는 벌써 했어요! 🎉'); return; }
+  const rows=[['cake','🍰','생일 케이크',(c.inv.cake||0)>0,'snack'],['phat','🎉','파티 모자',has('phat'),'fun'],['balloon','🎈','풍선',(c.inv.balloon||0)>0,'fun'],['present','🎁','선물',(c.inv.present||0)>0,'fun']];
+  const ready=rows.every(r=>r[3]);
+  const m=mkModal(`<h2 style="font-family:var(--display);margin:0">🎂 ${esc(c.name)} ${b.age}개월 생일${b.today?' 오늘이에요!':` ${b.soon}일 뒤예요!`}</h2>
+    <div>파티 준비물을 모아요</div>
+    <div class="tlist" style="width:100%">${rows.map(r=>`<div class="trow ${r[3]?'on':''}" style="--hc:#ff7eb6"><span style="font-size:30px">${r[1]}</span><span class="tt">${r[2]}</span>${r[3]?'<b>✓ 준비 완료</b>':`<button class="none" data-goshop="${r[4]}">🛍️ 사러 가기</button>`}</div>`).join('')}</div>
+    ${b.today?`<button class="big-btn green" id="party" ${ready?'':'disabled'}>🎉 파티 시작!</button>`:'<div>생일날 파티를 열 수 있어요. 미리 준비해 둬요!</div>'}`);
+  $$('[data-goshop]',m).forEach(x=>x.onclick=()=>{ m.remove(); shop(x.dataset.goshop); });
+  const pb=$('#party',m); if(pb) pb.onclick=()=>{ if(!ready) return; m.remove();
+    c.inv.cake--; c.inv.balloon--; c.inv.present--; c.wear.head='phat'; c.partyDay=dayNum(); c.joy=100; c.food=Math.min(100,c.food+5); save(); refreshCat();
+    tone([[523,.25],[523,.12],[587,.4],[523,.4],[698,.4],[659,.7],[523,.25],[523,.12],[587,.4],[523,.4],[784,.4],[698,.7]]);
+    let i=0; const iv=setInterval(()=>{ hearts(4,rnd(['🎈','🎉','🎂','🎁','✨','🥳'])); if(++i>=10) clearInterval(iv); },300);
+    setTimeout(()=>{ catAnim('hop'); speak(`Happy birthday, ${c.name}! Thank you for my party!`); },2400); toast(`🎂 ${c.name} 생일 축하해요! 기분 최고! 💖`); };
+}
+function goWalk(){
+  const c=S.cat; careInit();
+  if(!has('harness')) return needShop('산책하려면 하네스(산책 줄)가 필요해요! 🦮','We need a harness to go for a walk!','fun');
+  if(c.walkDay===dayNum()){ speak('We already went for a walk today. Let\'s go again tomorrow!'); toast('오늘은 산책했어요! 내일 또 가요 🐾'); return; }
+  if((c.inv.walkbag||0)<1) return needShop('산책 가방(간식·물)이 없어요. 상점에서 사요! 🎒','We need a walk bag with snacks and water!','fun');
+  const rain=rainy();
+  if(rain && !(has('rain')&&has('boot'))) return needShop('오늘은 비가 와요! 우비랑 장화가 있어야 나갈 수 있어요 ☔','It is raining! We need a raincoat and rain boots.','clothes');
+  const m=mkModal(`<h2 style="font-family:var(--display);margin:0">🐾 어디로 산책 갈까요? ${rain?'☔ 비 오는 날':'☀️'}</h2>
+    <div class="snackgrid">${PLACES.map(p=>`<button class="snk" data-place="${p.id}" ${S.coins<p.price?'disabled':''}><span>${p.i}</span><b>${p.ko}</b><small>${p.price?`티켓 🪙${p.price}`:'무료'}</small></button>`).join('')}</div>`);
+  $$('[data-place]',m).forEach(b=>b.onclick=()=>{ const p=PLACES.find(x=>x.id===b.dataset.place); if(S.coins<p.price) return; m.remove(); walkScene(p,rain); });
+}
+function walkScene(p,rain){
+  const c=S.cat; S.coins-=p.price; if(p.price) coinSnd(); c.inv.walkbag--;
+  if(rain){ c.wear.body='rain'; c.wear.feet='boot'; }
+  save();
+  const m=document.createElement('div'); m.className='modal';
+  m.innerHTML=`<div class="walkscene" style="background:${p.bg}">${rain?'<div class="rainfx">🌧️ 🌧️ 🌧️</div>':''}
+    ${p.th.map((t,i)=>`<span class="wth" style="left:${15+i*30}%">${t}</span>`).join('')}
+    <div class="walker">${catSVG({size:150,mood:'happy'})}</div><div class="wtitle">${p.i} ${esc(p.en)} · ${p.ko}</div></div>`;
+  document.body.appendChild(m); speak(`Let's go to the ${p.en.toLowerCase()}! ${rain?'Splash, splash in the rain!':'What a nice day!'}`);
+  setTimeout(()=>{ m.remove(); c.walkDay=dayNum(); c.joy=Math.min(100,c.joy+15); c.energy=Math.max(0,(c.energy||80)-15); c.paws=true; c.walks=(c.walks||0)+1; save(); catRoom({quiet:true});
+    hearts(6,'🐾'); speak('That was so fun! Oh no, my paws are muddy!'); toast('산책 재밌었어요! 기분 +15 · 발이 더러워졌어요 🐾'); },4200);
+}
+
 function pickCard(){
   const ids=Object.keys(S.cards).filter(id=>BYID[id]);
   if(!ids.length){ toast('아직 카드가 없어요. 오늘의 탐험에서 카드를 모아요!'); speak('Find cards on today\'s adventure first!'); return; }
@@ -2153,6 +2368,7 @@ function shop(tab){
   const card=x=>{
     let btn;
     if(x.inv){ btn=`<button class="buy" data-buy="${x.id}" ${S.coins<x.price?'disabled':''}>🪙 ${x.price} 사기</button><small>가지고 있음: ${c.inv[x.inv]}</small>`; }
+    else if(x.tool&&c.owned.includes(x.id)) btn=`<small class="lockgift" style="color:#2e9d6a">✓ 가지고 있어요</small>`;
     else if(c.owned.includes(x.id)){ const on=c.wear[x.slot]===x.id; btn=`<button class="buy ${on?'off':'wear'}" data-wear="${x.id}">${on?'벗기기':'입히기 / 놓기'}</button>`; }
     else if(x.cat==='special') btn=`<small class="lockgift">🔒 일주일 선물상자</small>`;
     else btn=`<button class="buy" data-buy="${x.id}" ${S.coins<x.price?'disabled':''}>🪙 ${x.price} 사기</button>${S.coins<x.price?`<small>코인 ${x.price-S.coins}개 더 필요해요</small>`:''}`;
@@ -2168,7 +2384,7 @@ function shop(tab){
   $$('.tab').forEach(b=>b.onclick=()=>shop(b.dataset.t));
   $('#back').onclick=()=>catRoom();
   $$('[data-buy]').forEach(b=>b.onclick=()=>{ const x=SHOPBY[b.dataset.buy]; if(S.coins<x.price) return;
-    S.coins-=x.price; if(x.inv) c.inv[x.inv]+=x.n; else { c.owned.push(x.id); c.wear[x.slot]=x.id; }
+    S.coins-=x.price; if(x.inv) c.inv[x.inv]=(c.inv[x.inv]||0)+x.n; else { c.owned.push(x.id); if(x.slot) c.wear[x.slot]=x.id; if(x.id==='musicbox'&&!c.songs.length) c.songs=['twinkle']; }
     save(); coinSnd(); speak(`You bought ${x.en}!`); toast(`${x.ko} 샀어요! 🛍️`);
     if(!x.inv && wishDone('item',x.id)){ setTimeout(()=>catRoom({quiet:true}),300); return; } shop(tab); });
   $$('[data-wear]').forEach(b=>b.onclick=()=>{ const x=SHOPBY[b.dataset.wear]; if(c.wear[x.slot]===x.id) delete c.wear[x.slot]; else c.wear[x.slot]=x.id; save(); shop(tab); });
