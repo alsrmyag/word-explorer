@@ -416,6 +416,8 @@ wraps|v|🎁|winds something around and around to cover it|She ___ her papa in a
 thunder|n|⛈️|the very loud, booming sound you hear in a storm|___ rumbles all around, and Joselina runs.|||2|천둥|chore,price,schedule||ticket,recipe,trophy
 rumbles|v|🥁|makes a long, low, rolling sound|Thunder ___ all around.|||3|우르르 울리다|decorate,borrow,select||pay,lend,sort
 snug|adj|🛌|warm, cozy, and comfortable|She makes her papa ___ with a big, warm hug.|cozy||3|포근한, 아늑한|shallow,rotten,cheap||sour,expensive,crowded
+begs|v|🙏|asks for something again and again, very hard|Joselina ___ on her knees, "Can we go now, please?"|||3|조르다, 간절히 부탁하다|measure,decorate,select||pay,lend,sort
+raindrops|n|🌧️|small drops of water that fall from the sky when it rains|___ start to fall, so Papa says it is too wet.|||2|빗방울|trophy,ticket,gift||recipe,chore,schedule
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful
@@ -991,7 +993,7 @@ const REVIEW_GAP = [2,3,5];
 const WORDS=[], BYID={}, BYW={};
 /* Only words whose picture shows the meaning itself. Every other word is asked as "read the word, pick the meaning". */
 /* bank words that also came up in Elena's books: put them in the next path first */
-const PRIO=['alone','wide'];
+const PRIO=['alone','wide','frown'];
 const PIC=new Set(['peek','cloudy','sunny','climb','map','fossil','throw','price','tool','experiment','pour','ticket','station','correct','loud','ghost','trophy','strong','smile','cry','gift','party','dance','surprised','quiet','sleepy','angry','silly','grow','seal','scarf']);
 function pic(w){ return w.pic?w.em:`<span class="kopic">${esc(w.ko)}</span>`; }
 (function(){
