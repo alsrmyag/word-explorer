@@ -66,7 +66,7 @@ dangerous|adj|⚠️🦈|able to hurt you|It is ___ to swim near sharks.|unsafe|
 prickly|adj|🌵|covered with sharp points|The cactus is too ___ to touch.|spiky|smooth|3|가시가 많은|spill,careless,pay|s:spiky:shallow,generous,sweet|fierce,hungry,noisy
 slimy|adj|🐌|wet and slippery in a yucky way|The snail felt ___ in my hand.|slippery||3|끈적하고 미끈한|mistake,tool,alone|s:slippery:dark,selfish,worried|fierce,hungry,silent
 noisy|adj|📢|making a lot of sound|The ___ birds woke me up early.|loud|quiet|2|시끄러운|practice,complete,glow|o:quiet:sour,proud,smooth|prickly,slimy,shallow
-roar|v|🦁|to make a very loud, deep sound like a lion|The lion will ___ loudly to scare others away.|growl||2|으르렁거리다|shadow,passenger,careless|s:growl:connect,sort,wait|hop,sort,explain
+roar|v|🦁|to make a very loud, deep sound like a lion; also to rush somewhere loudly and excitedly|Now out the door the happy piggies ___!|growl||2|으르렁거리다; 와아 하고 신나게 뛰쳐나가다|shadow,passenger,careless|s:growl:connect,sort,wait|sort,explain,measure
 chase|v|🐕💨⚽|to run after something to catch it|The dog likes to ___ the ball across the yard.|||2|쫓다|spill,spend,selfish||roar,melt,complain
 hungry|adj|🍽️❓|wanting to eat|I skipped lunch, so I was very ___.||full|2|배고픈|throw,tall,break|o:full:honest,brave,loud|fierce,prickly,noisy
 crawl|v|🐛|to move slowly on your hands and knees or on your belly|The baby can ___ across the floor.|creep||2|기어가다|heavy,late,notice|s:creep:arrive,connect,peek|roar,wash,break
