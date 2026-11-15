@@ -1297,7 +1297,7 @@ function bindTop(){ bindSay($(".top"));
 }
 const app=document.getElementById('app');
 /* ================= DAILY CHECKLIST (paper checklist, by weekday) ================= */
-const PLAN={
+const PLAN_OLD={
   1:[{t:'폴리책 3권',c:'#e8536b'},{t:'E-poly',c:'#3aa57a'},{t:'English',c:'#3aa57a'}],
   2:[{t:'폴리책 3권',c:'#e8536b'},{t:'필즈 2장',c:'#f0a030'},{t:'그림일기 다시쓰기',c:'#8b6fd6',diary:1}],
   3:[{t:'폴리책 3권',c:'#e8536b'},{t:'필즈 1장',c:'#f0a030'},{t:'E-poly',c:'#3aa57a'},{t:'Phonics',c:'#3aa57a'}],
@@ -1305,6 +1305,17 @@ const PLAN={
   5:[{t:'폴리책 2권',c:'#e8536b'},{t:'필즈 2장',c:'#f0a030'},{t:'Poly AR',c:'#4a86e8'}],
   6:[{t:'폴리책 3권',c:'#e8536b'},{t:'그림일기',c:'#8b6fd6',diary:1},{t:'단어 테스트 공부',c:'#e8536b'}]
 };
+/* from 2026-11-16 (oz): Mon-Fri only; Sat/Sun = catch-up days for anything not done Mon-Fri.
+   E-poly is one task with its part in brackets. Old weeks keep PLAN_OLD so their checks stay right. */
+const PLAN_FROM='2026-11-16';
+const PLAN={
+  1:[{t:'폴리책 3권',c:'#e8536b'},{t:'필즈 3장',c:'#f0a030'},{t:'E-poly (English)',c:'#3aa57a'}],
+  2:[{t:'폴리책 3권',c:'#e8536b'},{t:'필즈 2장',c:'#f0a030'},{t:'그림일기 다시쓰기',c:'#8b6fd6',diary:1}],
+  3:[{t:'폴리책 3권',c:'#e8536b'},{t:'E-poly (Phonics, Action time)',c:'#3aa57a'}],
+  4:[{t:'폴리책 3권',c:'#e8536b'},{t:'리딩 트레이너',c:'#4a86e8'}],
+  5:[{t:'폴리책 3권',c:'#e8536b'},{t:'그림일기',c:'#8b6fd6',diary:1},{t:'단어 테스트 공부',c:'#e8536b'}]
+};
+function newPlan(d){ return ymd(d)>=PLAN_FROM; }
 const WD_KO=['일','월','화','수','목','금','토'];
 const STICKERS=['🌟','🦄','🍓','🐣','🌈','🍭','🐰','🌸','🎈','🐬','🦋','🍩','🐼','🌻'];
 const GIFTS=['gown','gboot','unicorn','scape','pboot','starclip','rsweat','ribbon'];
@@ -1314,7 +1325,7 @@ function parseD(k){ const [y,m,d]=k.split('-').map(Number); return new Date(y,m-
 function addD(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
 function planInit(){ S.plan=S.plan||{}; const P=S.plan; if(!P.start){ P.start=ymd(); save(); } P.d=P.d||{}; P.gifts=P.gifts||{}; return P; }
 function dayRec(k){ const P=planInit(); return P.d[k]||(P.d[k]={c:[],x:[]}); }
-function tasksOf(d){ return PLAN[d.getDay()]||[]; }
+function tasksOf(d){ return (newPlan(d)?PLAN:PLAN_OLD)[d.getDay()]||[]; }
 function dayComplete(d){ const t=tasksOf(d); if(!t.length) return true; const r=(S.plan.d||{})[ymd(d)]; if(!r) return false; return t.every((_,i)=>r.c.includes(i)||r.x.includes(i)); }
 function dayStatus(d){ const k=ymd(d), today=ymd();
   if(!tasksOf(d).length) return 'rest';
@@ -1322,14 +1333,14 @@ function dayStatus(d){ const k=ymd(d), today=ymd();
   if(k===today) return 'today';
   return k<today?'missed':'future'; }
 function weekSun(d){ return addD(d,-d.getDay()); }
-function weekInfo(d){ const sun=weekSun(d); const days=[1,2,3,4,5,6].map(i=>addD(sun,i)); const st=days.map(dayStatus);
-  return {key:ymd(sun), days, st, ok:st.every(x=>x==='done'), lost:st.includes('missed'), nDone:st.filter(x=>x==='done').length}; }
+function weekInfo(d){ const sun=weekSun(d); const days=[1,2,3,4,5,6].map(i=>addD(sun,i)).filter(x=>tasksOf(x).length); const st=days.map(dayStatus);
+  return {key:ymd(sun), days, st, ok:st.every(x=>x==='done'), lost:st.includes('missed'), nDone:st.filter(x=>x==='done').length, n:days.length, lastWd:WD_KO[days.length?days[days.length-1].getDay():6]}; }
 function remaining(){ const d=new Date(), t=tasksOf(d); if(!t.length) return []; const r=dayRec(ymd(d)); return t.map((x,i)=>i).filter(i=>!r.c.includes(i)&&!r.x.includes(i)); }
 function speakKo(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang='ko-KR'; const v=speechSynthesis.getVoices().find(v=>/^ko/i.test(v.lang)); if(v)u.voice=v; u.rate=.95; u.pitch=1.15; speechSynthesis.speak(u); }catch(e){} }
 const HEART='<svg viewBox="0 0 24 24"><rect class="bx" x="2.5" y="2.5" width="19" height="19" rx="5"/><path class="ck" d="M6.5 12.5l3.8 3.8L17.8 8"/></svg>';
 /* Sunday: every task of the past Mon-Sat that is not checked yet, in order */
-function sunList(d){ const L=[];
-  for(let n=6;n>=1;n--){ const dd=addD(d,-n), kk=ymd(dd), rr=(S.plan.d||{})[kk];
+function sunList(d){ const L=[], base=weekSun(d.getDay()===0?addD(d,-1):d);
+  for(let n=1;n<=6;n++){ const dd=addD(base,n), kk=ymd(dd), rr=(S.plan.d||{})[kk]; if(kk>=ymd(d)) break;
     tasksOf(dd).forEach((x,i)=>{ if(!(rr&&(rr.c.includes(i)||rr.x.includes(i)))) L.push({k:kk,i,x,dd}); }); }
   return L; }
 function sunCheck(k,i,mode){
@@ -1343,10 +1354,10 @@ function sunCheck(k,i,mode){
 function catSay(){
   const d=new Date(), t=tasksOf(d), rem=remaining();
   if(!t.length){
-    if(d.getDay()===0){ const L=sunList(d);
+    if(d.getDay()===0||d.getDay()===6){ const L=sunList(d), sat=d.getDay()===6;
       if(L.length){ if(planAsk>=L.length) planAsk=0; const e=L[planAsk];
-        return {ko:(planAsk===0?`일요일이야! 지난주에 체크 안 한 게 ${L.length}개 있어. 같이 보자!\n`:'')+`${WD_KO[e.dd.getDay()]}요일 ${e.x.t} 했어?`, i:e.i, k:e.k, diary:e.x.diary}; }
-      if(weekInfo(addD(d,-1)).ok) return {ko:'지난주 할 일 다 했어! 최고야! 오늘은 푹 쉬자 🌙'};
+        return {ko:(planAsk===0?`${sat?'토요일':'일요일'}이야! 이번 주에 체크 안 한 게 ${L.length}개 있어. 못 한 건 오늘 해도 돼!\n`:'')+`${WD_KO[e.dd.getDay()]}요일 ${e.x.t} 했어?`, i:e.i, k:e.k, diary:e.x.diary}; }
+      if(weekInfo(sat?d:addD(d,-1)).ok) return {ko:'이번 주 할 일 다 했어! 최고야! 오늘은 푹 쉬자 🌙'};
     }
     return {ko:'오늘은 쉬는 날이야! 푹 쉬자 🌙'};
   }
@@ -1365,16 +1376,16 @@ function planView(){
       <span class="tt">${esc(x.t)}</span>${x.diary?`<button class="none" data-no="${i}">${no?'↩︎ 다시 하기':'오늘은 없어요'}</button>`:''}</div>`; }).join('');
   const sun=addD(weekSun(d),7*wkOff);
   const strip=[0,1,2,3,4,5,6].map(n=>{ const dd=addD(sun,n), kk=ymd(dd), st=dayStatus(dd), tt=tasksOf(dd), rr=(S.plan.d||{})[kk], can=true;
-    const body = !tt.length ? '<span class="moon">🌙</span><small class="rs">쉬는 날</small>'
+    const body = !tt.length ? (newPlan(dd)?'<span class="moon">🔁</span><small class="rs">못 한 거 하는 날</small>':'<span class="moon">🌙</span><small class="rs">쉬는 날</small>')
       : `<div class="ctl">${tt.map((x,i)=>{ const on=rr&&rr.c.includes(i), no=rr&&rr.x.includes(i);
           return `<div class="ct ${on?'on':''} ${no?'no':''} ${can&&!no?'tap':''}" style="--hc:${x.c}" ${can&&!no?`data-mk="${kk}|${i}" role="button"`:''}><span class="mh big">${HEART}</span><span>${esc(x.t)}</span></div>`; }).join('')}</div>`;
     return `<div class="wd ${st==='rest'?'wrest':st} ${kk===ymd()?'now':''}"><div class="wh"><small>${WD_KO[dd.getDay()]}</small><b>${dd.getDate()}</b>${st==='done'?`<span class="wst">${STICKERS[dd.getDate()%STICKERS.length]}</span>`:''}</div>${body}</div>`; }).join('');
   const giftLine= gift ? `<button class="giftline got" id="opengift">🎁 이번 주 선물 ${gift.opened?'받았어요!':'열어 보기!'}</button>`
-    : wk.lost ? `<div class="giftline lost">아직 못 한 날이 있어요. 했던 날이면 그 칸을 눌러 체크해요! (${wk.nDone}/6)</div>`
-    : `<div class="giftline">🎁 월~토 다 하면 큰 선물상자! <b>${wk.nDone}/6</b></div>`;
+    : wk.lost ? `<div class="giftline lost">아직 못 한 날이 있어요. 했던 날이면 그 칸을 눌러 체크해요! (${wk.nDone}/${wk.n})</div>`
+    : `<div class="giftline">🎁 월~${wk.lastWd} 다 하면 큰 선물상자! <b>${wk.nDone}/${wk.n}</b></div>`;
   const body = planTab==='cal' ? calHTML() : `
       <h2 class="ptitle">${d.getMonth()+1}월 ${d.getDate()}일 (${WD_KO[d.getDay()]}) 오늘 할 일</h2>
-      ${t.length?`<div class="tlist">${rows}</div><div class="pnote">✔ 다 하면 눌러서 체크해요 · 지난 날·미리 한 날은 아래 칸이나 달력에서 눌러서 체크해요</div>`:`<div class="rest">🌙<b>쉬는 날</b><span>오늘은 푹 쉬어요!</span></div><button class="giftline" data-pt="cal">📅 달력에서도 지난 날·다음 날을 체크할 수 있어요</button>`}
+      ${t.length?`<div class="tlist">${rows}</div><div class="pnote">✔ 다 하면 눌러서 체크해요 · 지난 날·미리 한 날은 아래 칸이나 달력에서 눌러서 체크해요</div>`:`${newPlan(d)&&sunList(d).length?`<div class="rest">🔁<b>못 한 거 하는 날</b><span>이번 주에 못 한 걸 고양이랑 하나씩 체크해요!</span></div>`:`<div class="rest">🌙<b>쉬는 날</b><span>오늘은 푹 쉬어요!</span></div>`}<button class="giftline" data-pt="cal">📅 달력에서도 지난 날·다음 날을 체크할 수 있어요</button>`}
       <div class="calhead"><button class="sm" data-wk="-1">◀</button><h3 style="margin:0;font-family:var(--display)">${wkOff===0?'이번 주':wkOff===-1?'지난주':wkOff===1?'다음 주':`${sun.getMonth()+1}월 ${sun.getDate()}일 주`}</h3><button class="sm" data-wk="1">▶</button></div>
       <div class="wkstrip">${strip}</div>${giftLine}`;
   app.innerHTML=`<div class="screen">${topbar()}
@@ -1482,7 +1493,7 @@ function calHTML(){
   for(let day=1;day<=n;day++){ const d=new Date(y,mo,day), st=dayStatus(d), k=ymd(d), r=(S.plan.d||{})[k], t=tasksOf(d);
     const wk=d.getDay()===6?S.plan.gifts[ymd(weekSun(d))]:null;
     let inner='';
-    if(st==='rest') inner='<span class="moon">🌙</span><small>쉬는 날</small>';
+    if(st==='rest') inner=newPlan(d)?'<span class="moon">🔁</span><small>못 한 거 하는 날</small>':'<span class="moon">🌙</span><small>쉬는 날</small>';
     else { inner=`<div class="ctl">${t.map((x,i)=>{ const on=r&&r.c.includes(i), no=r&&r.x.includes(i);
         return `<div class="ct ${on?'on':''} ${no?'no':''}" style="--hc:${x.c}"><span class="mh">${HEART}</span>${esc(x.t)}</div>`; }).join('')}</div>`;
       if(st==='done') inner+=`<span class="stk">${STICKERS[day%STICKERS.length]}</span>`; }
