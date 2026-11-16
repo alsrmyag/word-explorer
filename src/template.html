@@ -441,6 +441,12 @@ const BOOKQ=[
   {w:'break the line', t:'Someone runs and breaks the line. Miss Vee holds a red stop sign.', q:'Why does Miss Vee hold up the stop sign?', a:'Because someone broke the line.', x:['Because it is lunch time.','Because she wants to run.','Because the sign is broken.']},
   {w:'stop sign', t:'Someone runs and breaks the line. Miss Vee holds a red stop sign.', q:'Which word rhymes with line? (same ending sound)', a:'sign', x:['runs','red','stop']},
   {w:'stop sign', t:'Someone runs and breaks the line. Miss Vee holds a red stop sign.', q:'Miss Vee holds a stop sign. What does holds mean here?', a:'has it in her hand', x:['keeps her words inside','stops breathing','breaks it']},
+  {w:'shake her head', t:"Some kids talk. Some touch the wall. They forget we're in the hall. Miss Vee stops and shakes her head.", q:'Why does Miss Vee shake her head?', a:'Because the kids forgot to be quiet in the hall.', x:['Because it is time to play.', 'Because she is very happy.', 'Because the wall is dirty.']},
+  {w:'hall', t:"Some kids talk. Some touch the wall. They forget we're in the hall.", q:'Which word rhymes with wall? (same ending sound)', a:'hall', x:['kids', 'talk', 'touch']},
+  {w:'remember', t:"Miss Vee stops and shakes her head. 'Please remember what I said!'", q:'Which word rhymes with head? (same ending sound)', a:'said', x:['stops', 'please', 'what']},
+  {w:'near', t:'Other classes should not hear when our class is walking near.', q:'Why should the class walk quietly?', a:"So other classes don't hear them.", x:['So they can run faster.', 'So they can play outside.', 'So Miss Vee can sing.']},
+  {w:'have fun', t:'On the playground we can run! We can play and have some fun.', q:'Which word rhymes with run? (same ending sound)', a:'fun', x:['play', 'can', 'we']},
+  {w:'once again', t:"It's time to listen once again. We line up and count to ten.", q:'Which word rhymes with again? (same ending sound)', a:'ten', x:['time', 'listen', 'count']},
   {w:'look for', t:'Fifteen elephants herd together. They look for water.', q:'What are the elephants trying to find?', a:'Water.', x:['Lions.','Leaves.','Rocks.']}
 ];
 function makeWhyQ(b){
@@ -465,7 +471,7 @@ const WORDS=[], BYID={}, BYW={};
 /* bank words that also came up in Elena's books: put them in the next path first */
 /* first the bank words seen in books, then oz's SR Vocabulary List (Set 1-3) in list order */
 const PRIO=['alone','wide','frown','roar','arrive','decide','explain','follow','search','improve','invent','explore','notice','prepare','refuse','remind','share','solve','surprise','travel','visit','waste','gather','compare','deliver','invite','route','escape','review','discover','smooth','narrow','write','assist','trembling','clean','silent','increase','slippery','repair','select','polite','squeezed','protect','ancient','exhausted','sort','reply','appear','delicate','fortunate','admire','brave','curious','avoid','delicious','disappear','loose','divide','contain','observe','celebrate','certain','patient','enormous','message','imagine','balance','fair','measure','hurry','belong','guide','danger','pay','entire','exchange','beg','assignment','legend','location','flicker','amend','gush','opponent','abandoned','recite','ancestor','glance','eager','delight','tender','fragile','brief','fold','carry','erase','pleasant','equal','unfair','slim','thin','worsen','clear','cowardly','fearless','bold','courageous','keen','unexpected','respond','wonder','worry','anger','joy','pain','respectful','courteous','roll'];
-const PIC=new Set(['peek','cloudy','sunny','climb','map','fossil','throw','price','tool','experiment','pour','ticket','station','correct','loud','ghost','trophy','strong','smile','cry','gift','party','dance','surprised','quiet','sleepy','angry','silly','grow','seal','scarf','write','hippo','stop sign']);
+const PIC=new Set(['peek','cloudy','sunny','climb','map','fossil','throw','price','tool','experiment','pour','ticket','station','correct','loud','ghost','trophy','strong','smile','cry','gift','party','dance','surprised','quiet','sleepy','angry','silly','grow','seal','scarf','write','hippo','stop sign','playground']);
 function pic(w){ return w.pic?w.em:`<span class="kopic">${esc(w.ko)}</span>`; }
 (function(){
   let isl=null;

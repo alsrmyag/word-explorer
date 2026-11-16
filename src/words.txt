@@ -69,6 +69,15 @@ in a line|adv|🚶🚶🚶|one behind another, in one row|When we're walking ___
 do your best|v|💪|to try as hard as you can ("I'll do mine" = I'll do my best too)|When we're walking in a line, ___. I'll do mine.|try hard|give up|2|최선을 다하다 (I'll do mine = 나도 최선을 다할게)|bake,scrub,spill|o:give up:bake,hop,crawl|bake,scrub,sprinkle
 break the line|v|🏃💨|to leave your place so the line is not neat anymore (not breaking a thing!)|Don't run, or you will ___!|||3|줄을 흐트러뜨리다 (물건을 부수는 게 아님)|bake,scrub,spill||bake,scrub,sprinkle
 stop sign|n|🛑|a red sign that tells you to stop|Miss Vee holds a red ___.|||2|멈춤 표지판|recipe,puddle,fossil||ticket,trophy,puddle
+touch|v|👆|to put your hand or finger on something|Some kids talk. Some ___ the wall.|feel||2|만지다|bake,scrub,spill||bake,scrub,sprinkle
+forget|v|🤔|to not remember something|They ___ we're in the hall.|||2|잊어버리다|sprinkle,crawl,hop|o:remember:bake,hop,crawl|bake,scrub,spill
+hall|n|🚪|a long, narrow space inside a building with doors on each side|They forget we're in the ___.|hallway||2|복도|soil,puddle,cave||cave,puddle,ticket
+shake her head|v|🙂‍↔️|to move your head from side to side to say "no"|Miss Vee wants to say "No!" without talking, so she will ___.|||3|고개를 좌우로 젓다 (안 된다는 뜻)|bake,scrub,spill||bake,scrub,sprinkle
+remember|v|💭|to keep something in your mind and not forget it|Please ___ what I said!|||2|기억하다|bake,scrub,crawl|o:forget:bake,hop,crawl|bake,scrub,spill
+near|adv|📍|close to something; not far|Other classes should not hear when our class is walking ___.|close|far|2|가까이, 근처에|shallow,dusty,sour|o:far:sour,dusty,loud|sour,dusty,rotten
+playground|n|🛝|a place outside where children play, with slides and swings|On the ___ we can run!|||2|놀이터|recipe,soil,price||ticket,trophy,price
+have fun|v|🥳|to enjoy yourself and have a good time|We can play and ___.|enjoy||2|재미있게 놀다|bake,scrub,spill||bake,scrub,sprinkle
+once again|adv|🔁|one more time|It's time to listen ___.|again||3|다시 한번|shallow,dusty,sour||sour,dusty,rotten
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful

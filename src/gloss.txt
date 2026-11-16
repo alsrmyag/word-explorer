@@ -134,3 +134,5 @@ stay quiet|to not talk or make noise
 talk|to say words to someone
 try hard|to do your best
 give up|to stop trying
+remember|to keep something in your mind
+enjoy|to like doing something
