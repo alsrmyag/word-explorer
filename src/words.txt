@@ -65,6 +65,8 @@ line up|v|🧍🧍🧍|to stand one behind another in a line|Please ___, class. 
 rhyme|n|🎶|a short poem or song where the ending sounds are the same, like cat and hat|Let's all say the school line ___!|||3|라임 (끝소리가 같은 짧은 노래·말놀이, 예: cat-hat)|recipe,trophy,chore||ticket,trophy,puddle
 by my side|adv|🧍|right next to my body|Hands are down and ___.|||2|내 몸 옆에|shallow,dusty,sour||sour,dusty,rotten
 hold my words inside|v|🤐|to keep my words in and not talk; to stay quiet (hold = keep in, like hold your breath)|Hands are down and by my side. I will ___.|stay quiet|talk|3|말을 안에 담아 두다 = 조용히 하다 (hold = 참다, 담아 두다)|bake,scrub,spill|o:talk:bake,hop,crawl|bake,scrub,sprinkle
+in a line|adv|🚶🚶🚶|one behind another, in one row|When we're walking ___, do your best.|||2|한 줄로|shallow,dusty,sour||sour,dusty,rotten
+do your best|v|💪|to try as hard as you can ("I'll do mine" = I'll do my best too)|When we're walking in a line, ___. I'll do mine.|try hard|give up|2|최선을 다하다 (I'll do mine = 나도 최선을 다할게)|bake,scrub,spill|o:give up:bake,hop,crawl|bake,scrub,sprinkle
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful
