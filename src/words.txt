@@ -41,6 +41,8 @@ pride|n|🦁🦁🦁|a group of lions that live together|Five lions drink. A gro
 hippo|n|🦛|a very big, heavy animal that lives in rivers in Africa (short for hippopotamus)|Ten ___s cool off in the water.|||2|하마|recipe,puddle,fossil||ticket,trophy,fossil
 cool off|v|💦|to get cooler when you are too hot|It is so hot! Let's jump in the pool to ___.|cool down|warm up|2|(더울 때) 몸을 시원하게 식히다|bake,scrub,crawl|o:warm up:bake,hop,crawl|bake,scrub,sprinkle
 hold their breath|v|😤|to stop breathing for a short time, like under water|Hippos can ___ for five minutes under the water.|||2|숨을 참다|sprinkle,bake,spill||scrub,crawl,spill
+herd|v|🐘🐘🐘|(animals) to move together as a big group; also a group of animals like elephants or cows|Fifteen elephants ___ together.|||2|무리 지어 다니다 / (코끼리·소 등의) 무리|sprinkle,bake,spill||scrub,bake,spill
+look for|v|🔎|to try to find something|The elephants ___ water to drink.|search|find|2|~을 찾다|bake,scrub,spill||bake,scrub,sprinkle
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful
