@@ -469,6 +469,8 @@ by my side|adv|🧍|right next to my body|Hands are down and ___.|||2|내 몸 �
 hold my words inside|v|🤐|to keep my words in and not talk; to stay quiet (hold = keep in, like hold your breath)|Hands are down and by my side. I will ___.|stay quiet|talk|3|말을 안에 담아 두다 = 조용히 하다 (hold = 참다, 담아 두다)|bake,scrub,spill|o:talk:bake,hop,crawl|bake,scrub,sprinkle
 in a line|adv|🚶🚶🚶|one behind another, in one row|When we're walking ___, do your best.|||2|한 줄로|shallow,dusty,sour||sour,dusty,rotten
 do your best|v|💪|to try as hard as you can ("I'll do mine" = I'll do my best too)|When we're walking in a line, ___. I'll do mine.|try hard|give up|2|최선을 다하다 (I'll do mine = 나도 최선을 다할게)|bake,scrub,spill|o:give up:bake,hop,crawl|bake,scrub,sprinkle
+break the line|v|🏃💨|to leave your place so the line is not neat anymore (not breaking a thing!)|Don't run, or you will ___!|||3|줄을 흐트러뜨리다 (물건을 부수는 게 아님)|bake,scrub,spill||bake,scrub,sprinkle
+stop sign|n|🛑|a red sign that tells you to stop|Miss Vee holds a red ___.|||2|멈춤 표지판|recipe,puddle,fossil||ticket,trophy,puddle
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful
@@ -1190,6 +1192,9 @@ const BOOKQ=[
   {w:'hold my words inside', t:'Hands are down and by my side. I will hold my words inside.', q:'What does the child do in line?', a:'Stays quiet with hands down.', x:['Talks very loudly.','Waves both hands up high.','Runs to the playground.']},
   {w:'in a line', t:"When we're walking in a line, do your best. I'll do mine.", q:'Which word rhymes with line? (same ending sound)', a:'mine', x:['walking','best','do']},
   {w:'do your best', t:"When we're walking in a line, do your best. I'll do mine.", q:'"I\'ll do mine." What does mine mean here?', a:'my best', x:['my line','my hand','my school']},
+  {w:'break the line', t:'Someone runs and breaks the line. Miss Vee holds a red stop sign.', q:'Why does Miss Vee hold up the stop sign?', a:'Because someone broke the line.', x:['Because it is lunch time.','Because she wants to run.','Because the sign is broken.']},
+  {w:'stop sign', t:'Someone runs and breaks the line. Miss Vee holds a red stop sign.', q:'Which word rhymes with line? (same ending sound)', a:'sign', x:['runs','red','stop']},
+  {w:'stop sign', t:'Someone runs and breaks the line. Miss Vee holds a red stop sign.', q:'Miss Vee holds a stop sign. What does holds mean here?', a:'has it in her hand', x:['keeps her words inside','stops breathing','breaks it']},
   {w:'look for', t:'Fifteen elephants herd together. They look for water.', q:'What are the elephants trying to find?', a:'Water.', x:['Lions.','Leaves.','Rocks.']}
 ];
 function makeWhyQ(b){
@@ -1214,7 +1219,7 @@ const WORDS=[], BYID={}, BYW={};
 /* bank words that also came up in Elena's books: put them in the next path first */
 /* first the bank words seen in books, then oz's SR Vocabulary List (Set 1-3) in list order */
 const PRIO=['alone','wide','frown','roar','arrive','decide','explain','follow','search','improve','invent','explore','notice','prepare','refuse','remind','share','solve','surprise','travel','visit','waste','gather','compare','deliver','invite','route','escape','review','discover','smooth','narrow','write','assist','trembling','clean','silent','increase','slippery','repair','select','polite','squeezed','protect','ancient','exhausted','sort','reply','appear','delicate','fortunate','admire','brave','curious','avoid','delicious','disappear','loose','divide','contain','observe','celebrate','certain','patient','enormous','message','imagine','balance','fair','measure','hurry','belong','guide','danger','pay','entire','exchange','beg','assignment','legend','location','flicker','amend','gush','opponent','abandoned','recite','ancestor','glance','eager','delight','tender','fragile','brief','fold','carry','erase','pleasant','equal','unfair','slim','thin','worsen','clear','cowardly','fearless','bold','courageous','keen','unexpected','respond','wonder','worry','anger','joy','pain','respectful','courteous','roll'];
-const PIC=new Set(['peek','cloudy','sunny','climb','map','fossil','throw','price','tool','experiment','pour','ticket','station','correct','loud','ghost','trophy','strong','smile','cry','gift','party','dance','surprised','quiet','sleepy','angry','silly','grow','seal','scarf','write','hippo']);
+const PIC=new Set(['peek','cloudy','sunny','climb','map','fossil','throw','price','tool','experiment','pour','ticket','station','correct','loud','ghost','trophy','strong','smile','cry','gift','party','dance','surprised','quiet','sleepy','angry','silly','grow','seal','scarf','write','hippo','stop sign']);
 function pic(w){ return w.pic?w.em:`<span class="kopic">${esc(w.ko)}</span>`; }
 (function(){
   let isl=null;
