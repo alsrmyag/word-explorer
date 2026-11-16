@@ -56,6 +56,8 @@ reach|v|🦒⬆️|to stretch out and touch something|Long necks ___ tall trees.
 leaves|n|🍃|more than one leaf (one leaf, two leaves)|Thirty-five giraffes eat ___.|||2|나뭇잎들 (leaf의 복수: leaf → leaves)|soil,puddle,price||ticket,trophy,price
 wade|v|🦩💧|to walk through shallow water (not swim)|Forty flamingos ___ in the water.|||3|얕은 물속을 걸어가다 (헤엄 X)|bake,scrub,spill||bake,scrub,sprinkle
 slurp|v|🥤|to eat or drink with a loud sucking sound|The flamingos eat tiny water animals. They ___ them up!|||2|후루룩 소리 내며 먹다·마시다|sprinkle,crawl,hop||crawl,bake,scrub
+antelope|n|🦌|a fast animal with horns that looks a bit like a deer and lives in Africa|Forty-five ___ watch for danger.|||3|영양 (사슴 닮은 뿔 달린 빠른 동물)|recipe,puddle,fossil||ticket,trophy,puddle
+watch for|v|👀|to look carefully to see if something is coming|The antelope ___ danger. They run fast if a lion comes!|look out for|ignore|3|~이 오는지 잘 지켜보다|bake,scrub,spill|o:ignore:bake,hop,crawl|bake,scrub,sprinkle
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful

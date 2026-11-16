@@ -458,6 +458,8 @@ reach|v|🦒⬆️|to stretch out and touch something|Long necks ___ tall trees.
 leaves|n|🍃|more than one leaf (one leaf, two leaves)|Thirty-five giraffes eat ___.|||2|나뭇잎들 (leaf의 복수: leaf → leaves)|soil,puddle,price||ticket,trophy,price
 wade|v|🦩💧|to walk through shallow water (not swim)|Forty flamingos ___ in the water.|||3|얕은 물속을 걸어가다 (헤엄 X)|bake,scrub,spill||bake,scrub,sprinkle
 slurp|v|🥤|to eat or drink with a loud sucking sound|The flamingos eat tiny water animals. They ___ them up!|||2|후루룩 소리 내며 먹다·마시다|sprinkle,crawl,hop||crawl,bake,scrub
+antelope|n|🦌|a fast animal with horns that looks a bit like a deer and lives in Africa|Forty-five ___ watch for danger.|||3|영양 (사슴 닮은 뿔 달린 빠른 동물)|recipe,puddle,fossil||ticket,trophy,puddle
+watch for|v|👀|to look carefully to see if something is coming|The antelope ___ danger. They run fast if a lion comes!|look out for|ignore|3|~이 오는지 잘 지켜보다|bake,scrub,spill|o:ignore:bake,hop,crawl|bake,scrub,sprinkle
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful
@@ -1164,6 +1166,19 @@ const STAGES = [
 /* priority days (book + SR words) have no story: step 4 shows the Korean meaning, pick the English word */
 const STAGE4P={n:4, icon:'🧠', en:'Word Check', ko:'한국어 뜻 → 영어 단어', coins:5, say:'Step four. Read the Korean meaning, and find the English word.'};
 function STG(n){ return n===4&&S.today&&S.today.prio ? STAGE4P : STAGES[n-1]; }
+/* book "why?" questions (cause and effect, Elena's weak spot). Shown on step 4 of a priority day when the trigger word is in the path. */
+const BOOKQ=[
+  {w:'antelope', t:'Forty-five antelope watch for danger. They run fast if a lion comes!', q:'Why do the antelope run fast?', a:'Because a lion is coming.', x:['Because they are hungry.','Because they want to swim.','Because it is raining.']},
+  {w:'cool off', t:'Ten hippos cool off in the water.', q:'Why do the hippos go in the water?', a:'To cool off because they are hot.', x:['To look for a lion.','To eat leaves from tall trees.','To build a nest.']},
+  {w:'migrate', t:'Twenty wildebeests walk across the plains. They migrate to find food.', q:'Why do the wildebeests migrate?', a:'To find food.', x:['To play with the lions.','To cool off in the snow.','To sleep in a tree.']},
+  {w:'reach', t:'Thirty-five giraffes eat leaves. Long necks reach tall trees.', q:'How can giraffes eat leaves from tall trees?', a:'Their long necks reach the trees.', x:['They climb up the trees.','They fly up high.','They wait for the leaves to fall.']},
+  {w:'look for', t:'Fifteen elephants herd together. They look for water.', q:'What are the elephants trying to find?', a:'Water.', x:['Lions.','Leaves.','Rocks.']}
+];
+function makeWhyQ(b){
+  return {n:4, key:'y'+b.w, layout:'one', ws:'Why? 왜?', label:'책 속 이유 찾기', opts:shuffle([b.a].concat(b.x)).map(x=>({label:x, ok:x===b.a, say:x})),
+    head:`<div class="prompt"><div class="txt sent" style="font-size:24px">📖 ${esc(b.t)}</div><button class="speak" data-say="${esc(b.t)}">🔊</button></div>
+          <div class="prompt"><div class="txt"><b>${esc(b.q)}</b></div><button class="speak" data-say="${esc(b.q)}">🔊</button></div>`, say:b.t+' '+b.q, ans:b.a};
+}
 function makeKoQ(w){
   let d=w.p1.map(x=>BYW[x]).filter(x=>x&&x!==w&&x.ko!==w.ko&&!close(w,x));
   if(d.length<3) d=d.concat(shuffle(WORDS.filter(x=>x!==w&&x.island!==w.island&&!close(w,x)&&x.ko!==w.ko&&!d.includes(x))).slice(0,3-d.length));
@@ -1297,7 +1312,7 @@ function prioWords(exclude){
 /* Days alternate while priority words (book words, SR list) are waiting:
    one day a priority path of 12 of them, the next day the normal lesson path. */
 /* words Elena missed on her SR worksheet (11-15): put in the very next path once, even if already collected */
-const AGAIN=['trembling','brave','roar','tiny']; /* roar: safari book 11-16 (lion meaning) */
+const AGAIN=['trembling','brave','roar','tiny','danger']; /* roar: safari book 11-16 (lion meaning) */
 function newPath(){
   const P=newPath0(); S.againDone=S.againDone||[];
   const add=AGAIN.filter(x=>BYW[x]&&!S.againDone.includes(x)).map(x=>BYW[x].id).filter(id=>!P.words.includes(id));
@@ -1700,7 +1715,7 @@ function makeStoryQ(L, i){
 }
 function stageItems(n){
   const tw=TW();
-  if(n===4&&S.today.prio) return tw.map(w=>()=>makeKoQ(w));
+  if(n===4&&S.today.prio){ const ids=tw.map(w=>w.id); return tw.map(w=>()=>makeKoQ(w)).concat(BOOKQ.filter(b=>BYW[b.w]&&ids.includes(BYW[b.w].id)).map(b=>()=>makeWhyQ(b))); }
   if(n===4){ const L=S.today.lesson&&LBYID[S.today.lesson]; return L?L.qs.map((_,i)=>()=>makeStoryQ(L,i)):[]; }
   let list=tw; if(n===2) list=tw.filter(w=>w.q2);
   return list.map(w=>()=>makeQ(n,w));
