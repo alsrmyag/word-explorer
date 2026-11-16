@@ -49,6 +49,9 @@ plains|n|🌾|large, flat lands with lots of grass and few trees|Twenty wildebee
 migrate|v|🦬➡️|(animals) to travel a long way to another place to find food or warm weather|They ___ to find food.|travel||3|(철 따라 먼 곳으로) 이동하다|bake,scrub,spill||bake,scrub,spill
 baboon|n|🐒|a big monkey with a long, dog-like face that lives in Africa|Twenty-five ___s sit on rocks.|||3|개코원숭이|recipe,puddle,fossil||ticket,trophy,puddle
 troop|n|🐒🐒🐒|a group of monkeys, like baboons|A group of baboons is called a ___.|group||3|(원숭이) 무리|recipe,puddle,soil||pride,herd,puddle
+graze|v|🦓🌱|(animals) to eat grass in a field|Thirty zebras ___ in the field.|||3|(들판에서) 풀을 뜯어 먹다|bake,scrub,spill||bake,scrub,spill
+chew|v|😋|to bite food again and again with your teeth before you swallow it|They ___ hay and grasses.|bite|swallow|2|씹다|sprinkle,crawl,spill||sprinkle,scrub,crawl
+hay|n|🌾|dry grass that animals eat|The zebras chew ___ and grasses.|dry grass||2|건초, 마른풀|soil,price,chore||ticket,price,trophy
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful
