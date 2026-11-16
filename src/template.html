@@ -560,7 +560,7 @@ function prioWords(exclude){
 /* Days alternate while priority words (book words, SR list) are waiting:
    one day a priority path of 12 of them, the next day the normal lesson path. */
 /* words Elena missed on her SR worksheet (11-15): put in the very next path once, even if already collected */
-const AGAIN=['trembling','brave','roar']; /* roar: safari book 11-16 (lion meaning) */
+const AGAIN=['trembling','brave','roar','tiny']; /* roar: safari book 11-16 (lion meaning) */
 function newPath(){
   const P=newPath0(); S.againDone=S.againDone||[];
   const add=AGAIN.filter(x=>BYW[x]&&!S.againDone.includes(x)).map(x=>BYW[x].id).filter(id=>!P.words.includes(id));
