@@ -38,6 +38,9 @@ safari|n|🚙🦒|a trip to see wild animals, often riding in a jeep|We saw lion
 count by fives|v|🖐️|to count five numbers at a time: 5, 10, 15, 20…|Let's ___: five, ten, fifteen, twenty!|||2|5씩 세다 (5, 10, 15…)|sprinkle,crawl,scrub||bake,hop,spill
 come along|v|🚶|to go somewhere together with someone|We are going on a safari. Do you want to ___?|go with|stay|2|같이 가자, 따라와|bake,scrub,spill|o:stay:bake,hop,crawl|scrub,spill,sprinkle
 pride|n|🦁🦁🦁|a group of lions that live together|Five lions drink. A group of lions is called a ___.|group||2|(사자) 무리|recipe,puddle,fossil||ticket,recipe,puddle
+hippo|n|🦛|a very big, heavy animal that lives in rivers in Africa (short for hippopotamus)|Ten ___s cool off in the water.|||2|하마|recipe,puddle,fossil||ticket,trophy,fossil
+cool off|v|💦|to get cooler when you are too hot|It is so hot! Let's jump in the pool to ___.|cool down|warm up|2|(더울 때) 몸을 시원하게 식히다|bake,scrub,crawl|o:warm up:bake,hop,crawl|bake,scrub,sprinkle
+hold their breath|v|😤|to stop breathing for a short time, like under water|Hippos can ___ for five minutes under the water.|||2|숨을 참다|sprinkle,bake,spill||scrub,crawl,spill
 @animal
 fragile|adj|🥚|easy to break|Be careful with the eggs because they are ___.|delicate/breakable|sturdy/strong|3|깨지기 쉬운|lend,fall,fast|o:sturdy:correct,rotten,excited|scared,careful,hungry
 sturdy|adj|🌳💪|strong and not easy to break|The bird built its nest on a ___ branch.|strong/solid|fragile/flimsy|3|튼튼한|noise,mistake,chore|o:fragile:fast,rude,messy|scared,hungry,careful

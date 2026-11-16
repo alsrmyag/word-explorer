@@ -128,3 +128,5 @@ unwilling|not wanting to do something
 surprising|unexpected
 ache|a pain that keeps going
 spin|to turn round and round
+warm up|to get warmer
+cool down|to become cooler
