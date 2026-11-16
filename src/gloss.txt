@@ -130,3 +130,5 @@ ache|a pain that keeps going
 spin|to turn round and round
 warm up|to get warmer
 cool down|to become cooler
+stay quiet|to not talk or make noise
+talk|to say words to someone
