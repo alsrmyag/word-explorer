@@ -470,7 +470,7 @@ const WORDS=[], BYID={}, BYW={};
 /* Only words whose picture shows the meaning itself. Every other word is asked as "read the word, pick the meaning". */
 /* bank words that also came up in Elena's books: put them in the next path first */
 /* first the bank words seen in books, then oz's SR Vocabulary List (Set 1-3) in list order */
-const PRIO=['alone','wide','frown','roar','arrive','decide','explain','follow','search','improve','invent','explore','notice','prepare','refuse','remind','share','solve','surprise','travel','visit','waste','gather','compare','deliver','invite','route','escape','review','discover','smooth','narrow','write','assist','trembling','clean','silent','increase','slippery','repair','select','polite','squeezed','protect','ancient','exhausted','sort','reply','appear','delicate','fortunate','admire','brave','curious','avoid','delicious','disappear','loose','divide','contain','observe','celebrate','certain','patient','enormous','message','imagine','balance','fair','measure','hurry','belong','guide','danger','pay','entire','exchange','beg','assignment','legend','location','flicker','amend','gush','opponent','abandoned','recite','ancestor','glance','eager','delight','tender','fragile','brief','fold','carry','erase','pleasant','equal','unfair','slim','thin','worsen','clear','cowardly','fearless','bold','courageous','keen','unexpected','respond','wonder','worry','anger','joy','pain','respectful','courteous','roll'];
+const PRIO=['approach','dodge','impatient','safety','threat','respect','doubt','shun','rival','partner','referee','polished','create','rough','risk','trouble','alone','wide','frown','roar','arrive','decide','explain','follow','search','improve','invent','explore','notice','prepare','refuse','remind','share','solve','surprise','travel','visit','waste','gather','compare','deliver','invite','route','escape','review','discover','smooth','narrow','write','assist','trembling','clean','silent','increase','slippery','repair','select','polite','squeezed','protect','ancient','exhausted','sort','reply','appear','delicate','fortunate','admire','brave','curious','avoid','delicious','disappear','loose','divide','contain','observe','celebrate','certain','patient','enormous','message','imagine','balance','fair','measure','hurry','belong','guide','danger','pay','entire','exchange','beg','assignment','legend','location','flicker','amend','gush','opponent','abandoned','recite','ancestor','glance','eager','delight','tender','fragile','brief','fold','carry','erase','pleasant','equal','unfair','slim','thin','worsen','clear','cowardly','fearless','bold','courageous','keen','unexpected','respond','wonder','worry','anger','joy','pain','respectful','courteous','roll'];
 const PIC=new Set(['peek','cloudy','sunny','climb','map','fossil','throw','price','tool','experiment','pour','ticket','station','correct','loud','ghost','trophy','strong','smile','cry','gift','party','dance','surprised','quiet','sleepy','angry','silly','grow','seal','scarf','write','hippo','stop sign','playground']);
 function pic(w){ return w.pic?w.em:`<span class="kopic">${esc(w.ko)}</span>`; }
 (function(){
@@ -587,11 +587,12 @@ function prioWords(exclude){
 /* Days alternate while priority words (book words, SR list) are waiting:
    one day a priority path of 12 of them, the next day the normal lesson path. */
 /* words Elena missed on her SR worksheet (11-15): put in the very next path once, even if already collected */
-const AGAIN=['trembling','brave','roar','tiny','danger','recess']; /* roar: safari book 11-16 (lion meaning) */
+/* SR Set 2 worksheet (11-20): fragile first (missed on Star test) */
+const AGAIN=['trembling','brave','roar','tiny','danger','recess','fragile','sturdy','delicate','avoid','patient','recite','abandoned','admire','curious','gush','opponent','smooth','invent','measure','location','waste','message','celebrate','deliver','pay','decide']; /* roar: safari book 11-16 (lion meaning) */
 function newPath(){
   const P=newPath0(); S.againDone=S.againDone||[];
-  const add=AGAIN.filter(x=>BYW[x]&&!S.againDone.includes(x)).map(x=>BYW[x].id).filter(id=>!P.words.includes(id));
-  if(add.length){ P.words=add.concat(P.words); P.fresh=P.words.filter(id=>!owned(id)); AGAIN.forEach(x=>{ if(!S.againDone.includes(x)) S.againDone.push(x); }); }
+  const pick=AGAIN.filter(x=>BYW[x]&&!S.againDone.includes(x)).slice(0,6); const add=pick.map(x=>BYW[x].id).filter(id=>!P.words.includes(id));
+  if(add.length){ P.words=add.concat(P.words); P.fresh=P.words.filter(id=>!owned(id)); } pick.forEach(x=>S.againDone.push(x));
   return P;
 }
 function newPath0(){
